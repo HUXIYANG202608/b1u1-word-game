@@ -324,7 +324,7 @@ body.timer-danger{animation:danger-flash .5s infinite}
 </div>
 <div class="app" id="appRoot" style="display:none">
   <div class="topbar">
-    <div class="brand"><span class="logo">U1</span> 必修一U1 单词闯关<span style="margin-left:6px;font-size:11px;font-weight:800;color:#fff;background:linear-gradient(135deg,#1aa260,#13a05a);border-radius:999px;padding:2px 9px">v3.5·20260831</span></div>
+    <div class="brand"><span class="logo">U1</span> 必修一U1 单词闯关<span style="margin-left:6px;font-size:11px;font-weight:800;color:#fff;background:linear-gradient(135deg,#1aa260,#13a05a);border-radius:999px;padding:2px 9px">v3.5.1·20260831</span></div>
     <div class="right">
       <button class="iconbtn" onclick="showGuide()">❓ 帮助</button>
       <button class="iconbtn" onclick="resetProgressConfirm()">🗑 重置</button>
@@ -2805,6 +2805,7 @@ body.timer-danger{animation:danger-flash .5s infinite}
   global.buildChooseQuestions = buildChooseQuestions;
   global.buildMixQuestions = buildMixQuestions;
   global.buildReviewQuestions = buildReviewQuestions;
+  global.buildCaseQuestions = buildCaseQuestions;   /* 3.5.1 关键修复：补漏顶层 global 暴露，避免混合训练抛 ReferenceError */
   global.ALL_WORDS = ALL_WORDS;
   global.ALL_SENSES = ALL_SENSES;
   global.coreSenseOf = coreSenseOf;
