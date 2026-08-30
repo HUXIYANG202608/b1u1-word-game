@@ -2990,8 +2990,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
   function localUrlFor(word) {
     var raw = String(word == null ? '' : word).trim().toLowerCase();
     if (!raw) return '';
-    // GitHub Pages：mp3 放在仓库根目录，空格转下划线以匹配已上传文件
-    return raw.replace(/\s+/g, '_') + '.mp3';
+    // GitHub Pages：mp3 放在仓库根目录；非字母数字统一转下划线，匹配仓库实际文件名
+    // （修复原规则只转空格、导致 "one's" / "..." 等生成含特殊字符文件名而加载失败）
+    return raw.replace(/[^a-z0-9]+/g, '_').replace(/^_+|_+$/g, '') + '.mp3';
   }
   function canLocalFor(text) {
     if (!HAS_LOCAL) return false;
@@ -3022,6 +3023,31 @@ body.timer-danger{animation:danger-flash .5s infinite}
       events.forEach(function (e) { try { global.removeEventListener(e, handler); } catch (_) {} });
     }
     events.forEach(function (e) { try { global.addEventListener(e, handler, { passive: true }); } catch (_) {} });
+  }
+
+  /* ---------------- 即时反馈音（Web Audio 合成，无需任何音频文件） ----------------
+   * 答对：明亮上行两音（叮—咚），答错：低沉单音；不依赖 mp3 / 网络，任何环境都响。 */
+  function playDing(kind) {
+    try {
+      var AC = global.AudioContext || global.webkitAudioContext;
+      if (!AC) return;
+      var ctx = playDing._ctx || (playDing._ctx = new AC());
+      if (ctx.state === 'suspended') { try { ctx.resume(); } catch (_) {} }
+      var now = ctx.currentTime;
+      var freqs = (kind === 'err') ? [196] : [880, 1320];
+      freqs.forEach(function (f, i) {
+        var o = ctx.createOscillator();
+        var g = ctx.createGain();
+        o.type = 'sine';
+        o.frequency.value = f;
+        var t0 = now + i * 0.12;
+        g.gain.setValueAtTime(0.0001, t0);
+        g.gain.exponentialRampToValueAtTime(0.22, t0 + 0.02);
+        g.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.35);
+        o.connect(g); g.connect(ctx.destination);
+        o.start(t0); o.stop(t0 + 0.4);
+      });
+    } catch (_) {}
   }
 
   function speakViaLocalMp3(text) {
@@ -4075,6 +4101,7 @@ body.timer-danger{animation:danger-flash .5s infinite}
       var pk = state.streak >= 3 ? 'combo' : 'ok';
       var pt = praiseText(pk);
       speakPraise(pk, pt);
+      playDing('ok');
       applyTimeReward(q); // 时间奖励：金币 + 破纪录
       grantStreakGift();  // 连对 5 题送礼（⏸暂停 / 🐌减速 / ⏱加时 随机一个）
       showFeedback('ok', '✅ 正确！' + (pt ? ' <b>' + pt + '</b>' : ''), '', answerBlock(q));
@@ -4082,7 +4109,7 @@ body.timer-danger{animation:danger-flash .5s infinite}
       state.streak = 0;
       applyTimeFail(); // 答错 → 下一关时间放宽
       // 答错英语鼓励音（文字+声音双通道）：Try again! / Keep going! 等
-      var et = praiseText('err'); speakPraise('err', et);
+      var et = praiseText('err'); speakPraise('err', et); playDing('err');
       showFeedback('err', '❌ 答错了' + (et ? ' <b>' + et + '</b>' : ''), '正确答案：' + q.testSense.cnDef, answerBlock(q));
     }
     adjustDifficulty(correct);
@@ -4107,6 +4134,7 @@ body.timer-danger{animation:danger-flash .5s infinite}
       var pk = state.streak >= 3 ? 'combo' : 'ok';
       var pt = praiseText(pk);
       speakPraise(pk, pt);
+      playDing('ok');
       applyTimeReward(q); // 时间奖励：金币 + 破纪录
       grantStreakGift();  // 连对 5 题送礼（⏸暂停 / 🐌减速 / ⏱加时 随机一个）
       showFeedback('ok', '✅ 正确！' + (pt ? ' <b>' + pt + '</b>' : ''), '单词：' + target + '　' + ((q.coreSense ? q.coreSense.enDef : '') || ''), answerBlock(q));
@@ -4114,7 +4142,7 @@ body.timer-danger{animation:danger-flash .5s infinite}
       state.streak = 0;
       applyTimeFail(); // 答错 → 下一关时间放宽
       // 答错英语鼓励音（文字+声音双通道）
-      var et = praiseText('err'); speakPraise('err', et);
+      var et = praiseText('err'); speakPraise('err', et); playDing('err');
       var det = '正确答案：' + target;
       if (res.caseMismatch) det = '⚠️ 大小写不一致——该词在句中需大写/小写与示例完全一致。';
       else {
