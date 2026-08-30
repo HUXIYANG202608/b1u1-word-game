@@ -1,0 +1,4434 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>必修一U1 单词闯关 · A New Start（在线版）</title>
+  <meta name="description" content="高中英语外研版必修第一册 Unit 1 A New Start 单词闯关在线版：拼写挑战、听音选义、混合训练、错词本与 SM-2 间隔重复，浏览器直接玩，支持微信/QQ/GitHub 好友分享。" />
+  <meta name="theme-color" content="#4a6cf7" />
+  <meta name="author" content="高中英语 · 词汇闯关" />
+  <!-- 强制禁止浏览器/中间代理缓存，确保每次都能拉到最新代码 -->
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%234a6cf7'/%3E%3Ctext x='16' y='22' font-size='18' font-family='Arial' font-weight='bold' text-anchor='middle' fill='white'%3EU1%3C/text%3E%3C/svg%3E" />
+  <style>/* ============================================================
+ * XB4 单词闯关 · 样式 (style.css)
+ * 移动端优先，自适应手机 / 电脑 / 平板 / 希沃白板大屏触摸。
+ * ============================================================ */
+:root{
+  --primary:#4a6cf7; --primary-d:#3a55d6; --accent:#ff8a3d; --accent-d:#f06f1f;
+  --bg:#eef2ff; --card:#ffffff; --ink:#1f2533; --muted:#6b7384;
+  --ok:#1aa260; --err:#e0483b; --warn:#b06a00; --line:#e3e8f5;
+  --radius:18px; --shadow:0 10px 30px rgba(40,60,120,.10);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+  color:var(--ink);background:var(--bg);-webkit-text-size-adjust:100%;line-height:1.6}
+button{font-family:inherit}
+.app{max-width:760px;margin:0 auto;padding:0 16px 40px;min-height:100vh;display:flex;flex-direction:column}
+/* 顶栏 */
+.topbar{position:sticky;top:0;z-index:20;background:rgba(238,242,255,.92);backdrop-filter:saturate(160%) blur(8px);
+  display:flex;align-items:center;justify-content:space-between;padding:12px 0;margin-bottom:6px}
+.brand{display:flex;align-items:center;gap:9px;font-weight:900;font-size:17px}
+.logo{width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,var(--primary),#7b5cff);
+  display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900}
+.topbar .right{display:flex;gap:8px}
+.iconbtn{background:#fff;border:1px solid var(--line);border-radius:12px;padding:8px 12px;font-weight:700;
+  font-size:14px;cursor:pointer;color:var(--ink)}
+.iconbtn.share{background:linear-gradient(135deg,var(--accent),var(--accent-d));color:#fff;border:none}
+.screen{flex:1;display:none;animation:fade .25s ease}
+.screen.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* 首页 */
+.hero{padding:18px 0 8px}
+.hero h1{font-size:clamp(24px,6vw,34px);font-weight:900;letter-spacing:-.5px;line-height:1.2}
+.hero h1 .hl{background:linear-gradient(135deg,var(--primary),#7b5cff);color:#fff;padding:0 10px;border-radius:8px;display:inline-block;line-height:1.1;vertical-align:baseline}
+.hero p{color:var(--muted);margin-top:8px;font-size:15px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:18px 0}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 8px;text-align:center;box-shadow:var(--shadow)}
+.stat b{display:block;font-size:clamp(20px,5vw,28px);color:var(--primary-d);font-weight:900}
+.stat span{font-size:12px;color:var(--muted)}
+.diffbar{display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--line);
+  border-radius:14px;padding:12px 14px;margin-bottom:14px;box-shadow:var(--shadow);flex-wrap:wrap}
+.diffbar .lab{font-weight:800;font-size:14px}
+.diffdesc{font-size:12px;color:var(--muted);margin:-6px 2px 12px;font-weight:600}
+.seg{display:flex;background:#eef2ff;border-radius:12px;padding:4px;gap:4px;flex:1;min-width:200px}
+.seg button{flex:1;border:none;background:none;border-radius:9px;padding:9px 0;font-weight:800;font-size:14px;color:var(--muted);cursor:pointer}
+.seg button.on{background:#fff;color:var(--primary-d);box-shadow:0 2px 8px rgba(74,108,247,.18)}
+/* 4 档分组条：字号与内边距收紧，保证窄屏单行不换行 */
+.seg4 button{font-size:13px;padding:9px 1px}
+.modes{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.mode{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px;
+  cursor:pointer;box-shadow:var(--shadow);transition:.16s;display:flex;flex-direction:column;gap:6px}
+.mode:hover{transform:translateY(-3px);border-color:#cdd7f5}
+.mode .ic{font-size:26px}
+.mode h3{font-size:17px}
+.mode p{color:var(--muted);font-size:13px}
+.mode.full{grid-column:1/-1}
+.mode .badge{font-size:11px;background:#fff3e8;color:var(--accent-d);font-weight:800;border-radius:999px;padding:3px 9px;align-self:flex-start}
+
+/* 练习 */
+.progress{height:8px;background:#e3e8f5;border-radius:99px;overflow:hidden;margin:10px 0 4px}
+.progress i{display:block;height:100%;background:linear-gradient(90deg,var(--primary),#7b5cff);width:0;transition:.3s}
+.pinfo{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);margin-bottom:12px}
+.qcard{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow)}
+.qtag{display:inline-block;font-size:12px;font-weight:800;color:var(--primary-d);background:#eef2ff;border-radius:999px;padding:4px 12px;margin-bottom:12px}
+.qhint{font-size:16px;font-weight:700;margin-bottom:6px}
+.qhint small{font-weight:600;color:var(--muted);margin-left:6px}
+.qex{color:var(--muted);font-size:14px;margin:6px 0 12px;font-style:italic}
+.audio-btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--primary),var(--primary-d));color:#fff;
+  border:none;border-radius:12px;padding:10px 16px;font-weight:800;font-size:15px;cursor:pointer;margin:4px 0 12px}
+.audio-btn:active{transform:scale(.97)}
+.cloze{font-size:17px;line-height:1.8;margin:6px 0 12px}
+.cloze b{color:var(--primary-d);background:#eef2ff;border-radius:6px;padding:0 8px}
+.caps-tip{font-size:13px;color:var(--warn);background:#fff7e6;border:1px solid #ffe1a8;border-radius:10px;padding:10px 12px;margin:8px 0 12px;line-height:1.5}
+/* 选择题 */
+.opts{display:flex;flex-direction:column;gap:10px;margin-top:6px}
+.opt{text-align:left;background:#f7f9ff;border:2px solid var(--line);border-radius:14px;padding:14px 16px;
+  font-size:15px;font-weight:600;cursor:pointer;color:var(--ink);transition:.14s}
+.opt:active{transform:scale(.99)}
+.opt.correct{border-color:var(--ok);background:#e8f8f0;color:#0c7a45}
+.opt.wrong{border-color:var(--err);background:#fdecea;color:#b02a1f}
+/* 字母键盘 */
+.pad{margin-top:18px}
+.slots{display:flex;flex-wrap:wrap;gap:8px;min-height:56px;align-items:center;justify-content:center;
+  padding:12px;border:2px dashed #cdd7f5;border-radius:14px;background:#fafbff}
+.slot{min-width:34px;height:46px;padding:0 8px;display:flex;align-items:center;justify-content:center;
+  background:#fff;border:2px solid var(--primary);border-radius:10px;color:var(--primary-d);font-size:24px;font-weight:900}
+.slot.empty{font-size:13px;color:#9aa3b5;border:2px dashed #cdd7f5;background:#fafbff;font-weight:600}
+.slot.empty.pending{font-size:24px;color:#cbd2e2;border:2px dashed #dde3f1;background:#fafbff;font-weight:700}
+.slot.empty.tip{font-size:12px;color:#9aa3b5;border:none;background:none;font-weight:600;flex:0 0 auto;text-align:left;margin-left:8px}
+.slot.pop{animation:pop .32s ease}
+/* 空槽位：单条提示（不再展示 N 个橙色方块）*/
+.slots-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%;padding:14px 8px;color:var(--muted);font-size:14px;font-weight:600;text-align:center;gap:6px}
+.slots-empty .se-text b{color:var(--primary-d);font-weight:800}
+.slots-empty .se-tip{font-size:12px;color:var(--warn);background:#fff7e6;border-radius:8px;padding:4px 12px;font-weight:700}
+@keyframes pop{0%{transform:scale(.4);opacity:.2}60%{transform:scale(1.16)}100%{transform:scale(1);opacity:1}}
+.keypad{display:flex;flex-wrap:wrap;gap:9px;justify-content:center;margin-top:14px}
+.key{width:48px;height:48px;border:none;border-radius:12px;background:linear-gradient(180deg,#fff,#eef2ff);
+  color:var(--ink);font-size:21px;font-weight:900;cursor:pointer;box-shadow:0 3px 0 #cdd7f0;transition:.08s}
+.key:active{transform:translateY(3px);box-shadow:0 1px 0 #cdd7f0}
+.key.used{opacity:.25;box-shadow:none;pointer-events:none}
+.key.caps{width:auto;padding:0 14px;background:linear-gradient(180deg,#fff,#eef2ff);color:var(--primary-d);font-size:15px;border:2px dashed #b9c4dd;letter-spacing:.5px}
+.key.caps.on{background:linear-gradient(180deg,var(--accent),var(--accent-d));color:#fff;box-shadow:0 3px 0 #b04e0e;border:2px solid transparent;letter-spacing:0}
+.pad-actions{display:flex;gap:10px;margin-top:14px}
+.pad-actions button{flex:1;border:1px solid var(--line);background:#fff;border-radius:12px;padding:12px;font-weight:800;font-size:15px;cursor:pointer;color:var(--muted)}
+.pad-actions button:active{background:#eef1f8}
+.pad-actions button:disabled{opacity:.4}
+.firsthint{margin-top:8px;font-size:13px;color:var(--primary-d);text-align:center;font-weight:700}
+/* 反馈 */
+.feedback{margin-top:14px;border-radius:14px;padding:14px 16px;font-size:15px;font-weight:700;display:none;line-height:1.55}
+.feedback.show{display:block;animation:fade .2s ease}
+.feedback.ok{background:#e8f8f0;color:#0c7a45;border:1px solid #b6e6cf}
+.feedback.err{background:#fdecea;color:#b02a1f;border:1px solid #f5c2bc}
+.feedback.ime{background:#fff7e6;color:var(--warn);border:1px solid #ffe1a8}
+.feedback .det{font-weight:600;font-size:14px;margin-top:4px}
+/* 答题后释义展示 */
+.answer-senses{margin-top:10px;border-top:1px dashed #cdd7f5;padding-top:10px}
+.answer-senses .as-title{font-size:13px;font-weight:800;color:var(--muted);margin-bottom:6px}
+.srow{background:#fafbff;border:1px solid var(--line);border-radius:12px;padding:9px 12px;margin-bottom:8px}
+.srow:last-child{margin-bottom:0}
+.srow .st{display:inline-block;font-size:11px;font-weight:800;color:#fff;border-radius:999px;padding:2px 8px;margin-right:6px}
+.st-core{background:var(--primary)}
+.st-ext{background:var(--accent)}
+.st-rare{background:#8a93a6}
+.srow .sp{font-size:12px;color:var(--muted);font-weight:700;margin-right:6px}
+.srow .scn{font-size:14px;font-weight:600;margin-top:3px}
+.srow .sen{color:var(--muted);font-weight:500;font-size:13px}
+.srow .sex{color:#8a93a6;font-size:12px;font-style:italic;margin-top:2px}
+.submit{width:100%;margin-top:14px;border:none;border-radius:14px;padding:15px;font-size:17px;font-weight:900;
+  color:#fff;background:linear-gradient(135deg,var(--primary),var(--primary-d));cursor:pointer;box-shadow:0 8px 20px rgba(74,108,247,.3)}
+.submit:disabled{background:#c5cbe0;box-shadow:none;cursor:default}
+.submit.next{background:linear-gradient(135deg,var(--ok),#138a4d)}
+.backlink{margin-top:18px;text-align:center;color:var(--muted);font-size:14px;cursor:pointer;text-decoration:underline}
+
+/* 结算 */
+.result{text-align:center;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:30px 22px;box-shadow:var(--shadow);margin-top:20px}
+.result .stars{font-size:40px;letter-spacing:4px}
+.result .pct{font-size:34px;font-weight:900;color:var(--primary-d);margin:10px 0}
+.result .msg{font-size:18px;font-weight:800;margin-bottom:18px}
+.result .btns{display:flex;flex-direction:column;gap:10px}
+
+/* 词表 */
+.vlist{display:flex;flex-direction:column;gap:10px;margin-top:14px}
+.vitem{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;box-shadow:var(--shadow)}
+.vitem .w{font-size:19px;font-weight:900;color:var(--primary-d);display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.vitem .pos{font-size:12px;color:var(--muted);font-weight:700}
+.vitem .sense{font-size:14px;margin-top:6px;padding-left:10px;border-left:3px solid var(--line)}
+.vitem .sense .t{font-size:11px;color:var(--accent-d);font-weight:800;margin-right:6px}
+.vitem .en{color:var(--muted);font-size:13px}
+.vitem .ex{color:#8a93a6;font-size:12px;font-style:italic;margin-top:2px}
+
+/* 分享弹窗 */
+.toast{position:fixed;left:50%;bottom:36px;transform:translateX(-50%) translateY(20px);background:#1f2533;color:#fff;
+  padding:11px 20px;border-radius:12px;font-size:14px;opacity:0;pointer-events:none;transition:.25s;z-index:80;max-width:92vw;text-align:center}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ---------- 连对送礼横幅（每连对 5 题送一个道具） ---------- */
+.gift-banner{position:fixed;left:50%;top:44%;transform:translateX(-50%) scale(.6);
+  background:linear-gradient(135deg,#ffb347,#ff7e5f);color:#fff;border-radius:20px;
+  padding:20px 30px;text-align:center;box-shadow:0 16px 40px rgba(255,126,95,.45);
+  opacity:0;pointer-events:none;z-index:95;transition:opacity .3s,transform .45s cubic-bezier(.34,1.56,.64,1)}
+.gift-banner.show{opacity:1;transform:translateX(-50%) scale(1)}
+.gift-banner .gift-icon{font-size:44px;line-height:1;animation:giftBounce .7s ease-in-out infinite alternate}
+.gift-banner .gift-txt{margin-top:8px;font-size:15px;font-weight:800;line-height:1.6}
+.gift-banner .gift-txt b{font-size:19px}
+@keyframes giftBounce{from{transform:translateY(0) rotate(-8deg)}to{transform:translateY(-9px) rotate(8deg)}}
+
+.mask{position:fixed;inset:0;background:rgba(15,20,40,.6);display:none;align-items:center;justify-content:center;z-index:90;padding:20px}
+.mask.show{display:flex}
+.modal{background:#fff;border-radius:20px;padding:26px;max-width:340px;width:100%;text-align:center}
+.modal h3{font-size:19px;margin-bottom:6px}
+.modal p{color:var(--muted);font-size:14px;margin-bottom:14px}
+.modal .close{margin-top:16px;width:100%;background:var(--primary);color:#fff;border:none;padding:12px;border-radius:12px;font-weight:800;font-size:16px;cursor:pointer}
+.share-btns{display:flex;flex-direction:column;gap:10px;margin-top:8px}
+.share-btns button{display:flex;align-items:center;gap:10px;justify-content:center;border:1px solid var(--line);
+  background:#f7f9ff;border-radius:12px;padding:13px;font-weight:800;font-size:15px;cursor:pointer}
+.share-btns button.wx{background:#07c160;color:#fff;border:none}
+.share-btns button.qq{background:#12b7f5;color:#fff;border:none}
+.share-btns button.gh{background:#24292f;color:#fff;border:none}
+.share-btns button.copy{background:var(--accent);color:#fff;border:none}
+.share-btns button.mail{background:#7b5cff;color:#fff;border:none}
+
+/* 时间闯关：倒计时条 + 道具栏 + 排行榜 + 紧张红闪 */
+.timerbar{display:flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--line);
+  border-radius:12px;padding:8px 12px;margin-bottom:12px;box-shadow:var(--shadow)}
+.timerbar i{display:block;height:10px;border-radius:99px;background:linear-gradient(90deg,#1aa260,#13a04f);
+  transition:width .3s;flex:1}
+.timerbar i.warn{background:linear-gradient(90deg,#f2a93b,#e8890c)}
+.timerbar i.danger{background:linear-gradient(90deg,#e0483b,#c22f24);animation:pulse .6s infinite}
+.timerbar b{font-size:16px;font-weight:900;color:var(--primary-d);min-width:38px;text-align:right}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.45}}
+body.timer-danger{animation:danger-flash .5s infinite}
+@keyframes danger-flash{
+  0%,100%{box-shadow:inset 0 0 0 0 rgba(224,72,59,0)}
+  50%{box-shadow:inset 0 0 0 6px rgba(224,72,59,.55)}
+}
+.itembar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.itembar .coin{background:#fff7e6;border:1px solid #ffe1a8;color:#b06a00;border-radius:10px;
+  padding:6px 10px;font-weight:800;font-size:13px}
+.itembar .coin b{font-size:15px}
+.itembar .item{background:#fff;border:1px solid var(--line);border-radius:10px;padding:6px 10px;
+  font-weight:800;font-size:13px;cursor:pointer;color:var(--ink)}
+.itembar .item:active{background:#eef2ff}
+.rank{width:100%;border-collapse:collapse;margin-top:6px;font-size:13px}
+.rank th{background:#1f3a5f;color:#fff;padding:6px;font-size:12px}
+.rank td{padding:6px;border-bottom:1px solid var(--line);text-align:left}
+.rank tr:nth-child(even) td{background:#fafbff}
+.timenote{margin:8px auto 4px;background:#fff7e6;border:1px solid #ffe1a8;color:#b06a00;
+  border-radius:10px;padding:8px 12px;font-weight:800;font-size:13px;display:inline-block}
+.vitem .w .best{font-size:12px;color:var(--ok);font-weight:800;background:#e8f8f0;
+  border-radius:99px;padding:2px 8px}
+
+/* 开关（计时闯关 / 背景音乐） */
+.toggle{min-width:52px;border:2px solid var(--line);background:#f4f6fb;color:var(--muted);
+  border-radius:99px;padding:5px 12px;font-weight:900;font-size:14px;cursor:pointer;transition:.15s}
+.toggle.on{background:linear-gradient(135deg,var(--primary),var(--primary-d));color:#fff;
+  border-color:transparent;box-shadow:0 2px 8px rgba(74,108,247,.25)}
+/* 新手引导弹窗 */
+.modal.guide{max-width:360px;text-align:left}
+.modal.guide h3{font-size:18px;margin-bottom:8px}
+.modal.guide p{font-size:14px}
+.dots{display:flex;gap:6px;justify-content:center;margin:12px 0 4px}
+.dots i{width:8px;height:8px;border-radius:99px;background:#d5dcef;transition:.2s}
+.dots i.on{background:var(--primary);width:18px}
+.guide-btns{display:flex;gap:10px;margin-top:10px;align-items:center}
+
+/* 响应式 */
+@media (max-width:560px){ .modes{grid-template-columns:1fr} .stats{gap:8px} .key{width:42px;height:42px;font-size:19px} }
+@media (prefers-color-scheme: dark){
+  body{background:#0f1622;color:#e6ecf5}
+  .topbar{background:rgba(15,22,34,.92);border-bottom:1px solid #2a3650}
+  .brand{color:#e6ecf5}
+  .iconbtn{background:#243150;border-color:#384767;color:#e6ecf5}
+  .iconbtn.share{background:linear-gradient(135deg,var(--accent),var(--accent-d));color:#fff;border:none}
+  .card{background:#1a2435;border-color:#2a3650;color:#e6ecf5}
+  .btn{background:#243150;color:#cdd6e2;border-color:#384767}
+  .btn:hover{background:#2b3a5e}
+  .modal{background:#1a2435;color:#e6ecf5}
+  .modal p,.modal h3{color:#e6ecf5}
+  .modal .close{background:var(--primary);color:#fff}
+  .qword,.qprompt,h3{color:#e6ecf5}
+  .qhint{color:#e6ecf5}
+  .qcard,.vitem{background:#1a2435;border-color:#2a3650;color:#e6ecf5}
+  .opt{background:#243150;border-color:#384767;color:#cdd6e2}
+  .mode{background:#1a2435;border-color:#2a3650;color:#e6ecf5;box-shadow:0 10px 30px rgba(0,0,0,.3)}
+  .mode:hover{border-color:#3a4a6a}
+  .mode p{color:#9aa3b3}
+  .mode .badge{background:rgba(255,138,61,.18);color:#ffb766}
+  .diffbar,.stats .stat{background:#1a2435;border-color:#2a3650;color:#e6ecf5}
+  .stats .stat span{color:#9aa3b3}
+  .seg{background:#243150;border:none}
+  .seg button{color:#9aa3b3}
+  .seg button.on{background:#0f1622;color:#e6ecf5;box-shadow:0 2px 8px rgba(0,0,0,.4)}
+  .hero p{color:#9aa3b3}
+  .slots{background:#0f1622;border-color:#384767}
+  .slot{background:#1a2435;border-color:#7b5cff;color:#e6ecf5}
+  .key{background:linear-gradient(180deg,#243150,#1a2435);color:#e6ecf5;box-shadow:0 3px 0 #0f1622}
+  .key.caps{background:linear-gradient(180deg,#243150,#1a2435);color:#7fb1ff;border-color:#7b5cff}
+  .key.caps.on{background:linear-gradient(180deg,var(--accent),var(--accent-d));color:#fff;box-shadow:0 3px 0 #b04e0e;border:2px solid transparent}
+  .pad-actions button{background:#243150;border-color:#384767;color:#e6ecf5}
+  .pad-actions button:active{background:#2b3a5e}
+  .toggle{background:#243150;color:#9aa3b3;border-color:#384767}
+  .toggle.on{background:linear-gradient(135deg,var(--primary),var(--primary-d));color:#fff;border-color:transparent}
+  .qtag{background:rgba(74,108,247,.18);color:#7fb1ff}
+  .caps-tip{background:rgba(255,170,90,.12);color:#ffb766;border-color:rgba(255,170,90,.3)}
+  .progress{background:#2a3650}
+  .feedback.ok{background:rgba(26,162,96,.15);color:#7fcc9f;border-color:rgba(26,162,96,.4)}
+  .feedback.err{background:rgba(224,72,59,.15);color:#ff8a85;border-color:rgba(224,72,59,.4)}
+  .feedback.ime{background:rgba(255,170,90,.12);color:#ffb766;border-color:rgba(255,170,90,.3)}
+  .answer-senses{background:rgba(255,255,255,.04);border-color:#2a3650}
+  .st-core{background:rgba(120,180,255,.18);color:#7fb1ff}
+  .st-ext{background:rgba(170,170,170,.16);color:#b9c1cd}
+  .st-rare{background:rgba(255,170,90,.18);color:#ffb766}
+  .answer-senses .srow .slabel{color:#9aa3b3}
+  .qex,.vitem .pos,.vitem .en{color:#9aa3b3}
+  .vitem .sense{border-left-color:#2a3650}
+  .toast{background:#e6ecf5;color:#1f2533}
+  .mask{background:rgba(0,0,0,.7)}
+  .share-btns button{background:#243150;border-color:#384767;color:#e6ecf5}
+  .pinfo{color:#9aa3b3}
+  .backlink{color:#9aa3b3}
+  .diffdesc{color:#9aa3b3}
+}
+
+/* 三级回退全部失败时在题面单词处的高亮动画 */
+.qword.flash,
+.vc-word.flash{animation:wordflash 1.4s ease}
+@keyframes wordflash{
+  0%   {background:transparent;transform:scale(1)}
+  10%  {background:rgba(255,213,79,.55);transform:scale(1.07)}
+  60%  {background:rgba(255,213,79,.25);transform:scale(1)}
+  100% {background:transparent;transform:scale(1)}
+}
+/* 希沃白板 / 大屏触摸 */
+@media (min-width:1400px){ .app{max-width:900px} body{font-size:17px}
+  .key{width:60px;height:60px;font-size:28px} .slot{min-width:44px;height:60px;font-size:30px}
+  .mode{padding:24px} .mode h3{font-size:20px} .audio-btn{padding:14px 20px;font-size:18px} }
+@media (pointer:coarse) and (min-width:1000px){ .key{width:56px;height:56px} .opt{padding:18px 20px;font-size:18px} .submit{padding:18px;font-size:19px} }
+</style>
+</head>
+<body>
+<!-- JS 自检横幅：默认显示；只有 app.js 完整执行完才会自动隐藏 -->
+<div id="jsWarn" style="background:#fff3cd;border:2px solid #f0ad4e;border-radius:12px;
+     padding:14px 18px;margin:12px;font-family:'Microsoft YaHei',sans-serif;color:#7a5c1e;
+     font-size:14px;line-height:1.8">
+  <b>⚠️ 游戏脚本未加载完成</b><br/>
+  如果您看到这条提示，说明浏览器拦截了游戏的 JavaScript（常见原因：广告拦截扩展、浏览器在压缩包内打开 HTML、本地安全策略）。<br/>
+  <b>解决办法（任选一个，最稳的是 ①）：</b><br/>
+  ① <b>先把 zip 解压到文件夹</b>，再双击文件夹里的 <code>index.html</code>（推荐用 Edge 隐私窗口 / Chrome）<br/>
+  ② 临时关闭广告拦截类扩展后，刷新页面<br/>
+  ③ 换 <b>Chrome 浏览器</b> 或 <b>Edge 隐私窗口</b> 打开
+</div>
+<div class="app" id="appRoot" style="display:none">
+  <div class="topbar">
+    <div class="brand"><span class="logo">U1</span> 必修一U1 单词闯关</div>
+    <div class="right">
+      <button class="iconbtn" onclick="showGuide()">❓ 帮助</button>
+      <button class="iconbtn" onclick="resetProgressConfirm()">🗑 重置</button>
+     
+   <button class="iconbtn" onclick="goHome()">🏠 首页</button>
+      <button class="iconbtn share" onclick="openShare()">🔗 分享</button>
+    </div>
+  </div>
+
+  <!-- 首页 -->
+  <section class="screen active" id="home">
+    <div class="hero">
+      <h1>用<span class="hl">闯关</span>的方式<br/>把必修一U1单词记牢</h1>
+      <p>拼写挑战 · 听音选义 · 混合训练 · 错词复习，浏览器直接玩，成绩自动保存。</p>
+    </div>
+    <div class="stats" id="stats"></div>
+    <!-- 分组切换：按教材词汇表顺序等分（10/10/9），只改出题词池，不影响已保存的进度 -->
+    <div class="diffbar">
+      <span class="lab">分组</span>
+      <div class="seg seg4" id="groupSeg"></div>
+    </div>
+    <div class="diffdesc" id="groupDesc"></div>
+    <div class="diffbar">
+      <span class="lab">难度</span>
+      <div class="seg" id="diffSeg">
+        <button data-k="easy" onclick="setDiff('easy')">基础</button>
+        <button data-k="normal" onclick="setDiff('normal')">标准</button>
+        <button data-k="hard" onclick="setDiff('hard')">进阶</button>
+      </div>
+    </div>
+    <div class="diffdesc" id="diffDesc"></div>
+    <!-- 时间闯关 / 背景音乐 开关 -->
+    <div class="diffbar" style="margin-bottom:8px">
+      <span class="lab">⏱ 计时闯关</span>
+      <button class="toggle" id="timerToggle" onclick="toggleTimerMode()">开</button>
+      <span class="lab" style="margin-left:14px">🎵 背景音乐</span>
+      <button class="toggle" id="bgmToggle" onclick="toggleBgm()">关</button>
+    </div>
+    <div class="modes">
+      <div class="mode" onclick="startMode('spell')"><div class="ic">✍️</div><h3>拼写挑战</h3><p>点字母拼出单词 / 句子词，训练大小写规范</p></div>
+      <div class="mode" onclick="startMode('choose')"><div class="ic">👂</div><h3>听音选义</h3><p>听发音，选出正确释义</p></div>
+      <div class="mode" onclick="startMode('mix')"><div class="ic">🎲</div><h3>混合训练</h3><p>随机拼写或选择，贴近真实语境</p></div>
+      <div class="mode" onclick="startMode('review')"><div class="ic">🔁</div><h3>错词复习</h3><p>只练答错 / 到期词，间隔重复</p><span class="badge" id="reviewBadge"></span></div>
+      <div class="mode full" onclick="showVocab()"><div class="ic">📖</div><h3>词汇总览</h3><p id="vocabDesc">29 个核心词条、多义项、例句与词性标注一屏看全</p></div>
+    </div>
+    <button class="iconbtn" style="width:100%;margin-top:12px" onclick="openRank()">🏆 时间排行榜（本机最佳通关时间）</button>
+  </section>
+
+  <!-- 练习 -->
+  <section class="screen" id="play">
+    <div class="progress"><i id="progBar"></i></div>
+    <div class="pinfo"><span id="progText"></span><span id="modeText"></span></div>
+    <!-- 时间闯关：倒计时条 + 道具栏 -->
+    <div class="timerbar" id="timerBar" style="display:none"><i id="timerFill" class="ok"></i><b id="timerText">--</b></div>
+    <div class="itembar" id="itemBar" style="display:none"></div>
+    <div class="qcard" id="qcard"></div>
+    <div class="feedback" id="feedback"></div>
+    <button class="submit" id="submitBtn" onclick="onSubmit()">提交答案</button>
+    <div class="backlink" onclick="goHome()">← 返回首页</div>
+  </section>
+
+  <!-- 结算 -->
+  <section class="screen" id="result">
+    <div class="result" id="resultBox"></div>
+    <div class="backlink" onclick="goHome()">← 返回首页</div>
+  </section>
+
+  <!-- 词表 -->
+  <section class="screen" id="vocab">
+    <h2 style="font-size:22px;font-weight:900;margin:8px 0">📖 词汇总览</h2>
+    <div class="vlist" id="vlist"></div>
+    <div class="backlink" onclick="goHome()">← 返回首页</div>
+  </section>
+</div>
+
+<div class="toast" id="toast"></div>
+<!-- 连对送礼横幅：每连对 5 题送一个随机道具（⏸暂停 / 🐌减速 / ⏱加时） -->
+<div class="gift-banner" id="giftBanner"></div>
+<div class="mask" id="guideMask">
+  <div class="modal guide">
+    <h3 id="guideTitle">🎮 认识四个模式</h3>
+    <p id="guideDesc" style="min-height:84px;line-height:1.7"></p>
+    <div class="dots" id="guideDots"></div>
+    <div class="guide-btns">
+      <button class="iconbtn" onclick="closeGuide()">跳过</button>
+      <button class="submit" style="flex:1;margin-top:0" id="guideNext" onclick="nextGuide()">下一步 →</button>
+    </div>
+  </div>
+</div>
+<div class="mask" id="rankMask">
+  <div class="modal">
+    <h3>🏆 时间排行榜</h3>
+    <p>本机各词最佳通关时间（好友对比：分享你的纪录，对方打开游戏即可挑战）</p>
+    <div id="rankList" style="max-height:55vh;overflow:auto"></div>
+    <button class="close" onclick="closeRank()">关闭</button>
+  </div>
+</div>
+<div class="mask" id="shareMask">
+  <div class="modal">
+    <h3>📤 分享给好友</h3>
+    <p>微信 / QQ / GitHub · 手机电脑平板均可打开</p>
+    <div class="share-btns">
+      <button class="wx" onclick="shareWeChat()">💬 微信扫码分享</button>
+      <button class="qq" onclick="shareQQ()">🐧 QQ 分享</button>
+      <button class="gh" onclick="shareGitHub()">🐙 复制链接到 GitHub</button>
+      <button class="copy" onclick="copyLink()">🔗 复制链接</button>
+      <button class="mail" onclick="shareMail()">✉️ 邮件分享</button>
+    </div>
+    <button class="close" onclick="closeShare()">关闭</button>
+  </div>
+</div>
+
+<!-- 资源与逻辑（经典脚本，按依赖顺序加载，支持双击打开或本地服务器）
+     每个资源带 ?v= 版本号：部署后浏览器/ CDN 强制拉取新文件，避免缓存导致修复不生效 -->
+<script>/* ============================================================
+ * 必修一U1 单词闯关 · 词汇资源文件 (data) · 完整词表版
+ * ------------------------------------------------------------
+ * 数据来源：外研版(2019)必修第一册 权威教材词表（完整收录）
+ * 共 96 词：76 拼写类（spell）+ 20 选择类（choose，含短语）
+ *
+ * 分组：按教材词汇表顺序等分；U1 为 4 组 × 24，U2 为 3 组。
+ * 字段结构：no / group / practiceType / word / difficulty / senses[]
+ *   - 单字单词 spellable=true → practiceType:"spell"（字母拼写+听音）
+ *   - 短语/习语 spellable=false → practiceType:"choose"（听音选义，不进字母盘）
+ * 本文件由 gen_complete_data.py 生成，复用已修复引擎（答案防泄漏 / 连对送礼 / 声画一致 / 离线音频）。
+ * ============================================================ */
+(function (global) {
+  'use strict';
+
+  var WORDS = [
+  {
+    "no": 1,
+    "group": 1,
+    "practiceType": "spell",
+    "word": "senior",
+    "difficulty": 2,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "adj.",
+        "type": "核心",
+        "cnDef": "（地位、水平或级别）高的；高年级的",
+        "enDef": "having a higher rank, level, or status",
+        "example": "She is senior to me by two years and has more experience."
+      },
+      {
+        "senseNo": 2,
+        "pos": "adj.",
+        "type": "引申",
+        "cnDef": "资深的；年长的",
+        "enDef": "older or more experienced",
+        "example": "He is a senior student who helps the newcomers."
+      }
+    ]
+  },
+  {
+    "no": 2,
+    "group": 1,
+    "practiceType": "spell",
+    "word": "senior high",
+    "difficulty": 3,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "—",
+        "type": "核心",
+        "cnDef": "高中",
+        "enDef": "",
+        "example": "She is in senior high now."
+      }
+    ]
+  },
+  {
+    "no": 3,
+    "group": 1,
+    "practiceType": "spell",
+    "word": "curious",
+    "difficulty": 2,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "adj.",
+        "type": "核心",
+        "cnDef": "好奇的；求知欲强的",
+        "enDef": "eager to know or learn something",
+        "example": "Children are always curious about the world around them."
+      },
+      {
+        "senseNo": 2,
+        "pos": "adj.",
+        "type": "引申",
+        "cnDef": "稀奇的；不寻常的",
+        "enDef": "strange or unusual",
+        "example": "There was a curious look on his face when he heard the news."
+      }
+    ]
+  },
+  {
+    "no": 4,
+    "group": 1,
+    "practiceType": "spell",
+    "word": "impression",
+    "difficulty": 3,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "n.",
+        "type": "核心",
+        "cnDef": "印象；感想",
+        "enDef": "an idea or feeling that you have about someone or something",
+        "example": "The teacher made a good impression on all the students."
+      },
+      {
+        "senseNo": 2,
+        "pos": "n.",
+        "type": "引申",
+        "cnDef": "印记；压痕",
+        "enDef": "a mark made by pressing",
+        "example": "The wet shoes left an impression on the floor."
+      }
+    ]
+  },
+  {
+    "no": 5,
+    "group": 1,
+    "practiceType": "spell",
+    "word": "campus",
+    "difficulty": 2,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "n.",
+        "type": "核心",
+        "cnDef": "校园；校区",
+        "enDef": "the area of land that contains the buildings of a school, college, or university",
+        "example": "Our new campus is larger and more modern than the old one."
+      }
+    ]
+  },
+  {
+    "no": 6,
+    "group": 1,
+    "practiceType": "spell",
+    "word": "tradition",
+    "difficulty": 3,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "n.",
+        "type": "核心",
+        "cnDef": "传统；惯例",
+        "enDef": "a custom or belief passed down over time",
+        "example": "It is a tradition in our school to hold a sports meeting each autumn."
+      },
+      {
+        "senseNo": 2,
+        "pos": "n.",
+        "type": "引申",
+        "cnDef": "传统风格；传统手法",
+        "enDef": "a particular style or method followed for a long time",
+        "example": "He broke with tradition and chose a different career path."
+      }
+    ]
+  },
+  {
+    "no": 7,
+    "group": 1,
+    "practiceType": "spell",
+    "word": "facility",
+    "difficulty": 3,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "n.",
+        "type": "核心",
+        "cnDef": "设施；设备",
+        "enDef": "a building or piece of equipment provided for a particular use",
+        "example": "The school has built new sports facilities for the students."
+      },
+      {
+        "senseNo": 2,
+        "pos": "n.",
+        "type": "引申",
+        "cnDef": "（特定用途的）场所",
+        "enDef": "a place or service used for a specific activity",
+        "example": "The library is a quiet facility for reading and study."
+      }
+    ]
+  },
+  {
+    "no": 8,
+    "group": 1,
+    "practiceType": "spell",
+    "word": "impressive",
+    "difficulty": 3,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "adj.",
+        "type": "核心",
+        "cnDef": "令人钦佩的；给人深刻印象的",
+        "enDef": "evoking admiration because of size, quality, or skill",
+        "example": "Her performance in the competition was truly impressive."
+      }
+    ]
+  },
+  {
+    "no": 9,
+    "group": 1,
+    "practiceType": "spell",
+    "word": "moment",
+    "difficulty": 2,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "n.",
+        "type": "核心",
+        "cnDef": "某一时刻",
+        "enDef": "",
+        "example": "I will never forget that moment."
+      }
+    ]
+  },
+  {
+    "no": 10,
+    "group": 1,
+    "practiceType": "spell",
+    "word": "author",
+    "difficulty": 2,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "n.",
+        "type": "核心",
+        "cnDef": "作者；作家",
+        "enDef": "a person who writes a book or article",
+        "example": "Lu Xun is a famous author in China."
+      },
+      {
+        "senseNo": 2,
+        "pos": "v.",
+        "type": "引申",
+        "cnDef": "创作；撰写",
+        "enDef": "to write or create a work",
+        "example": "She authored a guidebook for new students."
+      }
+    ]
+  },
+  {
+    "no": 11,
+    "group": 1,
+    "practiceType": "spell",
+    "word": "eagerness",
+    "difficulty": 3,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "n.",
+        "type": "核心",
+        "cnDef": "热切；渴望",
+        "enDef": "a strong wish to do or have something",
+        "example": "He waited with eagerness for the result of the match."
+      }
+    ]
+  },
+  {
+    "no": 12,
+    "group": 1,
+    "practiceType": "spell",
+    "word": "explore",
+    "difficulty": 2,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "v.",
+        "type": "核心",
+        "cnDef": "考察；探险；探索",
+        "enDef": "to travel through a place to learn about it",
+        "example": "We explored the old town during the school trip."
+      },
+      {
+        "senseNo": 2,
+        "pos": "v.",
+        "type": "引申",
+        "cnDef": "探究；探讨",
+        "enDef": "to examine or discuss a subject carefully",
+        "example": "The article explores the meaning of friendship."
+      }
+    ]
+  },
+  {
+    "no": 13,
+    "group": 1,
+    "practiceType": "choose",
+    "word": "one by one",
+    "difficulty": 3,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "phrase",
+        "type": "核心",
+        "cnDef": "依次地，一个接一个地",
+        "enDef": "",
+        "example": "The students entered the hall one by one."
+      }
+    ]
+  },
+  {
+    "no": 14,
+    "group": 1,
+    "practiceType": "spell",
+    "word": "engine",
+    "difficulty": 2,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "n.",
+        "type": "核心",
+        "cnDef": "发动机；引擎",
+        "enDef": "a machine that produces power to make something move",
+        "example": "The car engine broke down on the way to school."
+      }
+    ]
+  },
+  {
+    "no": 15,
+    "group": 1,
+    "practiceType": "spell",
+    "word": "insect",
+    "difficulty": 2,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "n.",
+        "type": "核心",
+        "cnDef": "昆虫",
+        "enDef": "",
+        "example": "A small insect is on the leaf."
+      }
+    ]
+  },
+  {
+    "no": 16,
+    "group": 1,
+    "practiceType": "spell",
+    "word": "collection",
+    "difficulty": 3,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "n.",
+        "type": "核心",
+        "cnDef": "（一批）收藏品；收集",
+        "enDef": "a group of things collected together",
+        "example": "He showed us his collection of stamps."
+      },
+      {
+        "senseNo": 2,
+        "pos": "n.",
+        "type": "引申",
+        "cnDef": "募捐；募集的钱",
+        "enDef": "the act of collecting money or things",
+        "example": "We held a collection for the charity event."
+      }
+    ]
+  },
+  {
+    "no": 17,
+    "group": 1,
+    "practiceType": "spell",
+    "word": "organise",
+    "difficulty": 3,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "v.",
+        "type": "核心",
+        "cnDef": "组织；筹备",
+        "enDef": "to plan and arrange an activity or event",
+        "example": "They organised a talent show for the festival."
+      },
+      {
+        "senseNo": 2,
+        "pos": "v.",
+        "type": "引申",
+        "cnDef": "使有条理；整理",
+        "enDef": "to put things into a clear order",
+        "example": "She organised her notes before the exam."
+      }
+    ]
+  },
+  {
+    "no": 18,
+    "group": 1,
+    "practiceType": "spell",
+    "word": "nudge",
+    "difficulty": 1,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "n.",
+        "type": "核心",
+        "cnDef": "（通常用肘）轻推",
+        "enDef": "",
+        "example": "She gave me a nudge with her elbow."
+      }
+    ]
+  },
+  {
+    "no": 19,
+    "group": 1,
+    "practiceType": "spell",
+    "word": "butterfly",
+    "difficulty": 3,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "n.",
+        "type": "核心",
+        "cnDef": "蝴蝶",
+        "enDef": "a flying insect with large colourful wings",
+        "example": "A butterfly landed on the flower in the garden."
+      },
+      {
+        "senseNo": 2,
+        "pos": "phrase",
+        "type": "引申",
+        "cnDef": "（口语）情绪紧张，心里发慌；七上八下",
+        "enDef": "a feeling of nervousness before something important",
+        "example": "She had a nervous feeling in her stomach before the speech."
+      }
+    ]
+  },
+  {
+    "no": 20,
+    "group": 1,
+    "practiceType": "choose",
+    "word": "butterflies in one's stomach",
+    "difficulty": 3,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "idiom",
+        "type": "核心",
+        "cnDef": "情绪紧张，心里发慌",
+        "enDef": "",
+        "example": "I had butterflies in my stomach before the test."
+      }
+    ]
+  },
+  {
+    "no": 21,
+    "group": 1,
+    "practiceType": "spell",
+    "word": "breathe",
+    "difficulty": 2,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "v.",
+        "type": "核心",
+        "cnDef": "呼吸",
+        "enDef": "",
+        "example": "Breathe in and breathe out slowly."
+      }
+    ]
+  },
+  {
+    "no": 22,
+    "group": 1,
+    "practiceType": "spell",
+    "word": "panic",
+    "difficulty": 1,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "n.",
+        "type": "核心",
+        "cnDef": "惊恐；惊慌",
+        "enDef": "a sudden feeling of great fear",
+        "example": "He got into a panic when he lost his homework."
+      },
+      {
+        "senseNo": 2,
+        "pos": "v.",
+        "type": "核心",
+        "cnDef": "使惊慌；惊恐",
+        "enDef": "to feel or cause sudden fear",
+        "example": "Don't panic — we still have enough time."
+      }
+    ]
+  },
+  {
+    "no": 23,
+    "group": 1,
+    "practiceType": "choose",
+    "word": "in panic",
+    "difficulty": 2,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "phrase",
+        "type": "核心",
+        "cnDef": "惊慌地",
+        "enDef": "",
+        "example": "They ran away in panic."
+      }
+    ]
+  },
+  {
+    "no": 24,
+    "group": 1,
+    "practiceType": "spell",
+    "word": "challenge",
+    "difficulty": 3,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "n.",
+        "type": "核心",
+        "cnDef": "挑战；具有挑战性的事物",
+        "enDef": "a difficult task that tests your ability",
+        "example": "Starting high school is a big challenge for every freshman."
+      },
+      {
+        "senseNo": 2,
+        "pos": "v.",
+        "type": "核心",
+        "cnDef": "向……挑战；质疑",
+        "enDef": "to invite someone to compete or to question something",
+        "example": "She challenged her classmates to a friendly debate."
+      }
+    ]
+  },
+  {
+    "no": 25,
+    "group": 2,
+    "practiceType": "spell",
+    "word": "pressure",
+    "difficulty": 3,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "n.",
+        "type": "核心",
+        "cnDef": "压力；压迫感",
+        "enDef": "the force or influence that makes you feel worried or forced",
+        "example": "Many students feel pressure before important exams."
+      },
+      {
+        "senseNo": 2,
+        "pos": "v.",
+        "type": "引申",
+        "cnDef": "对……施加压力",
+        "enDef": "to try to persuade someone by using force or influence",
+        "example": "Don't let others pressure you into making a wrong choice."
+      }
+    ]
+  },
+  {
+    "no": 26,
+    "group": 2,
+    "practiceType": "spell",
+    "word": "calm",
+    "difficulty": 1,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "adj.",
+        "type": "核心",
+        "cnDef": "镇静的，沉着的",
+        "enDef": "",
+        "example": "Please keep calm and listen."
+      }
+    ]
+  },
+  {
+    "no": 27,
+    "group": 2,
+    "practiceType": "spell",
+    "word": "description",
+    "difficulty": 3,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "n.",
+        "type": "核心",
+        "cnDef": "描述；描写；叙述",
+        "enDef": "a spoken or written account of something",
+        "example": "Please give a brief description of your dream job."
+      },
+      {
+        "senseNo": 2,
+        "pos": "n.",
+        "type": "引申",
+        "cnDef": "种类；性质",
+        "enDef": "a type or kind of thing",
+        "example": "The loss was beyond description."
+      }
+    ]
+  },
+  {
+    "no": 28,
+    "group": 2,
+    "practiceType": "spell",
+    "word": "confident",
+    "difficulty": 3,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "adj.",
+        "type": "核心",
+        "cnDef": "有信心的；自信的",
+        "enDef": "feeling sure about your own abilities",
+        "example": "He is confident that he can solve the problem by himself."
+      },
+      {
+        "senseNo": 2,
+        "pos": "adj.",
+        "type": "引申",
+        "cnDef": "确信的；有把握的",
+        "enDef": "certain that something will happen or is true",
+        "example": "I am confident of success in the coming contest."
+      }
+    ]
+  },
+  {
+    "no": 29,
+    "group": 2,
+    "practiceType": "spell",
+    "word": "poster",
+    "difficulty": 2,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "n.",
+        "type": "核心",
+        "cnDef": "海报；招贴画",
+        "enDef": "a large printed picture used to advertise or decorate",
+        "example": "We designed a poster to welcome the new students."
+      }
+    ]
+  },
+  {
+    "no": 30,
+    "group": 2,
+    "practiceType": "spell",
+    "word": "badminton",
+    "difficulty": 3,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "n.",
+        "type": "核心",
+        "cnDef": "羽毛球（运动）",
+        "enDef": "a sport in which players hit a shuttlecock across a net",
+        "example": "We often play badminton on the playground after school."
+      }
+    ]
+  },
+  {
+    "no": 31,
+    "group": 2,
+    "practiceType": "spell",
+    "word": "drama",
+    "difficulty": 1,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "n.",
+        "type": "核心",
+        "cnDef": "戏剧；剧本",
+        "enDef": "a play for the stage, radio, or television",
+        "example": "She joined the school drama club and acted in a play."
+      },
+      {
+        "senseNo": 2,
+        "pos": "n.",
+        "type": "引申",
+        "cnDef": "戏剧性事件；紧张刺激",
+        "enDef": "an exciting or emotional series of events",
+        "example": "The meeting turned into a real drama when they disagreed."
+      }
+    ]
+  },
+  {
+    "no": 32,
+    "group": 2,
+    "practiceType": "spell",
+    "word": "band",
+    "difficulty": 1,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "n.",
+        "type": "核心",
+        "cnDef": "乐队，乐团",
+        "enDef": "",
+        "example": "The school band played a song."
+      }
+    ]
+  },
+  {
+    "no": 33,
+    "group": 2,
+    "practiceType": "spell",
+    "word": "debate",
+    "difficulty": 2,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "n.",
+        "type": "核心",
+        "cnDef": "讨论；辩论",
+        "enDef": "a formal discussion in which people express different opinions",
+        "example": "Our class had a heated debate about school rules."
+      },
+      {
+        "senseNo": 2,
+        "pos": "v.",
+        "type": "核心",
+        "cnDef": "辩论；争论",
+        "enDef": "to discuss a subject in a formal way",
+        "example": "They debated whether to join the volunteer project."
+      }
+    ]
+  },
+  {
+    "no": 34,
+    "group": 2,
+    "practiceType": "spell",
+    "word": "gym",
+    "difficulty": 1,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "n.",
+        "type": "核心",
+        "cnDef": "体育馆；健身房",
+        "enDef": "a building or room for sports and exercise",
+        "example": "The new gym will open to students next Monday."
+      }
+    ]
+  },
+  {
+    "no": 35,
+    "group": 2,
+    "practiceType": "spell",
+    "word": "piano",
+    "difficulty": 1,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "n.",
+        "type": "核心",
+        "cnDef": "钢琴",
+        "enDef": "",
+        "example": "She can play the piano."
+      }
+    ]
+  },
+  {
+    "no": 36,
+    "group": 2,
+    "practiceType": "spell",
+    "word": "stage",
+    "difficulty": 1,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "n.",
+        "type": "核心",
+        "cnDef": "舞台",
+        "enDef": "",
+        "example": "The singer is on the stage."
+      }
+    ]
+  },
+  {
+    "no": 37,
+    "group": 2,
+    "practiceType": "spell",
+    "word": "photography",
+    "difficulty": 3,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "n.",
+        "type": "核心",
+        "cnDef": "摄影",
+        "enDef": "",
+        "example": "He loves photography."
+      }
+    ]
+  },
+  {
+    "no": 38,
+    "group": 2,
+    "practiceType": "spell",
+    "word": "inner",
+    "difficulty": 1,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "adj.",
+        "type": "核心",
+        "cnDef": "（想法或情感）未表达出来的，隐藏的，内心的",
+        "enDef": "",
+        "example": "She kept her feelings inner."
+      }
+    ]
+  },
+  {
+    "no": 39,
+    "group": 2,
+    "practiceType": "spell",
+    "word": "pm",
+    "difficulty": 1,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "abbr.",
+        "type": "核心",
+        "cnDef": "下午",
+        "enDef": "",
+        "example": "The class ends at 4 pm."
+      }
+    ]
+  },
+  {
+    "no": 40,
+    "group": 2,
+    "practiceType": "spell",
+    "word": "argue",
+    "difficulty": 1,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "v.",
+        "type": "核心",
+        "cnDef": "争论，争辩",
+        "enDef": "",
+        "example": "Don't argue with your friends."
+      }
+    ]
+  },
+  {
+    "no": 41,
+    "group": 2,
+    "practiceType": "spell",
+    "word": "topic",
+    "difficulty": 1,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "n.",
+        "type": "核心",
+        "cnDef": "话题，论题",
+        "enDef": "",
+        "example": "The topic today is friendship."
+      }
+    ]
+  },
+  {
+    "no": 42,
+    "group": 2,
+    "practiceType": "spell",
+    "word": "sharp",
+    "difficulty": 1,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "adj.",
+        "type": "核心",
+        "cnDef": "敏锐的，聪明的",
+        "enDef": "",
+        "example": "He has a sharp mind."
+      }
+    ]
+  },
+  {
+    "no": 43,
+    "group": 2,
+    "practiceType": "spell",
+    "word": "dinosaur",
+    "difficulty": 3,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "n.",
+        "type": "核心",
+        "cnDef": "恐龙",
+        "enDef": "",
+        "example": "The dinosaur is extinct."
+      }
+    ]
+  },
+  {
+    "no": 44,
+    "group": 2,
+    "practiceType": "spell",
+    "word": "dolphin",
+    "difficulty": 2,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "n.",
+        "type": "核心",
+        "cnDef": "海豚",
+        "enDef": "",
+        "example": "The dolphin is very smart."
+      }
+    ]
+  },
+  {
+    "no": 45,
+    "group": 2,
+    "practiceType": "spell",
+    "word": "intelligent",
+    "difficulty": 3,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "adj.",
+        "type": "核心",
+        "cnDef": "有智慧的，聪明的",
+        "enDef": "",
+        "example": "She is an intelligent girl."
+      }
+    ]
+  },
+  {
+    "no": 46,
+    "group": 2,
+    "practiceType": "spell",
+    "word": "investigate",
+    "difficulty": 3,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "v.",
+        "type": "核心",
+        "cnDef": "查明，调查",
+        "enDef": "",
+        "example": "The police will investigate the accident."
+      }
+    ]
+  },
+  {
+    "no": 47,
+    "group": 2,
+    "practiceType": "spell",
+    "word": "various",
+    "difficulty": 2,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "adj.",
+        "type": "核心",
+        "cnDef": "各种各样的，各种不同的",
+        "enDef": "",
+        "example": "We have various books to read."
+      }
+    ]
+  },
+  {
+    "no": 48,
+    "group": 2,
+    "practiceType": "spell",
+    "word": "volunteer",
+    "difficulty": 3,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "n.",
+        "type": "核心",
+        "cnDef": "志愿者；义务工作者",
+        "enDef": "a person who does a job without being paid",
+        "example": "He is a volunteer who helps clean the community library."
+      },
+      {
+        "senseNo": 2,
+        "pos": "v.",
+        "type": "核心",
+        "cnDef": "自愿做；义务做",
+        "enDef": "to offer to do something without being forced or paid",
+        "example": "She volunteered to organize the welcome party for freshmen."
+      }
+    ]
+  },
+  {
+    "no": 49,
+    "group": 3,
+    "practiceType": "spell",
+    "word": "gain",
+    "difficulty": 1,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "v.",
+        "type": "核心",
+        "cnDef": "获得，赢得",
+        "enDef": "",
+        "example": "You will gain knowledge from reading."
+      }
+    ]
+  },
+  {
+    "no": 50,
+    "group": 3,
+    "practiceType": "spell",
+    "word": "apply",
+    "difficulty": 1,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "v.",
+        "type": "核心",
+        "cnDef": "申请",
+        "enDef": "",
+        "example": "I will apply for the job."
+      }
+    ]
+  },
+  {
+    "no": 51,
+    "group": 3,
+    "practiceType": "spell",
+    "word": "schedule",
+    "difficulty": 3,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "n.",
+        "type": "核心",
+        "cnDef": "计划表，进度表，日程表",
+        "enDef": "",
+        "example": "Make a schedule for your week."
+      }
+    ]
+  },
+  {
+    "no": 52,
+    "group": 3,
+    "practiceType": "spell",
+    "word": "award",
+    "difficulty": 1,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "n.",
+        "type": "核心",
+        "cnDef": "奖，奖赏",
+        "enDef": "",
+        "example": "He won an award for his story."
+      }
+    ]
+  },
+  {
+    "no": 53,
+    "group": 3,
+    "practiceType": "spell",
+    "word": "opportunity",
+    "difficulty": 3,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "n.",
+        "type": "核心",
+        "cnDef": "机会；时机",
+        "enDef": "a chance to do something that you want",
+        "example": "The exchange program is a great opportunity to learn."
+      },
+      {
+        "senseNo": 2,
+        "pos": "n.",
+        "type": "引申",
+        "cnDef": "良机；有利时机",
+        "enDef": "a favourable moment for doing something",
+        "example": "We should seize every opportunity to improve ourselves."
+      }
+    ]
+  },
+  {
+    "no": 54,
+    "group": 3,
+    "practiceType": "spell",
+    "word": "hint",
+    "difficulty": 1,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "n.",
+        "type": "核心",
+        "cnDef": "有益的建议",
+        "enDef": "",
+        "example": "She gave me a hint about the answer."
+      }
+    ]
+  },
+  {
+    "no": 55,
+    "group": 3,
+    "practiceType": "spell",
+    "word": "subscribe",
+    "difficulty": 3,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "v.",
+        "type": "核心",
+        "cnDef": "订阅（报纸或杂志）",
+        "enDef": "",
+        "example": "I subscribe to a newspaper."
+      }
+    ]
+  },
+  {
+    "no": 56,
+    "group": 3,
+    "practiceType": "spell",
+    "word": "view",
+    "difficulty": 1,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "n.",
+        "type": "核心",
+        "cnDef": "（一次）观看",
+        "enDef": "",
+        "example": "We had a clear view of the mountain."
+      }
+    ]
+  },
+  {
+    "no": 57,
+    "group": 3,
+    "practiceType": "spell",
+    "word": "former",
+    "difficulty": 2,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "adj.",
+        "type": "核心",
+        "cnDef": "从前的",
+        "enDef": "",
+        "example": "He is a former teacher."
+      }
+    ]
+  },
+  {
+    "no": 58,
+    "group": 3,
+    "practiceType": "spell",
+    "word": "graduate",
+    "difficulty": 3,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "v.",
+        "type": "核心",
+        "cnDef": "毕业",
+        "enDef": "to successfully complete a course of study",
+        "example": "She will graduate from senior high next summer."
+      },
+      {
+        "senseNo": 2,
+        "pos": "n.",
+        "type": "引申",
+        "cnDef": "毕业生",
+        "enDef": "a person who has completed a course of study",
+        "example": "The club welcomes both students and graduates."
+      }
+    ]
+  },
+  {
+    "no": 59,
+    "group": 3,
+    "practiceType": "spell",
+    "word": "orientation",
+    "difficulty": 3,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "n.",
+        "type": "核心",
+        "cnDef": "（新工作或学习课程开始前一段时间的）培训，迎新 Orientation Day 迎新日",
+        "enDef": "",
+        "example": "We had an orientation day at school."
+      }
+    ]
+  },
+  {
+    "no": 60,
+    "group": 3,
+    "practiceType": "spell",
+    "word": "frightened",
+    "difficulty": 3,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "adj.",
+        "type": "核心",
+        "cnDef": "受惊的，害怕的",
+        "enDef": "",
+        "example": "The child was frightened by the noise."
+      }
+    ]
+  },
+  {
+    "no": 61,
+    "group": 3,
+    "practiceType": "spell",
+    "word": "sight",
+    "difficulty": 1,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "n.",
+        "type": "核心",
+        "cnDef": "看到，看见",
+        "enDef": "",
+        "example": "The sight of the sea was beautiful."
+      }
+    ]
+  },
+  {
+    "no": 62,
+    "group": 3,
+    "practiceType": "spell",
+    "word": "figure",
+    "difficulty": 2,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "v.",
+        "type": "核心",
+        "cnDef": "认为，以为",
+        "enDef": "",
+        "example": "I figure he will come soon."
+      }
+    ]
+  },
+  {
+    "no": 63,
+    "group": 3,
+    "practiceType": "choose",
+    "word": "go all out",
+    "difficulty": 3,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "idiom",
+        "type": "核心",
+        "cnDef": "全力以赴，竭尽全力",
+        "enDef": "",
+        "example": "We went all out for the game."
+      }
+    ]
+  },
+  {
+    "no": 64,
+    "group": 3,
+    "practiceType": "spell",
+    "word": "select",
+    "difficulty": 2,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "v.",
+        "type": "核心",
+        "cnDef": "挑选，选择",
+        "enDef": "",
+        "example": "Please select a book you like."
+      }
+    ]
+  },
+  {
+    "no": 65,
+    "group": 3,
+    "practiceType": "spell",
+    "word": "particular",
+    "difficulty": 3,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "n./adj.",
+        "type": "核心",
+        "cnDef": "细节；尤其，特别",
+        "enDef": "",
+        "example": "Is there any particular color you like?"
+      }
+    ]
+  },
+  {
+    "no": 66,
+    "group": 3,
+    "practiceType": "choose",
+    "word": "in particular",
+    "difficulty": 3,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "phrase",
+        "type": "核心",
+        "cnDef": "尤其，特别",
+        "enDef": "",
+        "example": "I love music, pop music in particular."
+      }
+    ]
+  },
+  {
+    "no": 67,
+    "group": 3,
+    "practiceType": "spell",
+    "word": "rainbow",
+    "difficulty": 2,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "n.",
+        "type": "核心",
+        "cnDef": "彩虹",
+        "enDef": "",
+        "example": "A rainbow appeared after the rain."
+      }
+    ]
+  },
+  {
+    "no": 68,
+    "group": 3,
+    "practiceType": "spell",
+    "word": "neat",
+    "difficulty": 1,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "adj.",
+        "type": "核心",
+        "cnDef": "好的，令人愉快的",
+        "enDef": "",
+        "example": "Her desk is neat and tidy."
+      }
+    ]
+  },
+  {
+    "no": 69,
+    "group": 3,
+    "practiceType": "spell",
+    "word": "specific",
+    "difficulty": 3,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "adj.",
+        "type": "核心",
+        "cnDef": "具体的，特定的",
+        "enDef": "",
+        "example": "Please give a specific example."
+      }
+    ]
+  },
+  {
+    "no": 70,
+    "group": 3,
+    "practiceType": "spell",
+    "word": "refer",
+    "difficulty": 1,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "v.",
+        "type": "核心",
+        "cnDef": "参考，查阅",
+        "enDef": "",
+        "example": "The speaker referred to a study."
+      }
+    ]
+  },
+  {
+    "no": 71,
+    "group": 3,
+    "practiceType": "choose",
+    "word": "refer to",
+    "difficulty": 2,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "phrase",
+        "type": "核心",
+        "cnDef": "参考，查阅",
+        "enDef": "",
+        "example": "Please refer to the dictionary."
+      }
+    ]
+  },
+  {
+    "no": 72,
+    "group": 3,
+    "practiceType": "spell",
+    "word": "journal",
+    "difficulty": 2,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "n.",
+        "type": "核心",
+        "cnDef": "日记，日志",
+        "enDef": "",
+        "example": "She keeps a journal every day."
+      }
+    ]
+  },
+  {
+    "no": 73,
+    "group": 4,
+    "practiceType": "spell",
+    "word": "junior",
+    "difficulty": 2,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "adj.",
+        "type": "核心",
+        "cnDef": "低年级的",
+        "enDef": "",
+        "example": "He is a junior student."
+      }
+    ]
+  },
+  {
+    "no": 74,
+    "group": 4,
+    "practiceType": "spell",
+    "word": "struggle",
+    "difficulty": 3,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "v.",
+        "type": "核心",
+        "cnDef": "奋斗；拼搏；挣扎",
+        "enDef": "to try very hard to do something difficult",
+        "example": "He struggled to finish the work on time."
+      },
+      {
+        "senseNo": 2,
+        "pos": "n.",
+        "type": "引申",
+        "cnDef": "搏斗；斗争",
+        "enDef": "a long hard effort to achieve something",
+        "example": "The struggle for success taught him a lot."
+      }
+    ]
+  },
+  {
+    "no": 75,
+    "group": 4,
+    "practiceType": "spell",
+    "word": "memorise",
+    "difficulty": 3,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "v.",
+        "type": "核心",
+        "cnDef": "记住，熟记",
+        "enDef": "",
+        "example": "Try to memorise these words."
+      }
+    ]
+  },
+  {
+    "no": 76,
+    "group": 4,
+    "practiceType": "spell",
+    "word": "skateboarding",
+    "difficulty": 3,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "n.",
+        "type": "核心",
+        "cnDef": "滑板运动",
+        "enDef": "",
+        "example": "Skateboarding is fun."
+      }
+    ]
+  },
+  {
+    "no": 77,
+    "group": 4,
+    "practiceType": "spell",
+    "word": "forward",
+    "difficulty": 2,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "adv.",
+        "type": "核心",
+        "cnDef": "向前",
+        "enDef": "",
+        "example": "Move forward and don't stop."
+      }
+    ]
+  },
+  {
+    "no": 78,
+    "group": 4,
+    "practiceType": "choose",
+    "word": "look forward to",
+    "difficulty": 3,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "phrase",
+        "type": "核心",
+        "cnDef": "（兴奋地）期待，盼望",
+        "enDef": "",
+        "example": "I look forward to your letter."
+      }
+    ]
+  },
+  {
+    "no": 79,
+    "group": 4,
+    "practiceType": "spell",
+    "word": "committee",
+    "difficulty": 3,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "n.",
+        "type": "核心",
+        "cnDef": "委员会",
+        "enDef": "",
+        "example": "He is on the school committee."
+      }
+    ]
+  },
+  {
+    "no": 80,
+    "group": 4,
+    "practiceType": "spell",
+    "word": "improve",
+    "difficulty": 2,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "v.",
+        "type": "核心",
+        "cnDef": "改善，改进",
+        "enDef": "",
+        "example": "Exercise can improve your health."
+      }
+    ]
+  },
+  {
+    "no": 81,
+    "group": 4,
+    "practiceType": "spell",
+    "word": "rate",
+    "difficulty": 1,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "v.",
+        "type": "核心",
+        "cnDef": "对……作评估，评价",
+        "enDef": "",
+        "example": "How do you rate this film?"
+      }
+    ]
+  },
+  {
+    "no": 82,
+    "group": 4,
+    "practiceType": "spell",
+    "word": "performance",
+    "difficulty": 3,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "n.",
+        "type": "核心",
+        "cnDef": "（工作或活动中的）表现",
+        "enDef": "",
+        "example": "Her performance was great."
+      }
+    ]
+  },
+  {
+    "no": 83,
+    "group": 4,
+    "practiceType": "spell",
+    "word": "exchange",
+    "difficulty": 3,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "v.",
+        "type": "核心",
+        "cnDef": "交换；交流（意见、信息等）",
+        "enDef": "to give and receive something in return",
+        "example": "We exchanged ideas during the group discussion."
+      },
+      {
+        "senseNo": 2,
+        "pos": "n.",
+        "type": "引申",
+        "cnDef": "交流；互访",
+        "enDef": "an act of giving and receiving",
+        "example": "The cultural exchange widened our view of the world."
+      }
+    ]
+  },
+  {
+    "no": 84,
+    "group": 4,
+    "practiceType": "choose",
+    "word": "Orientation Day",
+    "difficulty": 2,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "phrase",
+        "type": "核心",
+        "cnDef": "迎新日",
+        "enDef": "",
+        "example": "We have Orientation Day before the new term."
+      }
+    ]
+  },
+  {
+    "no": 85,
+    "group": 4,
+    "practiceType": "choose",
+    "word": "Put...under pressure",
+    "difficulty": 2,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "phrase",
+        "type": "核心",
+        "cnDef": "给……施压",
+        "enDef": "",
+        "example": "The exam puts students under pressure."
+      }
+    ]
+  },
+  {
+    "no": 86,
+    "group": 4,
+    "practiceType": "choose",
+    "word": "depend on",
+    "difficulty": 2,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "phrase",
+        "type": "核心",
+        "cnDef": "依靠；依赖",
+        "enDef": "",
+        "example": "We depend on the bus to go to school."
+      }
+    ]
+  },
+  {
+    "no": 87,
+    "group": 4,
+    "practiceType": "choose",
+    "word": "make the most of",
+    "difficulty": 2,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "phrase",
+        "type": "核心",
+        "cnDef": "充分利用",
+        "enDef": "",
+        "example": "Make the most of your time."
+      }
+    ]
+  },
+  {
+    "no": 88,
+    "group": 4,
+    "practiceType": "choose",
+    "word": "graduate from",
+    "difficulty": 2,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "phrase",
+        "type": "核心",
+        "cnDef": "从……毕业",
+        "enDef": "",
+        "example": "She graduated from a famous university."
+      }
+    ]
+  },
+  {
+    "no": 89,
+    "group": 4,
+    "practiceType": "choose",
+    "word": "be about to",
+    "difficulty": 2,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "phrase",
+        "type": "核心",
+        "cnDef": "即将做，马上做",
+        "enDef": "",
+        "example": "I was about to leave when he called."
+      }
+    ]
+  },
+  {
+    "no": 90,
+    "group": 4,
+    "practiceType": "choose",
+    "word": "as if",
+    "difficulty": 1,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "phrase",
+        "type": "核心",
+        "cnDef": "仿佛，似乎",
+        "enDef": "",
+        "example": "He acts as if he knows everything."
+      }
+    ]
+  },
+  {
+    "no": 91,
+    "group": 4,
+    "practiceType": "choose",
+    "word": "start high school",
+    "difficulty": 2,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "phrase",
+        "type": "核心",
+        "cnDef": "开始上高中",
+        "enDef": "",
+        "example": "He will start high school in September."
+      }
+    ]
+  },
+  {
+    "no": 92,
+    "group": 4,
+    "practiceType": "choose",
+    "word": "keep an open mind",
+    "difficulty": 2,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "phrase",
+        "type": "核心",
+        "cnDef": "接受（别人的意见）",
+        "enDef": "",
+        "example": "Keep an open mind about new ideas."
+      }
+    ]
+  },
+  {
+    "no": 93,
+    "group": 4,
+    "practiceType": "choose",
+    "word": "deal with",
+    "difficulty": 2,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "phrase",
+        "type": "核心",
+        "cnDef": "处理，应付",
+        "enDef": "",
+        "example": "We must deal with the problem."
+      }
+    ]
+  },
+  {
+    "no": 94,
+    "group": 4,
+    "practiceType": "choose",
+    "word": "at the sight of",
+    "difficulty": 2,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "phrase",
+        "type": "核心",
+        "cnDef": "一看见",
+        "enDef": "",
+        "example": "She smiled at the sight of her mother."
+      }
+    ]
+  },
+  {
+    "no": 95,
+    "group": 4,
+    "practiceType": "choose",
+    "word": "hold one's head up",
+    "difficulty": 2,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "phrase",
+        "type": "核心",
+        "cnDef": "抬起头",
+        "enDef": "",
+        "example": "Hold your head up and be proud."
+      }
+    ]
+  },
+  {
+    "no": 96,
+    "group": 4,
+    "practiceType": "choose",
+    "word": "give...a hand",
+    "difficulty": 1,
+    "senses": [
+      {
+        "senseNo": 1,
+        "pos": "phrase",
+        "type": "核心",
+        "cnDef": "帮助",
+        "enDef": "",
+        "example": "Could you give me a hand?"
+      }
+    ]
+  }
+];
+
+  /* ---------- 分组定义（供首页分组条使用） ---------- */
+  var GROUPS = [
+  {
+    "key": "all",
+    "label": "全部",
+    "sub": "96 词",
+    "noRange": "教材 1–96 号"
+  },
+  {
+    "key": "1",
+    "label": "第 1 组",
+    "sub": "24 词",
+    "noRange": "教材 1–24 号"
+  },
+  {
+    "key": "2",
+    "label": "第 2 组",
+    "sub": "24 词",
+    "noRange": "教材 25–48 号"
+  },
+  {
+    "key": "3",
+    "label": "第 3 组",
+    "sub": "24 词",
+    "noRange": "教材 49–72 号"
+  },
+  {
+    "key": "4",
+    "label": "第 4 组",
+    "sub": "24 词",
+    "noRange": "教材 73–96 号"
+  }
+];
+
+  var SPELL_WORDS = WORDS.filter(function (w) { return w.practiceType === 'spell'; });
+  var READ_WORDS = WORDS.filter(function (w) { return w.practiceType === 'choose'; });
+
+  // 句子挖空素材（与拼写类词条一一对应）
+  var SENTENCES = [
+  {
+    "word": "senior",
+    "sentence": "She is a senior student in our school."
+  },
+  {
+    "word": "curious",
+    "sentence": "The child is curious about everything."
+  },
+  {
+    "word": "impression",
+    "sentence": "He made a good impression on the teacher."
+  },
+  {
+    "word": "campus",
+    "sentence": "Our campus is clean and beautiful."
+  },
+  {
+    "word": "tradition",
+    "sentence": "It is a school tradition to sing together."
+  },
+  {
+    "word": "facility",
+    "sentence": "The new library is a modern facility."
+  },
+  {
+    "word": "impressive",
+    "sentence": "Her speech was truly impressive."
+  },
+  {
+    "word": "challenge",
+    "sentence": "The task is a real challenge for us."
+  },
+  {
+    "word": "pressure",
+    "sentence": "He felt under pressure before the test."
+  },
+  {
+    "word": "confident",
+    "sentence": "She is confident about the exam."
+  },
+  {
+    "word": "poster",
+    "sentence": "We made a poster for the club."
+  },
+  {
+    "word": "badminton",
+    "sentence": "They play badminton after class."
+  },
+  {
+    "word": "drama",
+    "sentence": "He joined the school drama club."
+  },
+  {
+    "word": "gym",
+    "sentence": "The gym is open to students now."
+  },
+  {
+    "word": "debate",
+    "sentence": "We had a debate in class today."
+  },
+  {
+    "word": "volunteer",
+    "sentence": "He is a volunteer in the library."
+  },
+  {
+    "word": "opportunity",
+    "sentence": "This is a good opportunity to learn."
+  },
+  {
+    "word": "graduate",
+    "sentence": "She will graduate next year."
+  }
+];
+
+  global.XB4_DATA = {
+    WORDS: WORDS,
+    SPELL_WORDS: SPELL_WORDS,
+    READ_WORDS: READ_WORDS,
+    SENTENCES: SENTENCES,
+    GROUPS: GROUPS
+  };
+
+  global.WORDS = WORDS;
+  global.SPELL_WORDS = SPELL_WORDS;
+  global.READ_WORDS = READ_WORDS;
+  global.SENTENCES = SENTENCES;
+  global.GROUPS = GROUPS;
+})(typeof window !== 'undefined' ? window : this);
+</script>
+<script>/* ============================================================
+ * XB4 单词闯关 · 核心逻辑 (core)
+ * ------------------------------------------------------------
+ * 纯逻辑层：拼写判题、SM-2 间隔重复、题目生成、难度档等。
+ * 不依赖任何 DOM / wx / 浏览器 API，可在 Node 中直接单元测试。
+ * 移植自微信小程序 utils，并经 Node 测试验证。
+ * ============================================================ */
+(function (global) {
+  'use strict';
+
+  var SPELL_WORDS = global.SPELL_WORDS;
+  var READ_WORDS = global.READ_WORDS;
+  var SENTENCES = global.SENTENCES;
+
+  /* ---------- 文本归一化与输入法检测 ---------- */
+  function normalizeWord(s) {
+    return String(s == null ? '' : s)
+      .replace(/[\s  ᠎\u2000-\u200B\u200C-\u200F\u2028-\u202F\u205F-\u206F\u00AD\u3000]/g, '')
+      .toLowerCase();
+  }
+  function normalizeSentence(s) {
+    return String(s == null ? '' : s)
+      .replace(/[  ᠎\u2000-\u200B\u200C-\u200F\u2028-\u202F\u205F-\u206F\u00AD\u3000]/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+  }
+  function levenshtein(a, b) {
+    if (a === b) return 0;
+    if (!a) return b.length;
+    if (!b) return a.length;
+    if (a.length > b.length) { var t = a; a = b; b = t; }
+    var m = a.length, n = b.length;
+    var dp = new Array(n + 1);
+    for (var j = 0; j <= n; j++) dp[j] = j;
+    for (var i = 1; i <= m; i++) {
+      var prev = dp[0]; dp[0] = i;
+      for (var j2 = 1; j2 <= n; j2++) {
+        var tmp = dp[j2];
+        if (a.charCodeAt(i - 1) === b.charCodeAt(j2 - 1)) dp[j2] = prev;
+        else dp[j2] = 1 + Math.min(prev, dp[j2], dp[j2 - 1]);
+        prev = tmp;
+      }
+    }
+    return dp[n];
+  }
+  var RE_CJK = /[\u3400-\u4DBF\u4E00-\u9FFF\uF900-\uFAFF]/,
+      RE_FULLWIDTH = /[\uFF01-\uFF5E]/,
+      RE_NON_ASCII = /[^\x00-\x7F]/;
+  function classifyInput(r) {
+    if (!r) return { kind: 'empty', tip: null };
+    if (RE_CJK.test(r)) return { kind: 'chinese', tip: '⌨️ 检测到中文/拼音——请先切换到英文输入法，再输入英文单词。' };
+    if (RE_FULLWIDTH.test(r)) return { kind: 'fullwidth', tip: '⌨️ 检测到全角字符——请关闭全角、切到半角英文后重新输入。' };
+    if (RE_NON_ASCII.test(r)) return { kind: 'nonascii', tip: '⌨️ 含非英文字符（如重音字母）——请确认输入法为英文。' };
+    return { kind: 'none', tip: null };
+  }
+  function isSentence(t) {
+    if (!t) return false;
+    t = String(t).trim();
+    if (t.length < 3) return false;
+    return /^[A-Z]/.test(t) && /[.!?]["')\]}]?$/.test(t) && /\s/.test(t);
+  }
+
+  /* ---------- 拼写判题 + 错因定位 ---------- */
+  function spellJudge(rawInput, rawTarget, opts) {
+    opts = opts || {};
+    var caseSensitive = (typeof opts.caseSensitive === 'boolean') ? opts.caseSensitive : isSentence(rawTarget);
+    var cleanInput = caseSensitive ? normalizeSentence(rawInput) : normalizeWord(rawInput);
+    var cleanTarget = caseSensitive ? normalizeSentence(rawTarget) : normalizeWord(rawTarget);
+    var ime = classifyInput(cleanInput.toLowerCase());
+    if (ime.kind === 'chinese' || ime.kind === 'fullwidth' || ime.kind === 'nonascii')
+      return { correct: false, kind: 'input_method', imeTip: ime.tip, caseMismatch: false, distance: 0 };
+    if (!cleanInput) return { correct: false, kind: 'empty', imeTip: null, caseMismatch: false, distance: 0 };
+    if (cleanInput === cleanTarget) return { correct: true, kind: 'correct', imeTip: null, caseMismatch: false, distance: 0 };
+    var caseMismatch = caseSensitive && (cleanInput.toLowerCase() === cleanTarget.toLowerCase());
+    var distance = levenshtein(cleanInput, cleanTarget);
+    return { correct: false, kind: 'spelling', imeTip: null, caseMismatch: caseMismatch, distance: distance };
+  }
+  function firstMismatch(input, target) {
+    if (!input || !target || input.length !== target.length) return null;
+    var lo = input.toLowerCase(), lt = target.toLowerCase();
+    for (var i = 0; i < lt.length; i++) if (lo[i] !== lt[i]) return { index: i + 1, expected: lt[i], got: lo[i] };
+    return null;
+  }
+
+  /* ---------- SM-2 间隔重复算法（纯函数） ---------- */
+  function sm2(ease, interval, reps, quality) {
+    var e = (typeof ease === 'number' && !isNaN(ease)) ? ease : 2.5;
+    var iv = (typeof interval === 'number' && !isNaN(interval)) ? interval : 0;
+    var r = (typeof reps === 'number' && !isNaN(reps)) ? reps : 0;
+    var q = Math.max(0, Math.min(5, Math.round(quality)));
+    if (q < 3) { r = 0; iv = 1; }
+    else {
+      if (r === 0) iv = 1;
+      else if (r === 1) iv = 6;
+      else iv = Math.round(iv * e);
+      r = r + 1;
+    }
+    e = e + (0.1 - (5 - q) * (0.08 + (5 - q) * 0.02));
+    if (e < 1.3) e = 1.3;
+    return { ease: e, interval: iv, reps: r };
+  }
+
+  /* ---------- 难度档 ----------
+   * 三档差异明显化（用户反馈"三层没差别"）：
+   *   - 基础 easy  ：干扰字母最少(2) + 给首字母提示 → 键盘约 11 键；听音选义 3 选 1
+   *   - 标准 normal：无首字母提示 + 干扰字母中等(5) → 键盘约 14 键；听音选义 4 选 1
+   *   - 进阶 hard  ：无首字母提示 + 干扰字母最多(8) → 键盘约 17 键；听音选义 5 选 1
+   * 词池过滤（3.1 词内分阶）：按词 difficulty 星级（1易/2中/3难）收窄词池，
+   *   档内按星级升序出题 → 从易到难逐步递进。
+   */
+  var DIFFICULTY = {
+    easy:   { key: 'easy',   label: '基础', distractors: 2, firstHint: true,  chooseWrong: 2, minStar: 1, maxStar: 2, timeFactor: 1.3, chooseTime: 15 },
+    normal: { key: 'normal', label: '标准', distractors: 5, firstHint: false, chooseWrong: 3, minStar: 1, maxStar: 3, timeFactor: 1.0, chooseTime: 12 },
+    hard:   { key: 'hard',   label: '进阶', distractors: 8, firstHint: false, chooseWrong: 4, minStar: 2, maxStar: 3, timeFactor: 0.85, chooseTime: 10 }
+  };
+  function getDifficulty(k) { return DIFFICULTY[k] || DIFFICULTY.normal; }
+
+  /* ---------- 时间闯关：关卡限时计算（设计方案 §1） ----------
+   * 拼写：基础 = 20 + 6×字母数；选择：按难度档固定。
+   * 限时 = round(基础 × timeFactor × 动态系数 dynamicScale)，钳制 [30,150]。 */
+  function timeForTarget(target, diffKey, type, dynamicScale) {
+    var d = DIFFICULTY[diffKey] || DIFFICULTY.normal;
+    var clean = String(target == null ? '' : target).replace(/[^a-zA-Z]/g, '');
+    var base = (type === 'choose') ? d.chooseTime : (20 + 6 * clean.length);
+    var sc = (typeof dynamicScale === 'number' && dynamicScale > 0) ? dynamicScale : 1;
+    // 拼写长词限时宽（[30,150]）；选择题本就短时限（[8,60]）
+    var lo = (type === 'choose') ? 8 : 30;
+    var hi = (type === 'choose') ? 60 : 150;
+    return Math.max(lo, Math.min(hi, Math.round(base * d.timeFactor * sc)));
+  }
+
+  /* ---------- 得分计算 ---------- */
+  function computeResult(correct, total) {
+    if (!total) return { total: 0, correct: 0, pct: 0, stars: '', msg: '暂无题目' };
+    var pct = Math.round(correct / total * 100);
+    var stars = pct >= 80 ? '⭐⭐⭐' : pct >= 60 ? '⭐⭐' : '⭐';
+    var msg = pct >= 80 ? '太棒了！' : pct >= 60 ? '不错，继续加油！' : '多练几次就熟了！';
+    return { total: total, correct: correct, pct: pct, stars: stars, msg: msg };
+  }
+
+  /* ---------- 通用工具 ---------- */
+  function shuffle(a) {
+    a = a.slice();
+    for (var i = a.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var tmp = a[i]; a[i] = a[j]; a[j] = tmp;
+    }
+    return a;
+  }
+  function kwOf(def) {
+    return def.split(/[；;,，、（）()]/).map(function (s) { return s.trim(); })
+      .filter(function (s) { return s.length > 1; }).map(function (s) { return s.slice(0, 3); });
+  }
+  function pickSmartWrong(allSenses, testSense, n) {
+    var correctDef = testSense.cnDef;
+    var correctKw = {};
+    kwOf(correctDef).forEach(function (k) { correctKw[k] = true; });
+    var pool = allSenses.filter(function (s) { return s.cnDef !== correctDef; });
+    pool = pool.filter(function (s) {
+      var kw = kwOf(s.cnDef);
+      return !kw.some(function (k) { return correctKw[k]; });
+    });
+    var chosen = [], usedKw = {};
+    function tryPick(arr) {
+      var sh = shuffle(arr);
+      for (var i = 0; i < sh.length; i++) {
+        if (chosen.length >= n) break;
+        var kw = kwOf(sh[i].cnDef);
+        if (kw.some(function (k) { return usedKw[k]; })) continue;
+        chosen.push(sh[i]); kw.forEach(function (k) { usedKw[k] = true; });
+      }
+    }
+    tryPick(pool.filter(function (s) { return s.type === testSense.type && s.pos === testSense.pos; }));
+    tryPick(pool.filter(function (s) { return s.pos === testSense.pos; }));
+    tryPick(pool);
+    if (chosen.length < n) {
+      var extra = pool.filter(function (s) { return chosen.indexOf(s) < 0; });
+      while (chosen.length < n && extra.length) chosen.push(extra.shift());
+    }
+    return chosen;
+  }
+  function escapeRegExp(s) { return String(s).replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
+  /* ---------- 词形变体生成（规则化屈折变化，用于句子挖空） ----------
+   * 覆盖：原形 / 三单·复数 / 过去式·过去分词 / 现在分词。 */
+  function wordFormsOf(base) {
+    var b = String(base == null ? '' : base).toLowerCase();
+    if (!b) return [];
+    var forms = [b];
+    // 第三人称单数 / 名词复数
+    if (/[sxz]$/.test(b) || /(sh|ch)$/.test(b)) forms.push(b + 'es');
+    else if (/[^aeiou]y$/.test(b)) forms.push(b.slice(0, -1) + 'ies');
+    else forms.push(b + 's');
+    // 过去式 / 过去分词
+    if (/e$/.test(b)) forms.push(b + 'd');
+    else if (/[^aeiou]y$/.test(b)) forms.push(b.slice(0, -1) + 'ied');
+    else forms.push(b + 'ed');
+    // 现在分词
+    if (/e$/.test(b)) forms.push(b.slice(0, -1) + 'ing');
+    else forms.push(b + 'ing');
+    var seen = {}, out = [];
+    for (var i = 0; i < forms.length; i++) if (!seen[forms[i]]) { seen[forms[i]] = true; out.push(forms[i]); }
+    return out;
+  }
+
+  /* ---------- 句子挖空：目标词所有词形全部替换为 ______ ----------
+   * \b 词边界包裹，标点/空白原样保留；g 全局替换确保多处出现全部挖去。 */
+  function blankWord(sentence, word) {
+    if (!sentence) return { cloze: '', hasBlank: false, count: 0, matched: [] };
+    var forms = wordFormsOf(word);
+    var re = new RegExp('\\b(' + forms.map(escapeRegExp).join('|') + ')\\b', 'gi');
+    var matched = [];
+    var cloze = String(sentence).replace(re, function (m) { matched.push(m); return '______'; });
+    return { cloze: cloze, hasBlank: matched.length > 0, count: matched.length, matched: matched };
+  }
+
+  /* ---------- 挖空自检：确认题干不再残留答案词任何完整词形 ---------- */
+  function verifyCloze(clozeText, word) {
+    var re = new RegExp('\\b(' + wordFormsOf(word).map(escapeRegExp).join('|') + ')\\b', 'i');
+    return !re.test(String(clozeText || ''));
+  }
+
+  /* ---------- 向后兼容：保留 findWordInSentence（供旧调用方） ---------- */
+  function findWordInSentence(sentence, word) {
+    var s = String(sentence || '');
+    var w = String(word || '').trim();
+    if (!w) return { found: false, before: s, after: '', matchedWord: w, blankLen: w.length };
+    var re = new RegExp('\\b' + escapeRegExp(w) + '\\b', 'i');
+    var m = s.match(re);
+    if (!m) return { found: false, before: s, after: '', matchedWord: w, blankLen: w.length };
+    var idx = m.index, matched = m[0];
+    return { found: true, before: s.slice(0, idx), after: s.slice(idx + matched.length), matchedWord: matched, blankLen: matched.length };
+  }
+
+  /* ---------- 生成句子填空题（挖空 + 自检） ----------
+   * target = 句中实际出现的词形（答案）；clozeText = 挖空后的题干。
+   * 挖不到（hasBlank=false）时题干保持原句，由上层过滤掉，绝不展示"答案词残留"的题。 */
+  function buildSentenceQuestion(sentence, word) {
+    var src = String(sentence || '');
+    var w = String(word || '').trim();
+    var result = { isSentence: true, sentence: src, word: w, target: w, clozeText: src, hasBlank: false, clozeCount: 0 };
+    if (!w) return result;
+    var b = blankWord(src, w);
+    if (b.hasBlank && verifyCloze(b.cloze, w)) {
+      result.target = b.matched[0];
+      result.clozeText = b.cloze;
+      result.hasBlank = true;
+      result.clozeCount = b.count;
+    }
+    return result;
+  }
+
+  /* ---------- 全局词表 ---------- */
+  var ALL_WORDS = SPELL_WORDS.concat(READ_WORDS);
+  var ALL_SENSES = [];
+  ALL_WORDS.forEach(function (w) { w.senses.forEach(function (s) { ALL_SENSES.push(s); }); });
+  function coreSenseOf(w) { return w.senses.filter(function (s) { return s.type === '核心'; })[0] || w.senses[0]; }
+
+  /* ---------- 题目生成 ---------- */
+  /* 档内词池过滤 + 星级升序（3.1 词内分阶：从易到难） */
+  function starFilter(words, opt) {
+    var pool = words || [];
+    if (opt && opt.maxStar) pool = pool.filter(function (w) { return (w.difficulty || 1) <= opt.maxStar; });
+    if (opt && opt.minStar) pool = pool.filter(function (w) { return (w.difficulty || 1) >= opt.minStar; });
+    // 先随机再按星级升序 → 同星级内保持随机，整体从易到难
+    return shuffle(pool).sort(function (a, b) { return (a.difficulty || 1) - (b.difficulty || 1); });
+  }
+  function buildSpellWordQuestions(words, opt) {
+    return starFilter(words, opt).map(function (w) {
+      var coreSense = coreSenseOf(w);
+      return Object.assign({}, w, { coreSense: coreSense, isSentence: false });
+    });
+  }
+  function buildSentenceQuestions(sentences, opt) {
+    return (sentences || []).filter(function (s) {
+      var src = SPELL_WORDS.filter(function (x) { return x.word === s.word; })[0] ||
+                READ_WORDS.filter(function (x) { return x.word === s.word; })[0];
+      if (!src) return true;
+      if (opt && opt.maxStar && (src.difficulty || 1) > opt.maxStar) return false;
+      if (opt && opt.minStar && (src.difficulty || 1) < opt.minStar) return false;
+      return true;
+    }).map(function (s) {
+      var src = SPELL_WORDS.filter(function (x) { return x.word === s.word; })[0] ||
+                READ_WORDS.filter(function (x) { return x.word === s.word; })[0];
+      var coreSense = src ? coreSenseOf(src) : null;
+      var built = buildSentenceQuestion(s.sentence, s.word);
+      return Object.assign({ coreSense: coreSense, pos: coreSense ? coreSense.pos : '', targetInitial: /^[A-Z]/.test(built.target) }, built);
+    }).filter(function (q) { return q.hasBlank === true; });
+  }
+  function buildChooseQuestions(words, opt) {
+    // opt.wrong：干扰选项个数（选项总数 = wrong + 1）。按难度分档：基础 2 / 标准 3 / 进阶 4
+    var nWrong = (opt && typeof opt.wrong === 'number') ? opt.wrong : 3;
+    // 3.1 词内分阶：与拼写模块一致 —— 按难度档收窄词池 + 星级升序（从易到难）
+    return starFilter(words, opt).map(function (q) {
+      var testSense = q.senses[Math.floor(Math.random() * q.senses.length)];
+      var wrongs = pickSmartWrong(ALL_SENSES, testSense, nWrong);
+      var options = shuffle([{ def: testSense.cnDef, correct: true }]
+        .concat(wrongs.map(function (s) { return { def: s.cnDef, correct: false }; })));
+      return { q: q, word: q.word, type: 'choose', testSense: testSense, options: options, allSenses: q.senses };
+    });
+  }
+  function buildMixQuestions(words, opt) {
+    // 3.1 词内分阶：混合训练同样按难度档收窄词池 + 星级升序（从易到难）
+    return starFilter(words, opt).map(function (w) {
+      var type = Math.random() < 0.5 ? 'spell' : 'choose';
+      if (type === 'spell') {
+        var sense = coreSenseOf(w);
+        // 仅当例句里出现【原形】时才挖空；否则展示完整例句作语境，
+        // 避免把过去式/单三等形式（shifted/arisen/symbolizes）挖空却要求拼写原形。
+        var baseInExample = !!sense.example && new RegExp('\\b' + escapeRegExp(w.word) + '\\b', 'i').test(sense.example);
+        var b = blankWord(sense.example, w.word);
+        return { type: 'spell', word: w.word, pos: sense.pos, hint: sense.cnDef,
+                 example: sense.example || '', cloze: baseInExample ? b.cloze : '', hasBlank: baseInExample && b.hasBlank,
+                 allSenses: w.senses };
+      }
+      var coreSenses = w.senses.filter(function (s) { return s.type === '核心'; });
+      var testSense = coreSenses.length > 0 ? coreSenses[Math.floor(Math.random() * coreSenses.length)] : w.senses[Math.floor(Math.random() * w.senses.length)];
+      var nWrong = (opt && typeof opt.wrong === 'number') ? opt.wrong : 3;
+      var wrongs = pickSmartWrong(ALL_SENSES, testSense, nWrong);
+      var options = shuffle([{ def: testSense.cnDef, correct: true }]
+        .concat(wrongs.map(function (s) { return { def: s.cnDef, correct: false }; })));
+      return { type: 'choose', word: w.word, testSense: testSense, options: options, allSenses: w.senses };
+    });
+  }
+  function buildReviewQuestions(reviewWords) {
+    // 错词复习：同样按星级升序（易→难），保持与主模块一致的递进规律
+    var ordered = starFilter(reviewWords || [], {});
+    var wordQs = ordered.map(function (w) {
+      var coreSense = coreSenseOf(w);
+      return Object.assign({}, w, { coreSense: coreSense, isSentence: false });
+    });
+    var reviewSet = {};
+    ordered.forEach(function (w) { reviewSet[w.word.toLowerCase()] = true; });
+    var sentenceQs = (SENTENCES || []).filter(function (s) { return reviewSet[s.word.toLowerCase()]; }).map(function (s) {
+      var src = SPELL_WORDS.filter(function (x) { return x.word === s.word; })[0] ||
+                READ_WORDS.filter(function (x) { return x.word === s.word; })[0];
+      var coreSense = src ? coreSenseOf(src) : null;
+      var built = buildSentenceQuestion(s.sentence, s.word);
+      return Object.assign({ coreSense: coreSense, pos: coreSense ? coreSense.pos : '', targetInitial: /^[A-Z]/.test(built.target) }, built);
+    }).filter(function (q) { return q.hasBlank === true; });
+    return wordQs.concat(sentenceQs);
+  }
+
+  global.XB4_CORE = {
+    normalizeWord: normalizeWord, normalizeSentence: normalizeSentence, levenshtein: levenshtein,
+    classifyInput: classifyInput, isSentence: isSentence, spellJudge: spellJudge, firstMismatch: firstMismatch,
+    sm2: sm2, DIFFICULTY: DIFFICULTY, getDifficulty: getDifficulty, computeResult: computeResult,
+    timeForTarget: timeForTarget,
+    shuffle: shuffle, pickSmartWrong: pickSmartWrong, blankWord: blankWord, findWordInSentence: findWordInSentence,
+    wordFormsOf: wordFormsOf, verifyCloze: verifyCloze,
+    buildSentenceQuestion: buildSentenceQuestion, ALL_WORDS: ALL_WORDS, ALL_SENSES: ALL_SENSES,
+    coreSenseOf: coreSenseOf, buildSpellWordQuestions: buildSpellWordQuestions,
+    buildSentenceQuestions: buildSentenceQuestions, buildChooseQuestions: buildChooseQuestions,
+    buildMixQuestions: buildMixQuestions, buildReviewQuestions: buildReviewQuestions
+  };
+
+  // 顶层全局别名，便于 app.js 直接调用
+  global.normalizeWord = normalizeWord;
+  global.normalizeSentence = normalizeSentence;
+  global.spellJudge = spellJudge;
+  global.firstMismatch = firstMismatch;
+  global.sm2 = sm2;
+  global.getDifficulty = getDifficulty;
+  global.timeForTarget = timeForTarget;
+  global.computeResult = computeResult;
+  global.shuffle = shuffle;
+  global.buildSpellWordQuestions = buildSpellWordQuestions;
+  global.buildSentenceQuestions = buildSentenceQuestions;
+  global.buildChooseQuestions = buildChooseQuestions;
+  global.buildMixQuestions = buildMixQuestions;
+  global.buildReviewQuestions = buildReviewQuestions;
+  global.ALL_WORDS = ALL_WORDS;
+  global.ALL_SENSES = ALL_SENSES;
+  global.coreSenseOf = coreSenseOf;
+})(typeof window !== 'undefined' ? window : this);
+</script>
+<script>/* ============================================================
+ * XB4 单词闯关 · 本地持久化 (storage)
+ * ------------------------------------------------------------
+ * 基于 localStorage 保存学习记录（错词本 / 掌握度 / 待复习），
+ * 并驱动 SM-2 间隔重复调度。所有函数均为纯数据操作，不碰 DOM。
+ * ============================================================ */
+(function (global) {
+  'use strict';
+
+  var LS_KEY = 'xb4-learn-v1';
+  var DIFF_KEY = 'xb4-diff';
+  var GROUP_KEY = 'xb4-group';
+  var DAY = 86400000;
+
+  function loadLearn() {
+    try { return JSON.parse(global.localStorage.getItem(LS_KEY)) || {}; }
+    catch (e) { return {}; }
+  }
+  function saveLearn(o) {
+    try { global.localStorage.setItem(LS_KEY, JSON.stringify(o)); } catch (e) {}
+  }
+
+  // quality: 0~5（SuperMemo SM-2 评分）。答对记 5，答错记 1。
+  function recordAttempt(word, quality) {
+    var m = loadLearn();
+    var w = String(word).toLowerCase();
+    var rec = m[w] || { ease: 2.5, interval: 0, reps: 0, wrong: 0, correct: 0, due: Date.now() };
+    var r = global.XB4_CORE.sm2(rec.ease, rec.interval, rec.reps, quality);
+    rec.ease = r.ease;
+    rec.interval = r.interval;
+    rec.reps = r.reps;
+    rec.due = Date.now() + r.interval * DAY;
+    if (quality >= 3) rec.correct = (rec.correct || 0) + 1;
+    else rec.wrong = (rec.wrong || 0) + 1;
+    m[w] = rec;
+    saveLearn(m);
+    return rec;
+  }
+
+  function getStats() {
+    var m = loadLearn();
+    var now = Date.now();
+    var learned = 0, mastered = 0, due = 0, wrong = 0;
+    Object.keys(m).forEach(function (k) {
+      var r = m[k];
+      learned++;
+      if ((r.interval || 0) >= 21 || (r.reps || 0) >= 3) mastered++;
+      if ((r.due || 0) <= now) due++;
+      if ((r.wrong || 0) > 0) wrong++;
+    });
+    return { learned: learned, mastered: mastered, due: due, wrong: wrong };
+  }
+
+  function getReviewWords() {
+    var m = loadLearn();
+    var now = Date.now();
+    var set = {};
+    Object.keys(m).forEach(function (k) {
+      var r = m[k];
+      if ((r.due || 0) <= now || (r.wrong || 0) > 0) set[k] = true;
+    });
+    return global.ALL_WORDS.filter(function (w) { return set[w.word.toLowerCase()]; });
+  }
+
+  function getDiff() { return global.localStorage.getItem(DIFF_KEY) || 'normal'; }
+  function setDiff(k) { global.localStorage.setItem(DIFF_KEY, k); }
+  /* 当前分组：'all' | '1' | '2' | '3'（按教材词汇表顺序等分）。
+   * 只影响出题词池，学习进度仍按单词存储，切组不丢数据。 */
+  function getGroup() { return global.localStorage.getItem(GROUP_KEY) || 'all'; }
+  function setGroup(k) { global.localStorage.setItem(GROUP_KEY, k); }
+  function resetProgress() {
+    try { global.localStorage.removeItem(LS_KEY); } catch (e) {}
+  }
+
+  /* 3.7 埋点：词级作答统计（正确率 / 平均用时 / 错误字母混淆矩阵）
+   * 结构：{ word: { n, ok, totalMs, errs: { 'i>e': 2, 'c>k': 1 } } }
+   * 用于数据验证难度合理性：词正确率<40% 判过难、>95% 判过易；混淆矩阵反哺形近干扰池。 */
+  var WSTAT_KEY = 'xb4-wstat';
+  function loadWstat() {
+    try { return JSON.parse(global.localStorage.getItem(WSTAT_KEY)) || {}; }
+    catch (e) { return {}; }
+  }
+  function recordWordStat(word, correct, ms, errPairs) {
+    var m = loadWstat();
+    var w = String(word == null ? '' : word).toLowerCase();
+    if (!w) return null;
+    var rec = m[w] || { n: 0, ok: 0, totalMs: 0, errs: {} };
+    rec.n = (rec.n || 0) + 1;
+    if (correct) rec.ok = (rec.ok || 0) + 1;
+    if (typeof ms === 'number' && !isNaN(ms) && ms >= 0) rec.totalMs = (rec.totalMs || 0) + ms;
+    (errPairs || []).forEach(function (p) {
+      if (!p) return;
+      var k = (p.expected || '?') + '>' + (p.got || '?');
+      rec.errs[k] = (rec.errs[k] || 0) + 1;
+    });
+    m[w] = rec;
+    try { global.localStorage.setItem(WSTAT_KEY, JSON.stringify(m)); } catch (e) {}
+    return rec;
+  }
+  function getWordStats() { return loadWstat(); }
+
+  /* ============ 时间闯关：道具 / 时间币 / 最佳时间排行榜（设计方案 §3/§5） ============ */
+  var ITEMS_KEY = 'xb4-items';
+  var COINS_KEY = 'xb4-coins';
+  var BEST_KEY = 'xb4-besttime';
+  var GIFT_KEY = 'xb4-time-gift';
+
+  function loadJSON(k) { try { return JSON.parse(global.localStorage.getItem(k)) || {}; } catch (e) { return {}; } }
+  function saveJSON(k, o) { try { global.localStorage.setItem(k, JSON.stringify(o)); } catch (e) {} }
+
+  /* 新手礼包：首次进入计时模式送 ⏸暂停×1 + ⏱加时×1 */
+  function ensureTimeGift() {
+    try {
+      if (global.localStorage.getItem(GIFT_KEY)) return;
+      global.localStorage.setItem(GIFT_KEY, '1');
+      var it = loadJSON(ITEMS_KEY);
+      it.pause = (it.pause || 0) + 1;
+      it.bonus = (it.bonus || 0) + 1;
+      saveJSON(ITEMS_KEY, it);
+    } catch (e) {}
+  }
+  function getItems() { return loadJSON(ITEMS_KEY); }
+  function addItem(type, n) {
+    var it = loadJSON(ITEMS_KEY);
+    it[type] = (it[type] || 0) + (n || 1);
+    saveJSON(ITEMS_KEY, it);
+    return it;
+  }
+  function consumeItem(type) {
+    var it = loadJSON(ITEMS_KEY);
+    if (!(it[type] > 0)) return false;
+    it[type] -= 1;
+    saveJSON(ITEMS_KEY, it);
+    return true;
+  }
+  function getCoins() { var c = parseInt(global.localStorage.getItem(COINS_KEY) || '0', 10); return isNaN(c) ? 0 : c; }
+  function addCoins(n) {
+    var c = getCoins() + (n || 0);
+    try { global.localStorage.setItem(COINS_KEY, String(Math.max(0, c))); } catch (e) {}
+    return getCoins();
+  }
+  function getBestTime() { return loadJSON(BEST_KEY); }
+  /* 返回 true 表示破纪录 */
+  function setBestTime(word, ms) {
+    var m = loadJSON(BEST_KEY);
+    var w = String(word == null ? '' : word).toLowerCase();
+    if (!w) return false;
+    var rec = m[w];
+    if (rec && rec.ms <= ms) return false;
+    m[w] = { ms: Math.round(ms), date: new Date().toISOString() };
+    saveJSON(BEST_KEY, m);
+    return true;
+  }
+
+  global.XB4_STORE = {
+    loadLearn: loadLearn, saveLearn: saveLearn, recordAttempt: recordAttempt,
+    getStats: getStats, getReviewWords: getReviewWords, getDiff: getDiff,
+    setDiff: setDiff, getGroup: getGroup, setGroup: setGroup, resetProgress: resetProgress,
+    recordWordStat: recordWordStat, getWordStats: getWordStats,
+    ensureTimeGift: ensureTimeGift, getItems: getItems, addItem: addItem,
+    consumeItem: consumeItem, getCoins: getCoins, addCoins: addCoins,
+    getBestTime: getBestTime, setBestTime: setBestTime
+  };
+  global.getStats = getStats;
+  global.getReviewWords = getReviewWords;
+  global.getDiff = getDiff;
+  global.setDiff = setDiff;
+  global.getGroup = getGroup;
+  global.setGroup = setGroup;
+  global.recordAttempt = recordAttempt;
+  global.resetProgress = resetProgress;
+  global.recordWordStat = recordWordStat;
+  global.getWordStats = getWordStats;
+  global.ensureTimeGift = ensureTimeGift;
+  global.getItems = getItems;
+  global.addItem = addItem;
+  global.consumeItem = consumeItem;
+  global.getCoins = getCoins;
+  global.addCoins = addCoins;
+  global.getBestTime = getBestTime;
+  global.setBestTime = setBestTime;
+})(typeof window !== 'undefined' ? window : this);
+</script>
+<script>/* ================================================================
+ * XB4 单词闯关 · 发音 (audio)
+ * ----------------------------------------------------------------
+ * 四级回退，兼容安卓 / iOS / 桌面 / 离线环境：
+ *   0) 本地预打包 mp3（assets/audio/{word}.mp3）—— 100% 命中，无网也响
+ *   1) Web Speech API (SpeechSynthesis) —— 桌面 Chrome/Edge、iOS Safari
+ *   2) 在线 TTS：<audio> 元素逐个尝试有道 / 百度 / Google
+ *   3) 文本兜底（全部失败时）—— 题面单词短暂高亮 + 温和提示
+ * ================================================================ */
+(function (global) {
+  'use strict';
+
+  var voiceReady = false;
+  var voiceChecked = false;
+  var enVoice = null;
+  var audioCache = Object.create(null);
+  var HAS_LOCAL = false;
+
+  /* 本地预打包 mp3 词表改为【动态派生】（修复安卓点单词无声的根因之一）：
+   *  - 优先从 XB4_DATA.WORDS / SENTENCES 取全部单词，合并版与单单元版自动覆盖；
+   *  - 任何“单个英文单词 / 连字符词”也视为本地候选：缺 mp3 时 onerror 快速回退，
+   *    不再因硬编码白名单漏词而跳过 Tier-0 本地发音。 */
+  var LOCAL_LOOKUP = Object.create(null);
+  function initLocalVocab() {
+    try {
+      var d = global.XB4_DATA;
+      var list = [];
+      if (d && Array.isArray(d.WORDS)) d.WORDS.forEach(function (w) { if (w && w.word) list.push(String(w.word)); });
+      if (d && Array.isArray(d.SENTENCES)) d.SENTENCES.forEach(function (s) { if (s && s.word) list.push(String(s.word)); });
+      list.forEach(function (w) { LOCAL_LOOKUP[String(w).toLowerCase().trim()] = true; });
+    } catch (_) {}
+  }
+  initLocalVocab();
+  var WORD_RE = /^[a-z]+(?:[-'][a-z]+)*$/i;
+
+  /* ---------------- Tier 0: 本地预打包 mp3 ---------------- */
+  function localUrlFor(word) {
+    var raw = String(word == null ? '' : word).trim().toLowerCase();
+    if (!raw) return '';
+    // GitHub Pages：mp3 放在仓库根目录，空格转下划线以匹配已上传文件
+    return raw.replace(/\s+/g, '_') + '.mp3';
+  }
+  function canLocalFor(text) {
+    if (!HAS_LOCAL) return false;
+    if (!text) return false;
+    var t = String(text).toLowerCase().trim();
+    return !!LOCAL_LOOKUP[t] || WORD_RE.test(t);
+  }
+  /* ---------------- 移动端手势解锁 ---------------- */
+  var audioUnlocked = false;
+  function unlockAudio() {
+    if (audioUnlocked) return;
+    audioUnlocked = true;
+    // 移动端浏览器要求首个声音必须由用户手势触发。首次交互时用一段静音 wav
+    // “解锁”媒体播放引擎，并预热 speechSynthesis 语音通道（iOS/部分安卓需要）。
+    try {
+      var s = new Audio();
+      s.src = 'data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQAAAAA=';
+      var pr = s.play();
+      if (pr && typeof pr.catch === 'function') pr.catch(function () {});
+    } catch (_) {}
+    try { if ('speechSynthesis' in global) global.speechSynthesis.cancel(); } catch (_) {}
+  }
+  function attachGestureUnlock() {
+    if (typeof global.addEventListener === 'undefined') return;
+    var events = ['touchstart', 'pointerdown', 'mousedown', 'keydown', 'click'];
+    function handler() {
+      unlockAudio();
+      events.forEach(function (e) { try { global.removeEventListener(e, handler); } catch (_) {} });
+    }
+    events.forEach(function (e) { try { global.addEventListener(e, handler, { passive: true }); } catch (_) {} });
+  }
+
+  function speakViaLocalMp3(text) {
+    return new Promise(function (resolve, reject) {
+      if (typeof global.Audio === 'undefined') return reject(new Error('no-audio-api'));
+      var key = text.toLowerCase().trim();
+      var a = audioCache[key];
+      if (!a) {
+        try { a = new Audio(); a.preload = 'auto'; a.src = localUrlFor(text); audioCache[key] = a; }
+        catch (e) { return reject(e); }
+      } else {
+        try { a.currentTime = 0; } catch (_) {}
+      }
+      var settled = false;
+      function ok() { if (settled) return; settled = true; resolve(true); }
+      function bad(err) { if (settled) return; settled = true; reject(err || new Error('local-failed')); }
+      a.onerror = function () { bad(new Error('local-load-failed')); };
+      // 关键修复：play() 被自动播放策略（安卓/微信更严格）拒绝时，必须 reject
+      // 让上一级 fall through 到 SpeechSynthesis，而不是靠 oncanplay 误报“成功”。
+      var watchdog = setTimeout(function () { bad(new Error('local-play-timeout')); }, 1500);
+      var p;
+      try { p = a.play(); } catch (e) { clearTimeout(watchdog); return bad(e); }
+      if (p && typeof p.then === 'function') {
+        p.then(function () { clearTimeout(watchdog); ok(); })
+         .catch(function (err) { clearTimeout(watchdog); bad(err || new Error('play-rejected')); });
+      } else {
+        clearTimeout(watchdog); ok();
+      }
+    });
+  }
+
+  /* ---------------- Tier 1: Web Speech API ---------------- */
+  function setVoice() {
+    if (!('speechSynthesis' in global)) return;
+    try {
+      var vs = global.speechSynthesis.getVoices() || [];
+      enVoice = vs.filter(function (v) { return /^en[-_]US/i.test(v.lang); })[0] ||
+                vs.filter(function (v) { return /^en/i.test(v.lang); })[0] || null;
+      voiceReady = !!enVoice;
+    } catch (_) { enVoice = null; voiceReady = false; }
+    voiceChecked = true;
+  }
+  function initVoice() {
+    attachGestureUnlock();
+    if (!('speechSynthesis' in global)) { voiceChecked = true; return; }
+    setVoice();
+    try { global.speechSynthesis.onvoiceschanged = setVoice; } catch (_) { voiceChecked = true; }
+  }
+  function canSpeakSync() {
+    if (!('speechSynthesis' in global)) return false;
+    if (voiceReady) return true;
+    try {
+      var vs = global.speechSynthesis.getVoices() || [];
+      if (vs.length > 0) { setVoice(); return voiceReady; }
+    } catch (_) {}
+    return false;
+  }
+  function speakViaSpeechSynthesis(text) {
+    return new Promise(function (resolve, reject) {
+      if (!('speechSynthesis' in global)) return reject(new Error('no-speech-api'));
+      try {
+        global.speechSynthesis.cancel();
+        var u = new global.SpeechSynthesisUtterance(text);
+        u.lang = 'en-US'; u.rate = 0.9;
+        if (enVoice) u.voice = enVoice;
+        var done = false;
+        function finish(ok, err) { if (done) return; done = true; ok ? resolve(true) : reject(err || new Error('speech-failed')); }
+        u.onend = function () { finish(true); };
+        u.onerror = function (e) { finish(false, e); };
+        global.speechSynthesis.speak(u);
+        setTimeout(function () { finish(true); }, 5000);
+      } catch (e) { reject(e); }
+    });
+  }
+
+  /* ---------------- Tier 2: 在线 TTS ---------------- */
+  var TTS_ENDPOINTS = [
+    { name: 'youdao-en',    url: function (w) { return 'https://dict.youdao.com/dictvoice?type=2&audio=' + encodeURIComponent(w); } },
+    { name: 'youdao-en-uk', url: function (w) { return 'https://dict.youdao.com/dictvoice?type=1&audio=' + encodeURIComponent(w); } },
+    { name: 'baidu-fanyi',  url: function (w) { return 'https://fanyi.baidu.com/gettts?lan=en&text=' + encodeURIComponent(w) + '&spd=3&source=web'; } },
+    { name: 'google-gtx',   url: function (w) { return 'https://translate.googleapis.com/translate_tts?ie=UTF-8&q=' + encodeURIComponent(w) + '&tl=en&client=gtx'; } }
+  ];
+  function speakViaHttpTTS(text) {
+    return new Promise(function (resolve, reject) {
+      if (typeof global.Audio === 'undefined') return reject(new Error('no-audio-api'));
+      var idx = 0, settled = false, audio = null, timer = null;
+      function cleanup() { if (timer) { clearTimeout(timer); timer = null; } }
+      function tryNext() {
+        if (settled) return;
+        if (idx >= TTS_ENDPOINTS.length) { settled = true; cleanup(); try { if (audio) { audio.oncanplay = null; audio.onerror = null; } } catch (_) {} reject(new Error('all-tts-failed')); return; }
+        var ep = TTS_ENDPOINTS[idx++];
+        try {
+          audio = new Audio();
+          audio.preload = 'auto';
+          // 注意：不要设置 crossOrigin（有道/百度/Google 均无 CORS 头），
+          // 否则音频元素会因 CORS 校验失败而 onerror，导致在线 TTS 全部落空。
+          audio.oncanplay = function () {
+            if (settled) return;
+            var p;
+            try { p = audio.play(); } catch (e) { tryNext(); return; }
+            if (p && typeof p.then === 'function') {
+              p.then(function () { if (!settled) { settled = true; cleanup(); resolve(ep.name); } }).catch(function () { tryNext(); });
+            } else { settled = true; cleanup(); resolve(ep.name); }
+          };
+          audio.onerror = function () { tryNext(); };
+          audio.src = ep.url(text);
+        } catch (_) { tryNext(); }
+      }
+      timer = setTimeout(function () { if (!settled) { settled = true; cleanup(); reject(new Error('tts-timeout')); } }, 10000);
+      tryNext();
+    });
+  }
+
+  /* ---------------- Tier 3: 文本兜底 ---------------- */
+  function speakViaFallback(text) {
+    try { if (global.flashWordHighlight) global.flashWordHighlight(text); } catch (_) {}
+    if (global.toast) global.toast('🔇 当前网络不可用，请参照题面上的单词和释义朗读');
+  }
+
+  /* ---------------- 对外主入口 ---------------- */
+  function speak(text, opts) {
+    opts = opts || {};
+    if (!text) { var empty = { ok: false, method: 'none', error: 'empty-text' }; if (opts.callback) opts.callback(empty); return Promise.resolve(empty); }
+    function finalize(r) { if (opts.callback) { try { opts.callback(r); } catch (_) {} } return r; }
+
+    unlockAudio(); // 确保首次发音前媒体引擎已解锁（移动端）
+
+    // 安卓（尤其微信内置浏览器）：SpeechSynthesis 常“报成功却无声”，
+    // 而在线 TTS 走 <audio> 真实播放反而更稳 → 本地失败后【优先在线 TTS，再 Speech】；
+    // iOS/桌面：SpeechSynthesis 稳定 → 保持“Speech 优先、在线 TTS 兜底”。
+    var UA = (global.navigator && global.navigator.userAgent) || '';
+    var isAndroid = /Android/i.test(UA) && !/iP(hone|ad|od)/i.test(UA);
+
+    function tryHttpThenSpeech() {
+      return speakViaHttpTTS(text).then(function (ep) {
+        return finalize({ ok: true, method: 'http', text: text, endpoint: ep });
+      }).catch(function () {
+        if (canSpeakSync()) {
+          return speakViaSpeechSynthesis(text).then(function () {
+            return finalize({ ok: true, method: 'speech', text: text });
+          }).catch(function (err) {
+            speakViaFallback(text);
+            return finalize({ ok: false, method: 'none', text: text, error: String((err && err.message) || err) });
+          });
+        }
+        speakViaFallback(text);
+        return finalize({ ok: false, method: 'none', text: text, error: 'all-failed' });
+      });
+    }
+    function trySpeechThenHttp() {
+      if (canSpeakSync()) {
+        return speakViaSpeechSynthesis(text).then(function () {
+          return finalize({ ok: true, method: 'speech', text: text });
+        }).catch(function () {
+          return speakViaHttpTTS(text).then(function (ep) {
+            return finalize({ ok: true, method: 'http', text: text, endpoint: ep });
+          }).catch(function (err) {
+            speakViaFallback(text);
+            return finalize({ ok: false, method: 'none', text: text, error: String((err && err.message) || err) });
+          });
+        });
+      }
+      return speakViaHttpTTS(text).then(function (ep) {
+        return finalize({ ok: true, method: 'http', text: text, endpoint: ep });
+      }).catch(function (err) {
+        speakViaFallback(text);
+        return finalize({ ok: false, method: 'none', text: text, error: String((err && err.message) || err) });
+      });
+    }
+
+    if (canLocalFor(text)) {
+      return speakViaLocalMp3(text).then(function () {
+        return finalize({ ok: true, method: 'local', text: text, endpoint: localUrlFor(text) });
+      }).catch(function () {
+        // 本地 mp3 失败（404 / 解码失败 / 自动播放被拦截）→ 按平台走最优回退
+        return isAndroid ? tryHttpThenSpeech() : trySpeechThenHttp();
+      });
+    }
+    return isAndroid ? tryHttpThenSpeech() : trySpeechThenHttp();
+  }
+
+  /* ---------------- 英语鼓励音（用户要求：适当处添加） ----------------
+   * praiseText(kind)：取一句鼓励语（供 UI 文字同步展示，保证"看得到"）
+   * speakPraise(kind, fixedPhrase)：朗读该句（供"听得到"）
+   *   ★ 声画一致红线：必须传 fixedPhrase（即 praiseText 返回的那句），
+   *     否则内部会二次随机，出现"显示 Great job、播放 Well done"的错配。
+   *     正确写法：var pt = praiseText(k); speakPraise(k, pt);
+   * 播放链：SpeechSynthesis（只要有就尝试，不依赖语音列表是否就绪）
+   *        → 在线 TTS（有道/百度/Google，短句都能读）→ 全部失败静默，绝不阻塞作答。
+   */
+  var PRAISE_POOL = {
+    ok:   ['Great job!', 'Well done!', 'Perfect!', 'Nice work!', 'Excellent!', 'You got it!'],
+    combo:["You\'re on fire!", 'Amazing!', 'Incredible!', 'Brilliant!', 'Fantastic!'],
+    err:  ['Try again!', 'Don\'t give up!', 'Almost there!', 'Keep going!'],
+    high: ['Amazing! You did it!', 'That\'s fantastic!', 'You are a star!'],
+    mid:  ['Good job! Keep going!', 'Nice work! Well done!'],
+    low:  ['Practice makes perfect!', 'Don\'t worry, keep trying!']
+  };
+  function praiseText(kind) {
+    var pool = PRAISE_POOL[kind] || [];
+    return pool.length ? pool[Math.floor(Math.random() * pool.length)] : '';
+  }
+  /* 鼓励短句本地预打包 mp3（22 句，assets/audio/praise/），
+   * 与 18 个单词同一 Tier-0 机制：手势内同步 play，安卓最稳，
+   * 不依赖网络 / 英文语音包 / WebView 内核。 */
+  function praiseSlug(phrase) {
+    return String(phrase).toLowerCase().replace(/[^a-z ]/g, '').replace(/\s+/g, '-') + '.mp3';
+  }
+  function praiseLocalUrl(phrase) { return praiseSlug(phrase); }
+  function speakPraiseViaLocal(phrase) {
+    return new Promise(function (resolve, reject) {
+      if (typeof global.Audio === 'undefined') return reject(new Error('no-audio-api'));
+      var a;
+      try { a = new Audio(); a.preload = 'auto'; a.src = praiseLocalUrl(phrase); }
+      catch (e) { return reject(e); }
+      var settled = false;
+      function ok() { if (settled) return; settled = true; resolve(true); }
+      function bad(err) { if (settled) return; settled = true; reject(err || new Error('praise-local-failed')); }
+      a.onerror = function () { bad(new Error('praise-local-load-failed')); };
+      // 关键：play() 在 speakPraise 的调用栈内同步执行（用户手势内）→ 安卓放行
+      var watchdog = setTimeout(function () { bad(new Error('praise-local-timeout')); }, 3000);
+      var p;
+      try { p = a.play(); } catch (e) { clearTimeout(watchdog); return bad(e); }
+      if (p && typeof p.then === 'function') {
+        p.then(function () { clearTimeout(watchdog); ok(); })
+         .catch(function (err) { clearTimeout(watchdog); bad(err || new Error('praise-play-rejected')); });
+      } else {
+        clearTimeout(watchdog); ok();
+      }
+    });
+  }
+  /* 鼓励音播放链：
+   *   Tier 0 本地 mp3（手势内同步 play，安卓最稳，与单词发音同机制）
+   *   Tier 1 SpeechSynthesis（等 onend 才算成功；onerror/2.5s 无回调→下一级；
+   *           Chrome Android cancel 后延迟 150ms；iOS 手势内同步）
+   *   Tier 2 在线 TTS（有道/百度/Google）
+   *   全失败 → 静默（UI 文字仍显示英文鼓励语，双通道兜底） */
+  /* 声画一致关键：调用方必须把"屏幕展示的那句"传进来（fixedPhrase），
+   * 否则此处再次随机就会与屏幕文字对不上（显示 Great job、播放 Well done）。
+   * 正确用法：var pt = praiseText(k); speakPraise(k, pt); */
+  function speakPraise(kind, fixedPhrase) {
+    var phrase = fixedPhrase || praiseText(kind);
+    if (!phrase) return Promise.resolve({ ok: false, method: 'none', kind: kind });
+    unlockAudio(); // 移动端必须先解锁媒体引擎，否则首音被拦截
+    // Tier 0：本地预打包短句 mp3
+    return speakPraiseFallback(phrase, kind);
+  }
+  function speakPraiseFallback(phrase, kind) {
+    if (!('speechSynthesis' in global)) {
+      // 无语音 API（jsdom / 极老浏览器）→ 静默
+      return Promise.resolve({ ok: false, method: 'none', kind: kind, phrase: phrase });
+    }
+    var UA = (global.navigator && global.navigator.userAgent) || '';
+    var isWeChatAndroid = /MicroMessenger/i.test(UA) && /Android/i.test(UA);
+    if (isWeChatAndroid) {
+      // 安卓微信：speechSynthesis 不可靠 → 在线 TTS
+      return speakViaHttpTTS(phrase).then(function (ep) {
+        return { ok: true, method: 'http', kind: kind, phrase: phrase, endpoint: ep };
+      }).catch(function () {
+        return { ok: false, method: 'none', kind: kind, phrase: phrase };
+      });
+    }
+    // 普通环境：SpeechSynthesis，等 onend/onerror/超时判定成败
+    return new Promise(function (resolve) {
+      var settled = false;
+      function settle(res) { if (settled) return; settled = true; resolve(res); }
+      try {
+        var speakNow = function () {
+          try {
+            var u = new global.SpeechSynthesisUtterance(phrase);
+            u.lang = 'en-US'; u.rate = 1.05; u.volume = 0.95;
+            if (enVoice) u.voice = enVoice;
+            u.onend = function () { settle({ ok: true, method: 'speech', kind: kind, phrase: phrase }); };
+            u.onerror = function () { settle({ ok: false, method: 'speech-failed', kind: kind, phrase: phrase }); };
+            global.speechSynthesis.speak(u);
+            setTimeout(function () {
+              settle({ ok: false, method: 'speech-timeout', kind: kind, phrase: phrase });
+            }, 2500);
+          } catch (e) {
+            settle({ ok: false, method: 'speech-error', kind: kind, phrase: phrase });
+          }
+        };
+        // iOS Safari：speak() 必须在用户手势内同步调用（延迟会被忽略）→ 直接播
+        // 安卓 Chrome：cancel() 后立即 speak() 会无声 → 延迟 150ms 再播
+        var isIOS = /iP(hone|ad|od)/i.test(UA);
+        if (isIOS) {
+          try { global.speechSynthesis.cancel(); } catch (_) {}
+          speakNow();
+        } else {
+          try { global.speechSynthesis.cancel(); } catch (_) {}
+          setTimeout(speakNow, 150);
+        }
+      } catch (e) {
+        settle({ ok: false, method: 'speech-error', kind: kind, phrase: phrase });
+      }
+    }).then(function (r) {
+      if (r.ok) return r;
+      // speech 失败/超时 → 在线 TTS 兜底
+      return speakViaHttpTTS(phrase).then(function (ep) {
+        return { ok: true, method: 'http', kind: kind, phrase: phrase, endpoint: ep };
+      }).catch(function () {
+        return { ok: false, method: 'none', kind: kind, phrase: phrase };
+      });
+    });
+  }
+
+  function detect() {
+    return { speech: canSpeakSync(), audio: typeof global.Audio !== 'undefined', local: HAS_LOCAL, cacheSize: Object.keys(audioCache).length };
+  }
+
+  /* ---------------- 时间闯关：紧张音效（Web Audio 合成，零依赖） ----------------
+   * tickSound：剩余 ≤10s 每秒滴答（800Hz 短促）；alarmSound：≤5s 双音告警。 */
+  var _audioCtx = null;
+  function ctx() {
+    try {
+      if (!_audioCtx) {
+        var AC = global.AudioContext || (global.webkitAudioContext);
+        if (!AC) return null;
+        _audioCtx = new AC();
+      }
+      if (_audioCtx.state === 'suspended') { try { _audioCtx.resume(); } catch (e) {} }
+      return _audioCtx;
+    } catch (e) { return null; }
+  }
+  function beep(freq, dur, when, vol) {
+    var c = ctx();
+    if (!c) return;
+    try {
+      var o = c.createOscillator(), g = c.createGain();
+      o.type = 'square'; o.frequency.value = freq;
+      var t0 = c.currentTime + (when || 0);
+      g.gain.setValueAtTime(0.0001, t0);
+      g.gain.exponentialRampToValueAtTime(vol || 0.08, t0 + 0.01);
+      g.gain.exponentialRampToValueAtTime(0.0001, t0 + (dur || 0.08));
+      o.connect(g); g.connect(c.destination);
+      o.start(t0); o.stop(t0 + (dur || 0.08) + 0.02);
+    } catch (e) {}
+  }
+  function tickSound() { beep(800, 0.06, 0, 0.06); }
+  function alarmSound() { beep(1200, 0.12, 0, 0.09); beep(1600, 0.12, 0.15, 0.09); }
+
+  /* ---------------- 背景音乐（Web Audio 合成柔和琶音，零依赖） ----------------
+   * 默认关闭（课堂场景安全），由首页开关主动开启。低音量、循环上行/下行琶音。 */
+  var BGM_NOTES = [261.63, 329.63, 392.00, 440.00, 392.00, 329.63, 293.66, 261.63]; // C E G A G E D C
+  var bgmTimer = null, bgmStep = 0;
+  function bgmNote() {
+    var c = ctx();
+    if (!c) return;
+    try {
+      var f = BGM_NOTES[bgmStep % BGM_NOTES.length]; bgmStep++;
+      var o = c.createOscillator(), g = c.createGain();
+      o.type = 'sine'; o.frequency.value = f;
+      var t0 = c.currentTime;
+      g.gain.setValueAtTime(0.0001, t0);
+      g.gain.exponentialRampToValueAtTime(0.028, t0 + 0.05);
+      g.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.42);
+      o.connect(g); g.connect(c.destination);
+      o.start(t0); o.stop(t0 + 0.45);
+    } catch (e) {}
+  }
+  function bgmStart() {
+    if (bgmTimer) return;
+    if (!ctx()) return; // 无 AudioContext（老浏览器/测试环境）→ 静默
+    bgmStep = 0;
+    bgmTimer = setInterval(bgmNote, 560);
+  }
+  function bgmStop() { if (bgmTimer) { clearInterval(bgmTimer); bgmTimer = null; } }
+
+  global.XB4_AUDIO = { initVoice: initVoice, speak: speak, speakPraise: speakPraise, praiseText: praiseText, detect: detect, canSpeakSync: canSpeakSync, canLocalFor: canLocalFor, tickSound: tickSound, alarmSound: alarmSound, bgmStart: bgmStart, bgmStop: bgmStop };
+  global.initVoice = initVoice;
+  global.speak = speak;
+  global.speakPraise = speakPraise;
+  global.praiseText = praiseText;
+  global.tickSound = tickSound;
+  global.alarmSound = alarmSound;
+  global.bgmStart = bgmStart;
+  global.bgmStop = bgmStop;
+})(typeof window !== 'undefined' ? window : this);
+</script>
+<script>/* ============================================================
+ * XB4 单词闯关 · 界面与交互 (app)
+ * ------------------------------------------------------------
+ * 游戏状态机 + DOM 渲染 + 点击字母键盘 + 分享。依赖 core/storage/audio。
+ * 通过经典 <script> 全局函数暴露，支持直接双击 index.html 打开，
+ * 也支持本地静态服务器运行。
+ * ============================================================ */
+(function (global) {
+  'use strict';
+
+  var document = global.document;
+  // storage.js 在 app 之前加载，先捕获它暴露的持久化 setDiff，
+  // 避免下方 app 同名函数覆盖 global.setDiff 后产生无限递归调用。
+  var G_setDiff = global.setDiff;
+  var G_setGroup = global.setGroup;   // 同理，先捕获持久化的 setGroup 再覆盖
+
+  /* ---------- 游戏状态 ---------- */
+  var state = {
+    mode: null, questions: [], idx: 0, correct: 0, answered: false, q: null,
+    inputVal: '', typed: [], tiles: [], capsOn: false, lastIdx: -1, firstHint: '', isReview: false,
+    streak: 0,        // 连续答对计数（≥3 触发更热烈的英语鼓励音；每满 5 题送礼）
+    lastGiftAt: 0,    // 上次送礼时的连对数（防同一连对数重复送礼）
+    wrongStreak: 0,   // 连续答错计数（3.4 自适应用）
+    adj: 0,           // 自适应：干扰字母调整量（-2 ~ +2）
+    adjHint: false,   // 自适应：是否自动开启首字母提示
+    qStart: 0,        // 题目开始时间（3.7 埋点：用时统计）
+    /* 时间闯关（设计方案 §1-§6） */
+    timeLeft: 0, timeTotal: 0, timerId: 0,   // 剩余/总限时/定时器句柄
+    timeScale: 1, timePaused: false,          // 动态系数 / 暂停道具
+    slowTicks: 0,                             // 减速道具剩余 tick 数（每 tick -0.5s）
+    lastLeftRatio: 0.5,                       // 上一题时间余量比（驱动动态调节）
+    timeCoinsEarned: 0, newRecord: false      // 本局金币奖励 / 是否破纪录
+  };
+  var MODE_LABEL = { spell: '拼写挑战', choose: '听音选义', mix: '混合训练', review: '错词复习' };
+  /* 难度说明（随选择实时变化，让三档差异一目了然） */
+  var DIFF_DESC = {
+    easy:   '🟢 基础 · 有首字母提示，字母池小（约 11 键）',
+    normal: '🟡 标准 · 无首字母提示，字母池中等（约 14 键）',
+    hard:   '🔴 进阶 · 无首字母提示，干扰字母最多（约 17 键）'
+  };
+
+  /* ---------- 屏幕切换 ---------- */
+  function show(id) {
+    var screens = document.querySelectorAll('.screen');
+    for (var i = 0; i < screens.length; i++) screens[i].classList.remove('active');
+    document.getElementById(id).classList.add('active');
+    global.scrollTo(0, 0);
+  }
+  function goHome() { renderHome(); show('home'); }
+
+  /* ---------- 分组：按教材词汇表顺序等分（10 / 10 / 9） ----------
+   * 分组只收窄「出题词池」，不改变按单词存储的 SM-2 进度，切组不丢数据。
+   * 选择题的干扰项仍取自全单元义项池（core.js 的 ALL_SENSES），
+   * 因此分组后题目变短，但干扰强度不下降。 */
+  function GROUPS() { return global.GROUPS || []; }
+  function curGroup() { return global.getGroup ? global.getGroup() : 'all'; }
+  function setGroup(k) {
+    if (G_setGroup) G_setGroup(k);
+    renderHome();   // 内部会 renderDiff + renderGroup
+  }
+  /* g 省略时取当前分组；传 'all' 表示全单元 */
+  function poolWords(list, g) {
+    if (g === undefined) g = curGroup();
+    if (g === 'all') return list || [];
+    return (list || []).filter(function (w) { return String(w.group) === g; });
+  }
+  /* 句子挖空题跟随分组：只保留本组拼写词对应的句子 */
+  function poolSentences(g) {
+    if (g === undefined) g = curGroup();
+    var S = global.SENTENCES || [];
+    if (g === 'all') return S;
+    var inGroup = {};
+    (global.WORDS || []).forEach(function (w) { if (String(w.group) === g) inGroup[w.word] = true; });
+    return S.filter(function (s) { return inGroup[s.word]; });
+  }
+  function groupInfo(k) {
+    var gs = GROUPS();
+    for (var i = 0; i < gs.length; i++) if (gs[i].key === k) return gs[i];
+    return null;
+  }
+  /* 该分组下各模式的题目数（首页说明文字用）
+   * 拼写 = 拼写词数 × 2（单词题 + 句子挖空题）；混合 = 拼写词 + 选择词 */
+  function groupCounts(k) {
+    var sp = poolWords(global.SPELL_WORDS || [], k).length;
+    var rd = poolWords(global.READ_WORDS || [], k).length;
+    return { spell: sp * 2, choose: rd, mix: sp + rd, words: sp + rd, spellWords: sp, readWords: rd };
+  }
+  function renderGroup() {
+    var seg = document.getElementById('groupSeg');
+    if (!seg) return;
+    var cur = curGroup();
+    seg.innerHTML = GROUPS().map(function (g) {
+      return '<button data-k="' + g.key + '" onclick="setGroup(\'' + g.key + '\')">' + g.label + '</button>';
+    }).join('');
+    var btns = seg.querySelectorAll('button');
+    for (var i = 0; i < btns.length; i++) btns[i].classList.toggle('on', btns[i].dataset.k === cur);
+    var gi = groupInfo(cur);
+    var c = groupCounts(cur);
+    var desc = document.getElementById('groupDesc');
+    if (desc && gi) {
+      desc.textContent = '📚 ' + gi.noRange + ' · ' + gi.sub +
+        '（拼写 ' + c.spellWords + ' 词 · 选择 ' + c.readWords + ' 词）' +
+        ' ｜ 本组题量：拼写 ' + c.spell + ' 题 · 听音选义 ' + c.choose + ' 题 · 混合 ' + c.mix + ' 题';
+    }
+    var vd = document.getElementById('vocabDesc');
+    if (vd && gi) vd.textContent = gi.sub + '（' + gi.noRange + '）、多义项、例句与词性标注一屏看全';
+  }
+
+  /* ---------- 首页 / 难度 ---------- */
+  /* 防御性：自动从提示文本中剔除目标答案字母序列，防止误配置导致答案泄露
+   *  - 同时处理大小写（包括句首大写目标词）
+   *  - 仅剔除完整单词/词组匹配，避免误伤中文释义中偶尔出现的相同字母串
+   *  - 用于任何 qhint / caps-tip / se-tip 渲染前的最后一道防线 */
+  function scrubAnswer(text, answer) {
+    if (!text || !answer) return text || '';
+    var s = String(text);
+    var a = String(answer).trim();
+    if (!a) return s;
+    // 优先剔除"答案原形"与"答案小写"两种形态（目标词常见大小写形式）
+    var variants = [a];
+    var low = a.toLowerCase();
+    var cap = a.charAt(0).toUpperCase() + a.slice(1).toLowerCase();
+    var upper = a.toUpperCase();
+    if (low !== a) variants.push(low);
+    if (cap !== a && cap !== low) variants.push(cap);
+    if (upper !== a && upper !== low && upper !== cap) variants.push(upper);
+    // 仅当答案全为字母/连字符/撇号/空格时才启用字母级剔除（避免误伤中文释义）
+    if (!/^[A-Za-z][A-Za-z\s'\-]*$/.test(a)) return s;
+    variants.forEach(function (v) {
+      if (!v) return;
+      // 用单词边界匹配：避免误删中文释义中的同字母组合
+      var re = new RegExp('\\b' + v.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\b', 'g');
+      s = s.replace(re, '〔答案已隐〕');
+    });
+    return s;
+  }
+
+  function renderDiff() {
+    var k = getDiff();
+    var btns = document.querySelectorAll('#diffSeg button');
+    for (var i = 0; i < btns.length; i++) btns[i].classList.toggle('on', btns[i].dataset.k === k);
+    var dd = document.getElementById('diffDesc');
+    if (dd) dd.textContent = DIFF_DESC[k] || '';
+  }
+  function renderHome() {
+    renderDiff();
+    renderGroup();
+    var st = getStats();
+    var stats = document.getElementById('stats');
+    var cells = [['已学', st.learned], ['掌握', st.mastered], ['待复习', st.due], ['错词', st.wrong]];
+    stats.innerHTML = cells.map(function (c) {
+      return '<div class="stat"><b>' + c[1] + '</b><span>' + c[0] + '</span></div>';
+    }).join('');
+    var rw = getReviewWords().length;
+    var badge = document.getElementById('reviewBadge');
+    badge.textContent = rw > 0 ? ('待复习 ' + rw + ' 词') : '';
+    badge.style.display = rw > 0 ? 'inline-block' : 'none';
+  }
+  function setDiff(k) { if (G_setDiff) G_setDiff(k); renderDiff(); renderHome(); }
+
+  /* ---------- 开始一个模式 ---------- */
+  function startMode(mode) {
+    var questions;
+    // 听音选义/混合里的选择题也按难度分档：基础 3 选 1 / 标准 4 选 1 / 进阶 5 选 1
+    var cd = getDifficulty(getDiff());
+    var chooseOpt = { wrong: cd.chooseWrong };
+    // 3.1 词内分阶：所有模式按难度档收窄词池 + 档内星级升序（从易到难，规律与拼写一致）
+    var starOpt = { minStar: cd.minStar, maxStar: cd.maxStar };
+    if (mode === 'spell') {
+      questions = buildSpellWordQuestions(poolWords(SPELL_WORDS), starOpt).concat(buildSentenceQuestions(poolSentences(), starOpt));
+    } else if (mode === 'choose') {
+      questions = buildChooseQuestions(poolWords(READ_WORDS), Object.assign({}, chooseOpt, starOpt)); // 仅"听力/阅读类"词做听音选义
+    } else if (mode === 'mix') {
+      questions = buildMixQuestions(poolWords(ALL_WORDS), Object.assign({}, chooseOpt, starOpt));
+    } else if (mode === 'review') {
+      var rw = poolWords(getReviewWords());
+      if (rw.length === 0) {
+        toast(curGroup() === 'all' ? '🎉 暂无错词，先去闯关吧！' : '🎉 本组暂无错词，可切到「全部」看看');
+        return;
+      }
+      questions = buildReviewQuestions(rw);
+    } else return;
+
+    // 空题单防护（单单元版可能某模式无词：如 U6 全为拼写类、听音选义 0 题）
+    if (!questions || questions.length === 0) {
+      toast('😅 当前难度下该模式暂无单词，请换一个模式或难度试试');
+      return;
+    }
+
+    state.mode = mode;
+    state.questions = questions;
+    state.idx = 0;
+    state.correct = 0;
+    state.streak = 0;     // 新模式连对计数归零
+    state.lastGiftAt = 0; // 送礼记录归零（新一局重新累计连对送礼）
+    state.wrongStreak = 0;
+    state.adj = 0;        // 自适应：干扰调整归零
+    state.adjHint = false;
+    state.isReview = (mode === 'review');
+    // 时间闯关：新局重置
+    state.timeScale = 1; state.timePaused = false; state.slowTicks = 0;
+    state.lastLeftRatio = 0.5; state.timeCoinsEarned = 0; state.newRecord = false;
+    if (global.ensureTimeGift) global.ensureTimeGift(); // 新手礼包（首次）
+    document.getElementById('modeText').textContent = MODE_LABEL[mode];
+    if (mode === 'spell' || mode === 'mix') maybeShowCapsTip();
+    renderQuestion();
+    show('play');
+  }
+
+  /* 首次进入拼写/混合：提示大写按钮用法（只弹一次） */
+  function maybeShowCapsTip() {
+    try {
+      var k = 'xb4-caps-tip-shown';
+      if (global.localStorage.getItem(k)) return;
+      global.localStorage.setItem(k, '1');
+      setTimeout(function () {
+        toast('💡 默认小写 · 需要大写时点「⇧ 大写」切换');
+      }, 600);
+    } catch (e) {}
+  }
+
+  /* ---------- 渲染题目 ---------- */
+  function renderQuestion() {
+    var q = state.q = state.questions[state.idx];
+    state.answered = false; state.inputVal = ''; state.typed = []; state.lastIdx = -1;
+    // 句首单词自动武装大写（输入首字母后会自动切回小写）；其他场景默认小写
+    state.capsOn = !!(q && q.targetInitial);
+    // 必须传当前存储的难度键（getDifficulty() 无参会永远返回“标准”，
+    // 这正是用户反馈“三层难度没有差别”的根因！）
+    var diff = getDifficulty(getDiff());
+    // 3.4 自适应：干扰字母数 ±adj，失败自动开首字母提示
+    var baseDiff = {
+      distractors: Math.max(2, diff.distractors + (state.adj || 0)),
+      firstHint: !!(diff.firstHint || state.adjHint),
+      isHard: diff.key === 'hard' // 3.3 形近干扰：仅进阶档启用
+    };
+    state.qStart = Date.now(); // 3.7 埋点：记录本题目开始时间
+    var tot = state.questions.length;
+    document.getElementById('progBar').style.width = Math.round(state.idx / tot * 100) + '%';
+    document.getElementById('progText').textContent = (state.idx + 1) + ' / ' + tot;
+    var fb = document.getElementById('feedback');
+    fb.className = 'feedback'; fb.innerHTML = '';
+    var qc = document.getElementById('qcard');
+    var html = '';
+    if (q.isSentence) {
+      var clozeEsc = String(q.clozeText || q.sentence || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      var clozeHtml = clozeEsc.replace(/______/g, '<b class="blank">______</b>');
+      var sentAns = q.target || q.word || '';
+      html += '<span class="qtag">拼写 · 句子挖空</span>';
+      html += '<div class="qhint">请拼出挖空处的单词<small>' + scrubAnswer(q.pos || '', sentAns) + '</small></div>';
+      html += '<div class="cloze">' + clozeHtml + '</div>';
+      if (q.targetInitial) html += '<div class="caps-tip">💡 该词位于句首，首字母需大写——大写已自动开启。</div>';
+      html += letterPadHtml(q.target, baseDiff);
+    } else if (q.type === 'choose') {
+      html += '<span class="qtag">听音选义</span>';
+      html += '<button class="audio-btn" onclick="speak(\'' + q.word.replace(/'/g, "\\'") + '\')">🔊 点击听发音</button>';
+      html += '<div class="qhint">选出正确释义</div>';
+      html += '<div class="opts">' + q.options.map(function (o, i) {
+        return '<button class="opt" id="opt' + i + '" onclick="chooseOption(' + i + ')">' + o.def + '</button>';
+      }).join('') + '</div>';
+    } else if (q.type === 'spell') {
+      html += '<span class="qtag">拼写 · 单词</span>';
+      html += '<button class="audio-btn" onclick="speak(\'' + q.word.replace(/'/g, "\\'") + '\')">🔊 听发音</button>';
+      html += '<div class="qhint">' + scrubAnswer(q.hint || '', q.word || '') + '<small>' + scrubAnswer(q.pos || '', q.word || '') + '</small></div>';
+      html += letterPadHtml(q.word, baseDiff);
+    } else {
+      html += '<span class="qtag">拼写 · 单词</span>';
+      html += '<button class="audio-btn" onclick="speak(\'' + q.word.replace(/'/g, "\\'") + '\')">🔊 听发音</button>';
+      html += '<div class="qhint">' + scrubAnswer((q.coreSense ? q.coreSense.cnDef : q.hint) || '', q.word || '') + '<small>' + scrubAnswer((q.coreSense ? q.coreSense.pos : q.pos) || '', q.word || '') + '</small></div>';
+      html += letterPadHtml(q.word, baseDiff);
+    }
+    qc.innerHTML = html;
+    renderKeys(); // 同步大写按钮视觉（句首自动武装后必须显示点亮）
+    renderSlots(); // 首字母占位提示（首字母大写提示/小写提示）必须在题目首次落地时就出现，不能等用户点字母
+    var sb = document.getElementById('submitBtn');
+    sb.textContent = '提交答案'; sb.className = 'submit'; sb.disabled = (q.type === 'choose');
+    startTimer(); // 时间闯关：启动倒计时（设计方案 §1.3）
+  }
+
+  /* ============ 时间闯关系统（设计方案 §1-§6） ============ */
+  function timerEnabled() {
+    try { return global.localStorage.getItem('xb4-timer-on') !== '0'; } catch (e) { return true; }
+  }
+  /* 首页「计时闯关」开关（新手指引后手动切换） */
+  function toggleTimerMode() {
+    var on = !timerEnabled();
+    try { global.localStorage.setItem('xb4-timer-on', on ? '1' : '0'); } catch (e) {}
+    renderTimerToggle();
+    toast(on ? '⏱ 计时闯关已开启（限时挑战 + 道具 + 排行）' : '⏱ 计时闯关已关闭（无时间压力，安心练习）');
+  }
+  function renderTimerToggle() {
+    var b = document.getElementById('timerToggle');
+    if (!b) return;
+    var on = timerEnabled();
+    b.textContent = on ? '开' : '关';
+    b.classList.toggle('on', on);
+  }
+  /* 首页「背景音乐」开关（默认关，课堂安全） */
+  function bgmEnabled() { try { return global.localStorage.getItem('xb4-bgm') === '1'; } catch (e) { return false; } }
+  function toggleBgm() {
+    var on = !bgmEnabled();
+    try { global.localStorage.setItem('xb4-bgm', on ? '1' : '0'); } catch (e) {}
+    renderBgmToggle();
+    if (on) { if (global.bgmStart) global.bgmStart(); toast('🎵 背景音乐已开启（轻量合成音，可在首页关闭）'); }
+    else { if (global.bgmStop) global.bgmStop(); toast('🎵 背景音乐已关闭'); }
+  }
+  function renderBgmToggle() {
+    var b = document.getElementById('bgmToggle');
+    if (!b) return;
+    var on = bgmEnabled();
+    b.textContent = on ? '开' : '关';
+    b.classList.toggle('on', on);
+  }
+  function startTimer() {
+    stopTimer();
+    if (!timerEnabled()) return;
+    var q = state.q;
+    if (!q) return;
+    var target = q.isSentence ? q.target : q.word;
+    var diffKey = getDiff();
+    state.timeTotal = timeForTarget(target, diffKey, (q.type === 'choose') ? 'choose' : 'spell', state.timeScale);
+    state.timeLeft = state.timeTotal;
+    state.timePaused = false; state.slowTicks = 0;
+    document.body.classList.remove('timer-danger');
+    renderTimer(); renderItems();
+    state.timerId = setInterval(tickTimer, 1000);
+  }
+  function stopTimer() { if (state.timerId) { clearInterval(state.timerId); state.timerId = 0; } }
+  function tickTimer() {
+    if (state.answered) return;
+    if (state.timePaused) { renderTimer(); return; }
+    if (state.slowTicks > 0) { state.slowTicks--; state.timeLeft -= 0.5; }
+    else state.timeLeft -= 1;
+    renderTimer();
+    if (state.timeLeft <= 10) {
+      if (global.tickSound) { try { global.tickSound(); } catch (e) {} }
+      if (state.timeLeft <= 5 && global.alarmSound) { try { global.alarmSound(); } catch (e) {} }
+    }
+    if (state.timeLeft <= 0) timeUp();
+  }
+  function renderTimer() {
+    var bar = document.getElementById('timerBar');
+    if (!bar) return;
+    if (!timerEnabled()) { bar.style.display = 'none'; return; }
+    var fill = document.getElementById('timerFill'), txt = document.getElementById('timerText');
+    bar.style.display = 'flex';
+    var ratio = state.timeTotal > 0 ? (state.timeLeft / state.timeTotal) : 0;
+    if (fill) { fill.style.width = Math.max(0, Math.min(100, ratio * 100)) + '%';
+      fill.className = ratio > 0.5 ? 'ok' : ratio > 0.2 ? 'warn' : 'danger'; }
+    if (txt) txt.textContent = Math.max(0, Math.ceil(state.timeLeft)) + 's';
+    document.body.classList.toggle('timer-danger', state.timeLeft <= 10 && state.timeLeft > 0);
+  }
+  /* 超时 → 按答错处理 */
+  function timeUp() {
+    if (state.answered) return;
+    stopTimer();
+    var q = state.q;
+    state.answered = true;
+    state.lastLeftRatio = 0; // 超时 → 下一关时间放宽（设计方案 §4）
+    state.streak = 0; state.wrongStreak = (state.wrongStreak || 0) + 1;
+    // 超时同样给予英语鼓励（文字+声音双通道），保护学习动机
+    var et = praiseText('err'); speakPraise('err', et);
+    showFeedback('err', '⏰ 时间到！' + (et ? ' <b>' + et + '</b>' : ''), '正确答案：' + (q.isSentence ? q.target : q.word), answerBlock(q));
+    adjustDifficulty(false);
+    statWord(q, false);
+    recordAttempt(q.word, 1);
+    finishQuestion();
+  }
+  /* 道具栏渲染 */
+  function renderItems() {
+    var bar = document.getElementById('itemBar');
+    if (!bar) return;
+    if (!timerEnabled()) { bar.style.display = 'none'; return; }
+    var it = global.getItems ? global.getItems() : {};
+    bar.style.display = 'flex';
+    bar.innerHTML =
+      '<span class="coin">🪙 <b id="coinNum">' + (global.getCoins ? global.getCoins() : 0) + '</b></span>' +
+      '<button class="item" onclick="useItem(\'pause\')">⏸ 暂停×' + (it.pause || 0) + '</button>' +
+      '<button class="item" onclick="useItem(\'slow\')">🐌 减速×' + (it.slow || 0) + '</button>' +
+      '<button class="item" onclick="useItem(\'bonus\')">⏱ +15s×' + (it.bonus || 0) + '</button>';
+  }
+  /* 道具：直接用库存；库存不足时用时间币购买（暂停/减速 2 币，加时 3 币） */
+  function useItem(type) {
+    if (state.answered || !timerEnabled() || state.timeLeft <= 0) return;
+    var cost = type === 'bonus' ? 3 : 2;
+    if (!global.consumeItem || !global.consumeItem(type)) {
+      var coins = global.getCoins ? global.getCoins() : 0;
+      if (coins >= cost && global.addCoins && global.addItem) {
+        global.addCoins(-cost); global.addItem(type, 1); global.consumeItem(type);
+        toast('🪙 已用 ' + cost + ' 币兑换并立即使用');
+      } else {
+        toast('⏸ 道具不足：答对题目可得时间币，或用 🪙' + cost + ' 购买');
+        return;
+      }
+    }
+    if (type === 'pause') {
+      state.timePaused = true; toast('⏸ 时间暂停 5 秒！');
+      setTimeout(function () { state.timePaused = false; toast('▶ 时间继续'); }, 5000);
+    } else if (type === 'slow') {
+      state.slowTicks = 10; toast('🐌 时间减慢 10 秒！');
+    } else if (type === 'bonus') {
+      state.timeLeft += 15;
+      if (state.timeLeft > state.timeTotal) state.timeTotal = state.timeLeft;
+      toast('⏱ +15 秒！');
+    }
+    renderItems(); renderTimer();
+  }
+  /* ================= 连对送礼（用户要求功能） =================
+   * 每连对 5 题送一个随机道具（⏸暂停 / 🐌减速 / ⏱加时），连对 10、15…继续送。
+   * 道具存入库存（storage.js 的 addItem），计时闯关时可在道具栏直接使用；
+   * 未开计时模式也会累积库存，开启后即可使用。
+   * ============================================================ */
+  var STREAK_GIFT_STEP = 5;
+  var GIFT_TYPES = [
+    { type: 'pause', icon: '⏸', name: '暂停' },
+    { type: 'slow',  icon: '🐌', name: '减速' },
+    { type: 'bonus', icon: '⏱', name: '加时' }
+  ];
+  function grantStreakGift() {
+    var s = state.streak || 0;
+    if (s <= 0 || s % STREAK_GIFT_STEP !== 0) return null;   // 未满 5 的倍数
+    if (state.lastGiftAt === s) return null;                 // 同一连对数只送一次
+    if (!global.addItem) return null;
+    var g = GIFT_TYPES[Math.floor(Math.random() * GIFT_TYPES.length)];
+    try { global.addItem(g.type, 1); } catch (e) { return null; }
+    state.lastGiftAt = s;
+    renderItems();               // 道具栏数字实时 +1
+    showGiftBanner(g);
+    return g;
+  }
+  function showGiftBanner(g) {
+    var el = document.getElementById('giftBanner');
+    if (el) {
+      el.innerHTML = '<div class="gift-icon">🎁</div>' +
+        '<div class="gift-txt">连对 <b>' + state.streak + '</b> 题！<br/>' +
+        '获得 ' + g.icon + ' ' + g.name + ' ×1</div>';
+      el.classList.add('show');
+      setTimeout(function () { try { el.classList.remove('show'); } catch (e) {} }, 2600);
+    }
+    toast('🎁 连对 ' + state.streak + ' 题，获得 ' + g.icon + g.name + '×1！');
+  }
+
+  /* 作答正确时的时间奖励：金币 + 破纪录检测（设计方案 §2/§5） */
+  function applyTimeReward(q) {
+    if (!timerEnabled()) return;
+    stopTimer();
+    var leftMs = Math.max(0, state.timeLeft * 1000);
+    state.lastLeftRatio = state.timeTotal > 0 ? (state.timeLeft / state.timeTotal) : 0.5;
+    var earned = 1 + (state.lastLeftRatio > 0.4 ? 1 : 0);
+    if (global.addCoins) global.addCoins(earned);
+    state.timeCoinsEarned += earned;
+    var usedMs = state.qStart ? (Date.now() - state.qStart) : leftMs;
+    state.newRecord = !!(global.setBestTime && global.setBestTime(q.word, usedMs));
+  }
+  /* 作答错误时的动态调节输入（设计方案 §4） */
+  function applyTimeFail() {
+    if (!timerEnabled()) return;
+    stopTimer();
+    state.lastLeftRatio = 0.1; // 答错 → 下一关放宽
+  }
+  /* 时间排行榜弹窗（本机最佳） */
+  function openRank() {
+    var bt = global.getBestTime ? global.getBestTime() : {};
+    var rows = Object.keys(bt).map(function (w) {
+      return { word: w, ms: bt[w].ms, date: bt[w].date };
+    }).sort(function (a, b) { return a.ms - b.ms; });
+    var html = rows.length
+      ? '<table class="rank"><tr><th>#</th><th>单词</th><th>最佳时间</th><th>日期</th></tr>' +
+        rows.slice(0, 20).map(function (r, i) {
+          return '<tr><td>' + (i + 1) + '</td><td>' + r.word + '</td><td>' + (r.ms / 1000).toFixed(1) + 's</td><td>' + String(r.date || '').slice(0, 10) + '</td></tr>';
+        }).join('') + '</table>'
+      : '<p style="color:var(--muted);padding:10px">暂无纪录，快去闯关吧！</p>';
+    var el = document.getElementById('rankList');
+    if (el) el.innerHTML = html;
+    var mk = document.getElementById('rankMask');
+    if (mk) mk.classList.add('show');
+  }
+  function closeRank() { var mk = document.getElementById('rankMask'); if (mk) mk.classList.remove('show'); }
+
+  /* ---------- 点击字母键盘 ---------- */
+  /* 3.3 形近干扰：进阶档干扰字母优先选与目标词"形近/音近"的字母，
+   * 制造真正"看起来像"的难度（如 c→k、i→e、b→d/p/v、s→z/c）。 */
+  var CONFUSE = {
+    a: ['o', 'e', 'u'], b: ['d', 'p', 'v', 'h'], c: ['k', 's', 'g', 'e'],
+    d: ['b', 'p', 't', 'g'], e: ['i', 'a', 'o', 'c'], f: ['v', 't'],
+    g: ['j', 'c', 'q', 'd'], h: ['b', 'n'], i: ['e', 'y', 'o'],
+    j: ['g', 'i'], k: ['c', 'q'], l: ['r', 'i', 't'],
+    m: ['n', 'w'], n: ['m', 'h', 'u'], o: ['a', 'u', 'e'],
+    p: ['b', 'd', 'q'], q: ['g', 'k', 'p'], r: ['l', 'n'],
+    s: ['z', 'c', 'x'], t: ['d', 'f', 'l'], u: ['o', 'v', 'n', 'w'],
+    v: ['b', 'w', 'u'], w: ['v', 'm', 'u'], x: ['s', 'z'],
+    y: ['i', 'j'], z: ['s', 'x']
+  };
+  function confuseDistract(letters, n, isHard) {
+    var alpha = 'abcdefghijklmnopqrstuvwxyz'.split('');
+    var usedSet = {};
+    letters.forEach(function (c) { usedSet[c] = true; });
+    var usable = alpha.filter(function (c) { return !usedSet[c]; });
+    if (!isHard || n <= 2) return shuffle(usable).slice(0, n);
+    // 形近优先：收集目标字母的形近字母（需不在目标词中），随机取；不足再随机补
+    var confSet = {};
+    letters.forEach(function (l) {
+      (CONFUSE[l] || []).forEach(function (c) { if (!usedSet[c]) confSet[c] = true; });
+    });
+    var out = [], confList = shuffle(Object.keys(confSet));
+    for (var i = 0; i < confList.length && out.length < n; i++) out.push(confList[i]);
+    var rest = shuffle(usable.filter(function (c) { return out.indexOf(c) < 0; }));
+    while (out.length < n && rest.length) out.push(rest.shift());
+    return out;
+  }
+  function letterPadHtml(target, diff) {
+    var n = diff.distractors;
+    var letters = String(target || '').toLowerCase().replace(/[^a-z]/g, '').split('');
+    var distract = confuseDistract(letters, n, !!diff.isHard);
+    var tiles = shuffle(letters.concat(distract)).map(function (c, i) { return { id: i, ch: c }; });
+    state.tiles = tiles;
+    var firstHint = diff.firstHint ? String(target || '').charAt(0).toUpperCase() : '';
+    state.firstHint = firstHint;
+    var h = '<div class="pad"><div class="slots" id="slots"></div>';
+    if (firstHint) h += '<div class="firsthint">首字母提示：' + firstHint + '</div>';
+    h += '<div class="keypad">';
+    h += tiles.map(function (t) {
+      return '<button class="key" id="key' + t.id + '" onclick="tapLetter(' + t.id + ')">' + t.ch + '</button>';
+    }).join('');
+    h += '<button class="key caps" id="capsKey" onclick="toggleCaps()">⇧ 大写</button>';
+    h += '</div><div class="pad-actions"><button onclick="backspace()">⌫ 删除</button><button onclick="clearTyped()">清空重拼</button></div></div>';
+    return h;
+  }
+  function renderSlots() {
+    var el = document.getElementById('slots');
+    if (!el) return;
+    var q = state.q;
+    var target = q ? (q.isSentence ? q.target : q.word) : '';
+    var targetLen = String(target || '').replace(/[^A-Za-z]/g, '').length;
+
+    if (state.typed.length === 0) {
+      // 干净的占位：单条提示，不再 N 个橙色方块
+      var html = '<div class="slots-empty">';
+      html += '<div class="se-text">点击下方字母组成单词';
+      if (targetLen > 0) html += ' · <b>共 ' + targetLen + ' 个字母</b>';
+      html += '</div>';
+      if (q && q.isSentence && q.targetInitial) {
+        html += '<div class="se-tip">💡 首字母需大写，已自动开启大写</div>';
+      }
+      html += '</div>';
+      el.innerHTML = html;
+      return;
+    }
+    // 已输入：实心槽 + 浅色占位槽，让玩家看到剩余进度
+    var typedHtml = state.typed.map(function (t, i) {
+      return '<span class="slot' + (i === state.lastIdx ? ' pop' : '') + '">' + t.ch + '</span>';
+    }).join('');
+    var remaining = '';
+    for (var i = state.typed.length; i < targetLen; i++) {
+      remaining += '<span class="slot empty pending">·</span>';
+    }
+    el.innerHTML = typedHtml + remaining;
+  }
+  function renderKeys() {
+    state.tiles.forEach(function (t) {
+      var k = document.getElementById('key' + t.id);
+      // 注意：必须用显式布尔 add/remove，不能用 toggle('used', t.used)——
+      // 初始 t.used 是 undefined，浏览器会把 toggle(x, undefined) 当"翻转"，
+      // 导致所有字母键一进来就被误标 used 变成灰色不可点
+      if (!k) return;
+      if (t.used) { k.classList.add('used'); } else { k.classList.remove('used'); }
+    });
+    var c = document.getElementById('capsKey');
+    if (c) {
+      c.classList.toggle('on', state.capsOn);
+      // LOCK 模式：一次点击 = 开启（可连续输入多个大写字母） / 再次点击 = 关闭
+      c.textContent = state.capsOn ? '大写·已开启' : '⇧ 大写';
+      c.title = state.capsOn ? '大写已开启。点击关闭。' : '点击开启大写（可连续输入多个大写字母，再次点击关闭）';
+    }
+  }
+  function tapLetter(id) {
+    if (state.answered) return;
+    var tile = state.tiles.filter(function (t) { return t.id === id; })[0];
+    if (!tile || tile.used) return;
+    var ch = state.capsOn ? tile.ch.toUpperCase() : tile.ch;
+    tile.used = true;
+    state.typed.push({ ch: ch, tileId: id });
+    state.lastIdx = state.typed.length - 1;
+    state.inputVal = state.typed.map(function (t) { return t.ch; }).join('');
+    // LOCK 模式：caps 状态保持不变。仅在"句子挖空首字母自动武装"场景下，
+    // 输完 1 个首字母后自动关闭（避免后续字母也被大写）
+    var q = state.q;
+    if (state.capsOn && q && q.isSentence && q.targetInitial && state.typed.length === 1) {
+      state.capsOn = false;
+    }
+    renderSlots(); renderKeys();
+    (function () { var len = state.typed.length; setTimeout(function () { if (state.lastIdx === len - 1) state.lastIdx = -1; renderSlots(); }, 320); })();
+    var sb = document.getElementById('submitBtn'); if (sb) sb.disabled = false;
+  }
+  function backspace() {
+    if (state.answered) return;
+    var t = state.typed.pop();
+    if (!t) return;
+    var tile = state.tiles.filter(function (x) { return x.id === t.tileId; })[0];
+    if (tile) tile.used = false;
+    state.lastIdx = state.typed.length - 1;
+    state.inputVal = state.typed.map(function (x) { return x.ch; }).join('');
+    renderSlots(); renderKeys();
+    setTimeout(function () { state.lastIdx = -1; renderSlots(); }, 320);
+  }
+  function clearTyped() {
+    if (state.answered) return;
+    state.tiles.forEach(function (t) { t.used = false; });
+    state.typed = []; state.lastIdx = -1; state.inputVal = '';
+    renderSlots(); renderKeys();
+    var sb = document.getElementById('submitBtn'); if (sb) sb.disabled = true;
+  }
+  function toggleCaps() {
+    if (state.answered) return;
+    state.capsOn = !state.capsOn; renderKeys();
+  }
+
+  /* 3.4 自适应难度（档内微调）：
+   *  - 连对 ≥3 → 干扰字母 +1（上限 +2）
+   *  - 连错 ≥2 → 干扰字母 -1（下限 -2）；已达下限 → 自动开启首字母提示 */
+  function adjustDifficulty(correct) {
+    if (correct) {
+      state.wrongStreak = 0;
+      if (state.streak >= 3 && (state.adj || 0) < 2) {
+        state.adj = (state.adj || 0) + 1;
+        toast('⬆️ 难度已自动提升：干扰字母 +1');
+      }
+    } else {
+      state.wrongStreak = (state.wrongStreak || 0) + 1;
+      if (state.wrongStreak >= 2) {
+        state.wrongStreak = 0;
+        if ((state.adj || 0) > -2) {
+          state.adj = (state.adj || 0) - 1;
+          toast('⬇️ 难度已自动降低：干扰字母 -1');
+        } else if (!state.adjHint) {
+          state.adjHint = true;
+          toast('💡 已自动开启首字母提示，助你继续挑战');
+        }
+      }
+    }
+  }
+  /* 3.7 埋点：记录本词作答统计 */
+  function statWord(q, correct) {
+    try {
+      var ms = Date.now() - (state.qStart || Date.now());
+      var pairs = [];
+      if (!correct && q && q.type !== 'choose') {
+        var target = q.isSentence ? q.target : q.word;
+        var fm = firstMismatch(String(state.inputVal || '').toLowerCase(), String(target || '').toLowerCase());
+        if (fm) pairs.push({ expected: fm.expected, got: fm.got });
+      }
+      if (global.recordWordStat) global.recordWordStat(q.word, correct, ms, pairs);
+    } catch (e) {}
+  }
+
+  /* ---------- 作答判题 ---------- */
+  function chooseOption(i) {
+    if (state.answered) return;
+    var q = state.q, o = q.options[i];
+    state.answered = true;
+    q.options.forEach(function (op, j) {
+      var el = document.getElementById('opt' + j);
+      if (!el) return;
+      if (op.correct) el.classList.add('correct');
+      else if (j === i) el.classList.add('wrong');
+    });
+    var correct = o.correct;
+    if (correct) {
+      state.correct++;
+      state.streak++;
+      // 英语鼓励音（文字+声音双通道：即使设备不支持语音也能在反馈里看到英文鼓励语）
+      var pk = state.streak >= 3 ? 'combo' : 'ok';
+      var pt = praiseText(pk);
+      speakPraise(pk, pt);
+      applyTimeReward(q); // 时间奖励：金币 + 破纪录
+      grantStreakGift();  // 连对 5 题送礼（⏸暂停 / 🐌减速 / ⏱加时 随机一个）
+      showFeedback('ok', '✅ 正确！' + (pt ? ' <b>' + pt + '</b>' : ''), '', answerBlock(q));
+    } else {
+      state.streak = 0;
+      applyTimeFail(); // 答错 → 下一关时间放宽
+      // 答错英语鼓励音（文字+声音双通道）：Try again! / Keep going! 等
+      var et = praiseText('err'); speakPraise('err', et);
+      showFeedback('err', '❌ 答错了' + (et ? ' <b>' + et + '</b>' : ''), '正确答案：' + q.testSense.cnDef, answerBlock(q));
+    }
+    adjustDifficulty(correct);
+    statWord(q, correct);
+    recordAttempt(q.word, correct ? 5 : 1);
+    finishQuestion();
+  }
+  function onSubmit() {
+    var q = state.q;
+    if (state.answered) return;
+    if (q.type === 'choose') return;
+    var target = q.isSentence ? q.target : q.word;
+    var res = spellJudge(state.inputVal, target, { caseSensitive: !!q.isSentence });
+    if (res.kind === 'empty') { showFeedback('err', '❌ 请先拼出答案', '点击字母按钮组成单词后再提交。'); return; }
+    if (res.kind === 'input_method') { showFeedback('ime', res.imeTip || '输入有误', ''); return; }
+    state.answered = true;
+    var correct = res.correct;
+    if (correct) {
+      state.correct++;
+      state.streak++;
+      // 英语鼓励音（文字+声音双通道）
+      var pk = state.streak >= 3 ? 'combo' : 'ok';
+      var pt = praiseText(pk);
+      speakPraise(pk, pt);
+      applyTimeReward(q); // 时间奖励：金币 + 破纪录
+      grantStreakGift();  // 连对 5 题送礼（⏸暂停 / 🐌减速 / ⏱加时 随机一个）
+      showFeedback('ok', '✅ 正确！' + (pt ? ' <b>' + pt + '</b>' : ''), '单词：' + target + '　' + ((q.coreSense ? q.coreSense.enDef : '') || ''), answerBlock(q));
+    } else {
+      state.streak = 0;
+      applyTimeFail(); // 答错 → 下一关时间放宽
+      // 答错英语鼓励音（文字+声音双通道）
+      var et = praiseText('err'); speakPraise('err', et);
+      var det = '正确答案：' + target;
+      if (res.caseMismatch) det = '⚠️ 大小写不一致——该词在句中需大写/小写与示例完全一致。';
+      else {
+        var fm = firstMismatch(state.inputVal.toLowerCase(), target.toLowerCase());
+        if (fm) det += '（第 ' + fm.index + ' 个字母应为 "' + fm.expected.toUpperCase() + '"，你拼成 "' + fm.got.toUpperCase() + '"）';
+      }
+      showFeedback('err', '❌ 拼写错误' + (et ? ' <b>' + et + '</b>' : ''), det, answerBlock(q));
+    }
+    adjustDifficulty(correct);
+    statWord(q, correct);
+    recordAttempt(q.word, correct ? 5 : 1);
+    finishQuestion();
+  }
+  function showFeedback(cls, title, det, extra) {
+    var fb = document.getElementById('feedback');
+    fb.className = 'feedback show ' + cls;
+    fb.innerHTML = title + (det ? '<div class="det">' + det + '</div>' : '') + (extra || '');
+  }
+  /* 答题后该展示哪些释义：
+   *  - 听音选义 / 混合(选义)：展示该单词【全部含义】
+   *  - 单词拼写练习（拼写·单词 / 句子挖空 / 错词复习）：仅展示【核心义】 */
+  function sensesToShow(q) {
+    if (q.type === 'choose') {
+      return (q.allSenses && q.allSenses.length) ? q.allSenses : (q.senses || []);
+    }
+    if (q.senses && q.senses.length) {
+      var cs = coreSenseOf(q) || q.senses[0];
+      return [cs];
+    }
+    if (q.coreSense) return [q.coreSense];
+    return [];
+  }
+  function answerBlock(q) {
+    var senses = sensesToShow(q);
+    if (!senses.length) return '';
+    var title = q.type === 'choose' ? '📖 单词完整释义' : '📖 核心释义';
+    var rows = senses.map(function (s) {
+      var tcls = 'st-' + (s.type === '核心' ? 'core' : (s.type === '引申' ? 'ext' : 'rare'));
+      return '<div class="srow">' +
+        '<span class="st ' + tcls + '">' + (s.type || '') + '</span>' +
+        '<span class="sp">' + (s.pos || '') + '</span>' +
+        '<div class="scn">' + s.cnDef + ' <span class="sen">/ ' + s.enDef + '</span></div>' +
+        (s.example ? '<div class="sex">例句：' + s.example + '</div>' : '') +
+        '</div>';
+    }).join('');
+    return '<div class="answer-senses"><div class="as-title">' + title + '</div>' + rows + '</div>';
+  }
+  function finishQuestion() {
+    var sb = document.getElementById('submitBtn');
+    sb.textContent = '下一题 →'; sb.className = 'submit next'; sb.disabled = false; sb.onclick = nextQuestion;
+    document.getElementById('progBar').style.width = Math.round((state.idx + 1) / state.questions.length * 100) + '%';
+    // 提交后 caps 状态重置：下一题不沿用，防止"上一题开了 caps → 这一题意外输出大写"
+    state.capsOn = false;
+    renderKeys();
+  }
+  /* 动态时间调节（设计方案 §4）：根据上一题时间余量调整后续时间压力 */
+  function adjustTimeScale() {
+    if (!timerEnabled()) return;
+    if (state.lastLeftRatio > 0.4) state.timeScale = Math.min(1.5, (state.timeScale || 1) * 0.92);
+    else if (state.lastLeftRatio < 0.1) state.timeScale = Math.max(0.7, (state.timeScale || 1) * 1.12);
+  }
+  function nextQuestion() {
+    var sb = document.getElementById('submitBtn');
+    sb.onclick = onSubmit;
+    adjustTimeScale(); // 依据上一题表现调整下一关限时
+    state.idx++;
+    if (state.idx >= state.questions.length) showResult();
+    else renderQuestion();
+  }
+
+  /* ---------- 结算 ---------- */
+  function showResult() {
+    var r = computeResult(state.correct, state.questions.length);
+    var rk = r.pct >= 80 ? 'high' : r.pct >= 60 ? 'mid' : 'low';
+    var rt = praiseText(rk);
+    speakPraise(rk, rt); // 结算英语鼓励音（文字+声音，声画一致：用同一句）
+    stopTimer();
+    // 时间闯关结算信息：金币奖励 + 新纪录（设计方案 §2/§5）
+    var timeNote = '';
+    if (timerEnabled()) {
+      var parts = [];
+      if (state.timeCoinsEarned > 0) parts.push('⏱ 时间奖励 +🪙' + state.timeCoinsEarned);
+      if (state.newRecord) parts.push('🏆 本关最快纪录！');
+      timeNote = parts.length
+        ? '<div class="timenote">' + parts.join(' ｜ ') + '</div>'
+        : '<button class="iconbtn" style="margin:6px auto 0;display:block" onclick="openRank()">🏆 时间排行榜</button>';
+      if (parts.length) timeNote += '<button class="iconbtn" style="margin:6px auto 0;display:block" onclick="openRank()">🏆 查看时间排行榜</button>';
+    }
+    document.getElementById('resultBox').innerHTML =
+      '<div class="stars">' + r.stars + '</div>' +
+      '<div class="pct">' + r.pct + ' 分</div>' +
+      '<div class="msg">' + r.msg + (rt ? '<br/><span style="font-size:16px;color:var(--primary-d)">' + rt + '</span>' : '') + '</div>' +
+      timeNote +
+      '<div style="color:var(--muted);margin-bottom:18px">答对 ' + r.correct + ' / ' + r.total + ' 题</div>' +
+      '<div class="btns"><button class="submit" onclick="startMode(\'' + state.mode + '\')">🔁 再来一组</button>' +
+      '<button class="iconbtn" style="border:1px solid var(--line);border-radius:12px;padding:13px" onclick="goHome()">返回首页</button></div>';
+    show('result');
+  }
+
+  /* ---------- 词表（跟随当前分组） ---------- */
+  function showVocab() {
+    var bt = global.getBestTime ? global.getBestTime() : {};
+    var vl = document.getElementById('vlist');
+    vl.innerHTML = poolWords(ALL_WORDS).map(function (w) {
+      var best = bt[w.word.toLowerCase()];
+      var bestTxt = best ? '<span class="best">🏆 ' + (best.ms / 1000).toFixed(1) + 's</span>' : '';
+      return '<div class="vitem"><div class="w">' + w.word +
+        ' <span class="pos">' + w.senses[0].pos + '</span> ' + bestTxt +
+        '<button class="iconbtn" style="padding:4px 10px;font-size:12px" onclick="speak(\'' + w.word + '\')">🔊</button></div>' +
+        w.senses.map(function (s) {
+          return '<div class="sense"><span class="t">' + s.type + '</span>' + s.cnDef +
+            ' <span class="en">/ ' + s.enDef + '</span><div class="ex">' + s.example + '</div></div>';
+        }).join('') + '</div>';
+    }).join('');
+    show('vocab');
+  }
+
+  /* ---------- 分享 ---------- */
+  function curUrl() { return global.location.href.split('#')[0]; }
+  function enc(s) { return encodeURIComponent(s); }
+  function toast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg; t.classList.add('show');
+    clearTimeout(t._t); t._t = setTimeout(function () { t.classList.remove('show'); }, 2200);
+  }
+  /* 三级都失败时，在题面单词处加一个短暂高亮 */
+  function flashWordHighlight(word) {
+    if (!word) return;
+    var el = document.querySelector('.qword, .vc-word');
+    if (!el) return;
+    el.classList.remove('flash'); void el.offsetWidth; el.classList.add('flash');
+    setTimeout(function () { el.classList.remove('flash'); }, 1400);
+  }
+  function copyText(t) {
+    if (global.navigator.clipboard && global.navigator.clipboard.writeText) return global.navigator.clipboard.writeText(t);
+    return new Promise(function (r) {
+      var ta = document.createElement('textarea'); ta.value = t; document.body.appendChild(ta); ta.select();
+      try { document.execCommand('copy'); } catch (e) {}
+      document.body.removeChild(ta); r();
+    });
+  }
+  function openShare() { document.getElementById('shareMask').classList.add('show'); }
+  function closeShare() { document.getElementById('shareMask').classList.remove('show'); }
+  function nativeShare() {
+    if (global.navigator.share) {
+      global.navigator.share({
+        title: '必修一U1 单词闯关 · A New Start 在线版',
+        text: '拼写挑战、听音选义、混合训练、错词本与间隔重复，浏览器直接玩！',
+        url: curUrl()
+      }).catch(function () {});
+      return true;
+    }
+    return false;
+  }
+  function shareWeChat() {
+    if (nativeShare()) { closeShare(); return; }
+    var u = curUrl();
+    global.open('https://api.qrserver.com/v1/create-qr-code/?size=240x240&data=' + enc(u), '_blank');
+    toast('已生成二维码，可长按或保存分享');
+  }
+  function shareQQ() {
+    if (nativeShare()) { closeShare(); return; }
+    var u = curUrl();
+    global.open('https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=' + enc(u) +
+      '&title=' + enc('必修一U1 单词闯关在线版') + '&summary=' + enc('浏览器直接玩的单词闯关游戏') + '&site=' + enc('高中英语'), '_blank');
+    closeShare();
+  }
+  function shareGitHub() {
+    copyText(curUrl()).then(function () { toast('链接已复制，可粘贴到 GitHub 仓库 / Issue'); });
+    global.open('https://github.com', '_blank'); closeShare();
+  }
+  function copyLink() { copyText(curUrl()).then(function () { toast('✅ 链接已复制'); }); closeShare(); }
+  function shareMail() {
+    var u = curUrl();
+    global.location.href = 'mailto:?subject=' + enc('邀请体验：必修一U1 英语单词闯关在线版') +
+      '&body=' + enc('你好，推荐一个可直接在浏览器玩的英语单词闯关游戏：\n' + u + '\n功能：拼写挑战、听音选义、混合训练、错词本与间隔重复。');
+    closeShare();
+  }
+  function resetProgressConfirm() {
+    if (global.confirm('确定要清空学习记录（错词本 / 掌握度）吗？此操作不可恢复。')) {
+      resetProgress(); renderHome(); toast('已清空学习记录');
+    }
+  }
+
+  /* ---------- 新手引导（分步弹窗，替代单条 toast） ---------- */
+  var GUIDE_STEPS = [
+    { t: '🎮 认识四个模式', d: '拼写挑战：点字母拼出单词/句子词；听音选义：听发音选释义；混合训练：随机组合；错词复习：只练答错/到期的词（智能重复）。' },
+    { t: '🎚️ 难度三档', d: '基础：有首字母提示、只出简单词；标准：全部词；进阶：难词 + 形近干扰。难度会随你的表现自动微调。' },
+    { t: '✍️ 大小写与发音', d: '默认小写；需要大写时点「⇧ 大写」切换。点 🔊 听单词发音，答对/连对还有英语鼓励音。' },
+    { t: '🎁 连对送礼', d: '连续答对 5 题，就送你一个随机道具（⏸暂停 / 🐌减速 / ⏱加时 任选其一）；连对 10 题、15 题继续送。道具会存进道具栏，开启「计时闯关」后即可使用。' },
+    { t: '⏱️ 时间挑战与道具', d: '开启「计时闯关」后，每关限时作答，提前完成得时间币；道具栏可用 ⏸暂停 / 🐌减速 / ⏱加时，时间不够可紧急救场。' },
+    { t: '🏆 排行榜与词汇总览', d: '首页「时间排行榜」记录每个词的最佳通关时间；「词汇总览」可查看全部词条、义项与例句。' }
+  ];
+  var guideIdx = 0;
+  function showGuide() {
+    guideIdx = 0;
+    renderGuide();
+    var mk = document.getElementById('guideMask');
+    if (mk) mk.classList.add('show');
+  }
+  function renderGuide() {
+    var mk = document.getElementById('guideMask');
+    if (!mk) return;
+    var s = GUIDE_STEPS[guideIdx] || GUIDE_STEPS[0];
+    var gt = document.getElementById('guideTitle'), gd = document.getElementById('guideDesc'),
+        gdots = document.getElementById('guideDots'), gn = document.getElementById('guideNext');
+    if (gt) gt.textContent = s.t;
+    if (gd) gd.textContent = s.d;
+    if (gdots) gdots.innerHTML = GUIDE_STEPS.map(function (_, i) {
+      return '<i class="dot' + (i === guideIdx ? ' on' : '') + '"></i>';
+    }).join('');
+    if (gn) gn.textContent = guideIdx >= GUIDE_STEPS.length - 1 ? '开始闯关 ▶' : '下一步 →';
+  }
+  function nextGuide() {
+    guideIdx++;
+    if (guideIdx >= GUIDE_STEPS.length) { closeGuide(); return; }
+    renderGuide();
+  }
+  function closeGuide() { var mk = document.getElementById('guideMask'); if (mk) mk.classList.remove('show'); }
+
+  /* ---------- 暴露全局（供内联 onclick 调用） ---------- */
+  global.show = show;
+  global.goHome = goHome;
+  global.renderHome = renderHome;
+  global.renderDiff = renderDiff;
+  global.setDiff = setDiff;
+  global.setGroup = setGroup;
+  global.renderGroup = renderGroup;
+  global.startMode = startMode;
+  global.tapLetter = tapLetter;
+  global.toggleCaps = toggleCaps;
+  global.backspace = backspace;
+  global.clearTyped = clearTyped;
+  global.chooseOption = chooseOption;
+  global.onSubmit = onSubmit;
+  global.nextQuestion = nextQuestion;
+  global.showVocab = showVocab;
+  global.openShare = openShare;
+  global.closeShare = closeShare;
+  global.shareWeChat = shareWeChat;
+  global.shareQQ = shareQQ;
+  global.shareGitHub = shareGitHub;
+  global.copyLink = copyLink;
+  global.shareMail = shareMail;
+  global.resetProgressConfirm = resetProgressConfirm;
+  global.toast = toast;
+  global.flashWordHighlight = flashWordHighlight;
+  // 测试/调试辅助（不影响游戏功能）
+  global.adjustDifficulty = adjustDifficulty;
+  global.getAdaptive = function () { return { adj: state.adj || 0, adjHint: !!state.adjHint }; };
+  global.bumpStreak = function (n) { state.streak = (state.streak || 0) + (n || 1); };
+  // 时间闯关：全局入口（UI 与测试共用）
+  global.useItem = useItem;
+  global.openRank = openRank;
+  global.closeRank = closeRank;
+  global.startTimer = startTimer;
+  global.stopTimer = stopTimer;
+  global.tickTimer = tickTimer;
+  global.timeUp = timeUp;
+  global.adjustTimeScale = adjustTimeScale;
+  global.timerEnabled = timerEnabled;
+  global.toggleTimerMode = toggleTimerMode;
+  global.toggleBgm = toggleBgm;
+  global.showGuide = showGuide;
+  global.nextGuide = nextGuide;
+  global.closeGuide = closeGuide;
+  global.getTimeState = function () {
+    return { left: state.timeLeft, total: state.timeTotal, scale: state.timeScale,
+             paused: state.timePaused, slowTicks: state.slowTicks, answered: state.answered,
+             coins: state.timeCoinsEarned, newRecord: state.newRecord };
+  };
+  global.__testSetLeft = function (s) { state.timeLeft = s; state.timeTotal = Math.max(state.timeTotal, s); };
+  global.__testSetLastRatio = function (r) { state.lastLeftRatio = r; };
+  global.__testSetQStart = function () { state.qStart = Date.now(); };
+
+  /* ---------- 初始化 ---------- */
+  global.addEventListener('DOMContentLoaded', function () {
+    initVoice();
+    renderHome();
+    renderDiff();
+    renderSlots();
+    renderTimerToggle();
+    renderBgmToggle();
+    // 恢复上次 BGM 状态（仅用户主动开启过才播）
+    if (bgmEnabled() && global.bgmStart) global.bgmStart();
+    // 新手引导：首次进入自动弹出（也可随时点顶栏 ❓ 查看）
+    if (!global.localStorage.getItem('xb4-guide-shown')) { global.localStorage.setItem('xb4-guide-shown', '1'); setTimeout(showGuide, 400); }
+    document.getElementById('shareMask').addEventListener('click', function (e) {
+      if (e.target.id === 'shareMask') closeShare();
+    });
+  });
+})(typeof window !== 'undefined' ? window : this);
+</script>
+<!-- JS 自检：只有当 app.js 完整执行（XB4_DATA 与 renderHome 都就位）才算加载成功 -->
+<script>
+  (function () {
+    var ok = !!(window.XB4_DATA && typeof window.renderHome === 'function');
+    var warn = document.getElementById('jsWarn');
+    var root = document.getElementById('appRoot');
+    if (ok) {
+      if (warn) warn.style.display = 'none';
+      if (root) root.style.display = '';
+    } else {
+      // JS 加载失败时**保留可见骨架**（让用户知道游戏长什么样）+ 在首页顶部追加一条醒目提示
+      if (root) root.style.display = '';
+      var home = document.getElementById('home');
+      if (home && warn && home.parentNode) {
+        var extra = document.createElement('div');
+        extra.style.cssText = 'background:#fff3cd;border:2px dashed #f0ad4e;border-radius:12px;padding:12px 16px;margin:12px;font-family:"Microsoft YaHei",sans-serif;color:#7a5c1e;font-size:14px;line-height:1.8';
+        extra.innerHTML = '⚠️ <b>脚本被拦截，以下四个模式点击无效</b>。请按上方黄色横幅的 ① 解决：<b>先把 zip 解压到文件夹</b>，再双击文件夹里的 <code>index.html</code>。';
+        home.parentNode.insertBefore(extra, home);
+      }
+    }
+  })();
+</script>
+</body>
+</html>
