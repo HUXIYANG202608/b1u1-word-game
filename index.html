@@ -324,7 +324,7 @@ body.timer-danger{animation:danger-flash .5s infinite}
 </div>
 <div class="app" id="appRoot" style="display:none">
   <div class="topbar">
-    <div class="brand"><span class="logo">U1</span> 必修一U1 单词闯关<span style="margin-left:6px;font-size:11px;font-weight:800;color:#fff;background:linear-gradient(135deg,#1aa260,#13a05a);border-radius:999px;padding:2px 9px">v3.1·20260830</span></div>
+    <div class="brand"><span class="logo">U1</span> 必修一U1 单词闯关<span style="margin-left:6px;font-size:11px;font-weight:800;color:#fff;background:linear-gradient(135deg,#1aa260,#13a05a);border-radius:999px;padding:2px 9px">v3.2·20260830</span></div>
     <div class="right">
       <button class="iconbtn" onclick="showGuide()">❓ 帮助</button>
       <button class="iconbtn" onclick="resetProgressConfirm()">🗑 重置</button>
@@ -3429,6 +3429,8 @@ body.timer-danger{animation:danger-flash .5s infinite}
   global.alarmSound = alarmSound;
   global.bgmStart = bgmStart;
   global.bgmStop = bgmStop;
+  global.playDing = playDing;
+  global.localUrlFor = localUrlFor;
 })(typeof window !== 'undefined' ? window : this);
 </script>
 <script>/* ============================================================
