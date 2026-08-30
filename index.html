@@ -3133,8 +3133,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
   function speakViaHttpTTS(text) {
     return new Promise(function (resolve, reject) {
       if (typeof global.Audio === 'undefined') return reject(new Error('no-audio-api'));
-      var idx = 0, settled = false, audio = null, timer = null;
-      function cleanup() { if (timer) { clearTimeout(timer); timer = null; } }
+      var idx = 0, settled = false, audio = null, timer = null, epTimer = null;
+      var EP_TIMEOUT_MS = 2500; // 单个 endpoint 超时：避免网络不通时界面长时间"无网络"假死
+      function cleanup() { if (timer) { clearTimeout(timer); timer = null; } if (epTimer) { clearTimeout(epTimer); epTimer = null; } }
       function tryNext() {
         if (settled) return;
         if (idx >= TTS_ENDPOINTS.length) { settled = true; cleanup(); try { if (audio) { audio.oncanplay = null; audio.onerror = null; } } catch (_) {} reject(new Error('all-tts-failed')); return; }
@@ -3144,6 +3145,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
           audio.preload = 'auto';
           // 注意：不要设置 crossOrigin（有道/百度/Google 均无 CORS 头），
           // 否则音频元素会因 CORS 校验失败而 onerror，导致在线 TTS 全部落空。
+          // 单 endpoint 超时保险：网络不通时切下一个
+          if (epTimer) clearTimeout(epTimer);
+          epTimer = setTimeout(function () { if (!settled) tryNext(); }, EP_TIMEOUT_MS);
           audio.oncanplay = function () {
             if (settled) return;
             var p;
@@ -3598,9 +3602,13 @@ body.timer-danger{animation:danger-flash .5s infinite}
     if (mode === 'spell') {
       questions = buildSpellWordQuestions(poolWords(SPELL_WORDS), starOpt).concat(buildSentenceQuestions(poolSentences(), starOpt));
     } else if (mode === 'choose') {
-      questions = buildChooseQuestions(poolWords(READ_WORDS), Object.assign({}, chooseOpt, starOpt)); // 仅"听力/阅读类"词做听音选义
+      var rw = poolWords(READ_WORDS);
+      if (rw.length === 0) rw = poolWords(ALL_WORDS); // 兜底：某分组可能全为拼写类，回退到全部词，保证听音选义总能出题
+      questions = buildChooseQuestions(rw, Object.assign({}, chooseOpt, starOpt)); // 仅"听力/阅读类"词做听音选义
     } else if (mode === 'mix') {
-      questions = buildMixQuestions(poolWords(ALL_WORDS), Object.assign({}, chooseOpt, starOpt));
+      var mw = poolWords(ALL_WORDS);
+      if (mw.length === 0) mw = poolWords(SPELL_WORDS.concat(READ_WORDS)); // 极端兜底
+      questions = buildMixQuestions(mw, Object.assign({}, chooseOpt, starOpt));
     } else if (mode === 'review') {
       var rw = poolWords(getReviewWords());
       if (rw.length === 0) {
@@ -4084,77 +4092,85 @@ body.timer-danger{animation:danger-flash .5s infinite}
 
   /* ---------- 作答判题 ---------- */
   function chooseOption(i) {
-    if (state.answered) return;
-    var q = state.q, o = q.options[i];
-    state.answered = true;
-    q.options.forEach(function (op, j) {
-      var el = document.getElementById('opt' + j);
-      if (!el) return;
-      if (op.correct) el.classList.add('correct');
-      else if (j === i) el.classList.add('wrong');
-    });
-    var correct = o.correct;
-    if (correct) {
-      state.correct++;
-      state.streak++;
-      // 英语鼓励音（文字+声音双通道：即使设备不支持语音也能在反馈里看到英文鼓励语）
-      var pk = state.streak >= 3 ? 'combo' : 'ok';
-      var pt = praiseText(pk);
-      speakPraise(pk, pt);
-      playDing('ok');
-      applyTimeReward(q); // 时间奖励：金币 + 破纪录
-      grantStreakGift();  // 连对 5 题送礼（⏸暂停 / 🐌减速 / ⏱加时 随机一个）
-      showFeedback('ok', '✅ 正确！' + (pt ? ' <b>' + pt + '</b>' : ''), '', answerBlock(q));
-    } else {
-      state.streak = 0;
-      applyTimeFail(); // 答错 → 下一关时间放宽
-      // 答错英语鼓励音（文字+声音双通道）：Try again! / Keep going! 等
-      var et = praiseText('err'); speakPraise('err', et); playDing('err');
-      showFeedback('err', '❌ 答错了' + (et ? ' <b>' + et + '</b>' : ''), '正确答案：' + q.testSense.cnDef, answerBlock(q));
+    try {
+      if (state.answered) return;
+      var q = state.q, o = q.options[i];
+      state.answered = true;
+      q.options.forEach(function (op, j) {
+        var el = document.getElementById('opt' + j);
+        if (!el) return;
+        if (op.correct) el.classList.add('correct');
+        else if (j === i) el.classList.add('wrong');
+      });
+      var correct = o.correct;
+      if (correct) {
+        state.correct++;
+        state.streak++;
+        var pk = state.streak >= 3 ? 'combo' : 'ok';
+        var pt = praiseText(pk);
+        speakPraise(pk, pt);
+        playDing('ok');
+        applyTimeReward(q);
+        grantStreakGift();
+        showFeedback('ok', '✅ 正确！' + (pt ? ' <b>' + pt + '</b>' : ''), '', answerBlock(q));
+      } else {
+        state.streak = 0;
+        applyTimeFail();
+        var et = praiseText('err'); speakPraise('err', et); playDing('err');
+        showFeedback('err', '❌ 答错了' + (et ? ' <b>' + et + '</b>' : ''), '正确答案：' + q.testSense.cnDef, answerBlock(q));
+      }
+      adjustDifficulty(correct);
+      statWord(q, correct);
+      recordAttempt(q.word, correct ? 5 : 1);
+    } catch (e) {
+      // 兜底：即便任意一步抛错，也要把 UI 推进到下一题阶段，避免界面卡死
+      try { toast('⚠️ 答题出错了：' + (e && e.message ? e.message : '未知错误')); } catch (_) {}
+    } finally {
+      // 无论 try 块成功或异常，都强制切到"下一题"按钮，保证流程不会卡在"提交答案"置灰
+      try { finishQuestion(); } catch (e2) { try { renderQuestion(); } catch (_) {} }
     }
-    adjustDifficulty(correct);
-    statWord(q, correct);
-    recordAttempt(q.word, correct ? 5 : 1);
-    finishQuestion();
   }
   function onSubmit() {
-    var q = state.q;
-    if (state.answered) return;
-    if (q.type === 'choose') return;
-    var target = q.isSentence ? q.target : q.word;
-    var res = spellJudge(state.inputVal, target, { caseSensitive: !!q.isSentence });
-    if (res.kind === 'empty') { showFeedback('err', '❌ 请先拼出答案', '点击字母按钮组成单词后再提交。'); return; }
-    if (res.kind === 'input_method') { showFeedback('ime', res.imeTip || '输入有误', ''); return; }
-    state.answered = true;
-    var correct = res.correct;
-    if (correct) {
-      state.correct++;
-      state.streak++;
-      // 英语鼓励音（文字+声音双通道）
-      var pk = state.streak >= 3 ? 'combo' : 'ok';
-      var pt = praiseText(pk);
-      speakPraise(pk, pt);
-      playDing('ok');
-      applyTimeReward(q); // 时间奖励：金币 + 破纪录
-      grantStreakGift();  // 连对 5 题送礼（⏸暂停 / 🐌减速 / ⏱加时 随机一个）
-      showFeedback('ok', '✅ 正确！' + (pt ? ' <b>' + pt + '</b>' : ''), '单词：' + target + '　' + ((q.coreSense ? q.coreSense.enDef : '') || ''), answerBlock(q));
-    } else {
-      state.streak = 0;
-      applyTimeFail(); // 答错 → 下一关时间放宽
-      // 答错英语鼓励音（文字+声音双通道）
-      var et = praiseText('err'); speakPraise('err', et); playDing('err');
-      var det = '正确答案：' + target;
-      if (res.caseMismatch) det = '⚠️ 大小写不一致——该词在句中需大写/小写与示例完全一致。';
-      else {
-        var fm = firstMismatch(state.inputVal.toLowerCase(), target.toLowerCase());
-        if (fm) det += '（第 ' + fm.index + ' 个字母应为 "' + fm.expected.toUpperCase() + '"，你拼成 "' + fm.got.toUpperCase() + '"）';
+    try {
+      var q = state.q;
+      if (state.answered) return;
+      if (q.type === 'choose') return;
+      var target = q.isSentence ? q.target : q.word;
+      var res = spellJudge(state.inputVal, target, { caseSensitive: !!q.isSentence });
+      if (res.kind === 'empty') { showFeedback('err', '❌ 请先拼出答案', '点击字母按钮组成单词后再提交。'); return; }
+      if (res.kind === 'input_method') { showFeedback('ime', res.imeTip || '输入有误', ''); return; }
+      state.answered = true;
+      var correct = res.correct;
+      if (correct) {
+        state.correct++;
+        state.streak++;
+        var pk = state.streak >= 3 ? 'combo' : 'ok';
+        var pt = praiseText(pk);
+        speakPraise(pk, pt);
+        playDing('ok');
+        applyTimeReward(q);
+        grantStreakGift();
+        showFeedback('ok', '✅ 正确！' + (pt ? ' <b>' + pt + '</b>' : ''), '单词：' + target + '　' + ((q.coreSense ? q.coreSense.enDef : '') || ''), answerBlock(q));
+      } else {
+        state.streak = 0;
+        applyTimeFail();
+        var et = praiseText('err'); speakPraise('err', et); playDing('err');
+        var det = '正确答案：' + target;
+        if (res.caseMismatch) det = '⚠️ 大小写不一致——该词在句中需大写/小写与示例完全一致。';
+        else {
+          var fm = firstMismatch(state.inputVal.toLowerCase(), target.toLowerCase());
+          if (fm) det += '（第 ' + fm.index + ' 个字母应为 "' + fm.expected.toUpperCase() + '"，你拼成 "' + fm.got.toUpperCase() + '"）';
+        }
+        showFeedback('err', '❌ 拼写错误' + (et ? ' <b>' + et + '</b>' : ''), det, answerBlock(q));
       }
-      showFeedback('err', '❌ 拼写错误' + (et ? ' <b>' + et + '</b>' : ''), det, answerBlock(q));
+      adjustDifficulty(correct);
+      statWord(q, correct);
+      recordAttempt(q.word, correct ? 5 : 1);
+    } catch (e) {
+      try { toast('⚠️ 判分出错了：' + (e && e.message ? e.message : '未知错误')); } catch (_) {}
+    } finally {
+      try { finishQuestion(); } catch (e2) { try { renderQuestion(); } catch (_) {} }
     }
-    adjustDifficulty(correct);
-    statWord(q, correct);
-    recordAttempt(q.word, correct ? 5 : 1);
-    finishQuestion();
   }
   function showFeedback(cls, title, det, extra) {
     var fb = document.getElementById('feedback');
