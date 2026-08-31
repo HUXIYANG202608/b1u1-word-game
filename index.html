@@ -400,12 +400,17 @@ body.timer-danger{animation:danger-flash .5s infinite}
       <span class="lab" style="margin-left:14px">🎵 背景音乐</span>
       <button class="toggle" id="bgmToggle" onclick="toggleBgm()">关</button>
     </div>
+    <div class="diffbar" style="margin-bottom:8px">
+      <span class="lab">🔥 核心四会</span>
+      <button class="toggle" id="reqToggle" onclick="toggleRequired()">关</button>
+      <span class="lab" style="margin-left:8px">开启后各模式仅练 41 课标必背（听说读写）</span>
+    </div>
     <div class="modes">
       <div class="mode" onclick="startMode('spell')"><div class="ic">✍️</div><h3>拼写挑战</h3><p>点字母拼出单词 / 句子词，训练大小写规范</p></div>
       <div class="mode" onclick="startMode('choose')"><div class="ic">👂</div><h3>听音选义</h3><p>听发音，选出正确释义</p></div>
       <div class="mode" onclick="startMode('mix')"><div class="ic">🎲</div><h3>混合训练</h3><p>随机拼写或选择，贴近真实语境</p></div>
       <div class="mode" onclick="startMode('review')"><div class="ic">🔁</div><h3>错词复习</h3><p>只练答错 / 到期词，间隔重复</p><span class="badge" id="reviewBadge"></span></div>
-      <div class="mode full" onclick="showVocab()"><div class="ic">📖</div><h3>词汇总览</h3><p id="vocabDesc">29 个核心词条、多义项、例句与词性标注一屏看全</p></div>
+      <div class="mode full" onclick="showVocab()"><div class="ic">📖</div><h3>词汇总览</h3><p id="vocabDesc">96 个词条（含 41 课标必背：32 单字四会 + 9 短语语块），多义项、例句与词性标注一屏看全</p></div>
     </div>
     <button class="iconbtn" style="width:100%;margin-top:12px" onclick="openRank()">🏆 时间排行榜（本机最佳通关时间）</button>
   </section>
@@ -441,6 +446,8 @@ body.timer-danger{animation:danger-flash .5s infinite}
     <h2 style="font-size:20px;font-weight:900;margin:8px 0">📊 学习数据看板</h2>
     <p style="color:var(--muted);font-size:13px;margin:0 0 10px">基于你的作答记录统计每词正确率、平均用时与易错字母。可导出 CSV 交给教师做分层诊断（数据存于本机浏览器，不上传）。</p>
     <button class="iconbtn" style="margin:4px 0 10px" onclick="exportCsv()">⬇️ 导出 CSV</button>
+    <button class="iconbtn" style="margin:4px 0 10px" onclick="exportData()">💾 备份数据</button>
+    <button class="iconbtn" style="margin:4px 0 10px" onclick="importData()">📥 导入恢复</button>
     <div class="dwrap"><div id="dataBox"></div></div>
     <div class="backlink" onclick="goHome()">← 返回首页</div>
   </section>
@@ -459,7 +466,7 @@ body.timer-danger{animation:danger-flash .5s infinite}
 <div class="gift-banner" id="giftBanner"></div>
 <div class="mask" id="guideMask">
   <div class="modal guide">
-    <h3 id="guideTitle">🎮 认识四个模式</h3>
+    <h3 id="guideTitle">🎮 认识六个模式</h3>
     <p id="guideDesc" style="min-height:84px;line-height:1.7"></p>
     <div class="dots" id="guideDots"></div>
     <div class="guide-btns">
@@ -545,7 +552,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "older or more experienced",
         "example": "He is a senior student who helps the newcomers."
       }
-    ]
+    ],
+    "required": true,
+    "tier": "四会"
   },
   {
     "no": 2,
@@ -562,7 +571,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "",
         "example": "She is in senior high now."
       }
-    ]
+    ],
+    "required": true,
+    "tier": "必背短语"
   },
   {
     "no": 3,
@@ -587,7 +598,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "strange or unusual",
         "example": "There was a curious look on his face when he heard the news."
       }
-    ]
+    ],
+    "required": false,
+    "tier": "认读"
   },
   {
     "no": 4,
@@ -612,7 +625,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "a mark made by pressing",
         "example": "The wet shoes left an impression on the floor."
       }
-    ]
+    ],
+    "required": false,
+    "tier": "认读"
   },
   {
     "no": 5,
@@ -629,7 +644,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "the area of land that contains the buildings of a school, college, or university",
         "example": "Our new campus is larger and more modern than the old one."
       }
-    ]
+    ],
+    "required": true,
+    "tier": "四会"
   },
   {
     "no": 6,
@@ -654,7 +671,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "a particular style or method followed for a long time",
         "example": "He broke with tradition and chose a different career path."
       }
-    ]
+    ],
+    "required": false,
+    "tier": "认读"
   },
   {
     "no": 7,
@@ -679,7 +698,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "a place or service used for a specific activity",
         "example": "The library is a quiet facility for reading and study."
       }
-    ]
+    ],
+    "required": true,
+    "tier": "四会"
   },
   {
     "no": 8,
@@ -696,7 +717,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "evoking admiration because of size, quality, or skill",
         "example": "Her performance in the competition was truly impressive."
       }
-    ]
+    ],
+    "required": false,
+    "tier": "认读"
   },
   {
     "no": 9,
@@ -713,7 +736,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "",
         "example": "I will never forget that moment."
       }
-    ]
+    ],
+    "required": true,
+    "tier": "四会"
   },
   {
     "no": 10,
@@ -738,7 +763,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "to write or create a work",
         "example": "She authored a guidebook for new students."
       }
-    ]
+    ],
+    "required": true,
+    "tier": "四会"
   },
   {
     "no": 11,
@@ -755,7 +782,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "a strong wish to do or have something",
         "example": "He waited with eagerness for the result of the match."
       }
-    ]
+    ],
+    "required": false,
+    "tier": "认读"
   },
   {
     "no": 12,
@@ -780,7 +809,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "to examine or discuss a subject carefully",
         "example": "The article explores the meaning of friendship."
       }
-    ]
+    ],
+    "required": false,
+    "tier": "认读"
   },
   {
     "no": 13,
@@ -797,7 +828,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "",
         "example": "The students entered the hall one by one."
       }
-    ]
+    ],
+    "required": true,
+    "tier": "必背短语"
   },
   {
     "no": 14,
@@ -814,7 +847,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "a machine that produces power to make something move",
         "example": "The car engine broke down on the way to school."
       }
-    ]
+    ],
+    "required": true,
+    "tier": "四会"
   },
   {
     "no": 15,
@@ -831,7 +866,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "",
         "example": "A small insect is on the leaf."
       }
-    ]
+    ],
+    "required": false,
+    "tier": "认读"
   },
   {
     "no": 16,
@@ -856,7 +893,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "the act of collecting money or things",
         "example": "We held a collection for the charity event."
       }
-    ]
+    ],
+    "required": false,
+    "tier": "认读"
   },
   {
     "no": 17,
@@ -881,7 +920,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "to put things into a clear order",
         "example": "She organised her notes before the exam."
       }
-    ]
+    ],
+    "required": false,
+    "tier": "认读"
   },
   {
     "no": 18,
@@ -898,7 +939,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "",
         "example": "She gave me a nudge with her elbow."
       }
-    ]
+    ],
+    "required": false,
+    "tier": "认读"
   },
   {
     "no": 19,
@@ -915,7 +958,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "a flying insect with large colourful wings",
         "example": "A butterfly landed on the flower in the garden."
       }
-    ]
+    ],
+    "required": false,
+    "tier": "认读"
   },
   {
     "no": 20,
@@ -932,7 +977,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "",
         "example": "I had butterflies in my stomach before the test."
       }
-    ]
+    ],
+    "required": true,
+    "tier": "必背短语"
   },
   {
     "no": 21,
@@ -949,7 +996,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "",
         "example": "Breathe in and breathe out slowly."
       }
-    ]
+    ],
+    "required": false,
+    "tier": "认读"
   },
   {
     "no": 22,
@@ -974,7 +1023,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "to feel or cause sudden fear",
         "example": "Don't panic — we still have enough time."
       }
-    ]
+    ],
+    "required": true,
+    "tier": "四会"
   },
   {
     "no": 23,
@@ -991,7 +1042,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "",
         "example": "They ran away in panic."
       }
-    ]
+    ],
+    "required": true,
+    "tier": "必背短语"
   },
   {
     "no": 24,
@@ -1016,7 +1069,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "to invite someone to compete or to question something",
         "example": "She challenged her classmates to a friendly debate."
       }
-    ]
+    ],
+    "required": false,
+    "tier": "认读"
   },
   {
     "no": 25,
@@ -1041,7 +1096,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "to try to persuade someone by using force or influence",
         "example": "Don't let others pressure you into making a wrong choice."
       }
-    ]
+    ],
+    "required": false,
+    "tier": "认读"
   },
   {
     "no": 26,
@@ -1058,7 +1115,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "",
         "example": "Please keep calm and listen."
       }
-    ]
+    ],
+    "required": false,
+    "tier": "认读"
   },
   {
     "no": 27,
@@ -1075,7 +1134,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "a spoken or written account of something",
         "example": "Please give a brief description of your dream job."
       }
-    ]
+    ],
+    "required": false,
+    "tier": "认读"
   },
   {
     "no": 28,
@@ -1100,7 +1161,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "certain that something will happen or is true",
         "example": "I am confident of success in the coming contest."
       }
-    ]
+    ],
+    "required": false,
+    "tier": "认读"
   },
   {
     "no": 29,
@@ -1117,7 +1180,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "a large printed picture used to advertise or decorate",
         "example": "We designed a poster to welcome the new students."
       }
-    ]
+    ],
+    "required": true,
+    "tier": "四会"
   },
   {
     "no": 30,
@@ -1134,7 +1199,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "a sport in which players hit a shuttlecock across a net",
         "example": "We often play badminton on the playground after school."
       }
-    ]
+    ],
+    "required": false,
+    "tier": "认读"
   },
   {
     "no": 31,
@@ -1159,7 +1226,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "an exciting or emotional series of events",
         "example": "The meeting turned into a real drama when they disagreed."
       }
-    ]
+    ],
+    "required": true,
+    "tier": "四会"
   },
   {
     "no": 32,
@@ -1176,7 +1245,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "",
         "example": "The school band played a song."
       }
-    ]
+    ],
+    "required": true,
+    "tier": "四会"
   },
   {
     "no": 33,
@@ -1201,7 +1272,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "to discuss a subject in a formal way",
         "example": "They debated whether to join the volunteer project."
       }
-    ]
+    ],
+    "required": true,
+    "tier": "四会"
   },
   {
     "no": 34,
@@ -1218,7 +1291,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "a building or room for sports and exercise",
         "example": "The new gym will open to students next Monday."
       }
-    ]
+    ],
+    "required": true,
+    "tier": "四会"
   },
   {
     "no": 35,
@@ -1235,7 +1310,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "",
         "example": "She can play the piano."
       }
-    ]
+    ],
+    "required": true,
+    "tier": "四会"
   },
   {
     "no": 36,
@@ -1252,7 +1329,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "",
         "example": "The singer is on the stage."
       }
-    ]
+    ],
+    "required": true,
+    "tier": "四会"
   },
   {
     "no": 37,
@@ -1269,7 +1348,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "",
         "example": "He loves photography."
       }
-    ]
+    ],
+    "required": false,
+    "tier": "认读"
   },
   {
     "no": 38,
@@ -1286,7 +1367,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "",
         "example": "Her inner feelings remained hidden from others."
       }
-    ]
+    ],
+    "required": true,
+    "tier": "四会"
   },
   {
     "no": 39,
@@ -1303,7 +1386,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "",
         "example": "The class ends at 4 pm."
       }
-    ]
+    ],
+    "required": false,
+    "tier": "认读"
   },
   {
     "no": 40,
@@ -1320,7 +1405,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "",
         "example": "Don't argue with your friends."
       }
-    ]
+    ],
+    "required": false,
+    "tier": "认读"
   },
   {
     "no": 41,
@@ -1337,7 +1424,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "",
         "example": "The topic today is friendship."
       }
-    ]
+    ],
+    "required": true,
+    "tier": "四会"
   },
   {
     "no": 42,
@@ -1354,7 +1443,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "",
         "example": "He has a sharp mind."
       }
-    ]
+    ],
+    "required": false,
+    "tier": "认读"
   },
   {
     "no": 43,
@@ -1371,7 +1462,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "",
         "example": "The dinosaur is extinct."
       }
-    ]
+    ],
+    "required": false,
+    "tier": "认读"
   },
   {
     "no": 44,
@@ -1388,7 +1481,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "",
         "example": "The dolphin is very smart."
       }
-    ]
+    ],
+    "required": false,
+    "tier": "认读"
   },
   {
     "no": 45,
@@ -1405,7 +1500,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "",
         "example": "She is an intelligent girl."
       }
-    ]
+    ],
+    "required": false,
+    "tier": "认读"
   },
   {
     "no": 46,
@@ -1422,7 +1519,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "",
         "example": "The police will investigate the accident."
       }
-    ]
+    ],
+    "required": false,
+    "tier": "认读"
   },
   {
     "no": 47,
@@ -1439,7 +1538,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "",
         "example": "We have various books to read."
       }
-    ]
+    ],
+    "required": false,
+    "tier": "认读"
   },
   {
     "no": 48,
@@ -1464,7 +1565,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "to offer to do something without being forced or paid",
         "example": "She volunteered to organize the welcome party for freshmen."
       }
-    ]
+    ],
+    "required": false,
+    "tier": "认读"
   },
   {
     "no": 49,
@@ -1481,7 +1584,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "",
         "example": "You will gain knowledge from reading."
       }
-    ]
+    ],
+    "required": true,
+    "tier": "四会"
   },
   {
     "no": 50,
@@ -1498,7 +1603,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "",
         "example": "I will apply for the job."
       }
-    ]
+    ],
+    "required": false,
+    "tier": "认读"
   },
   {
     "no": 51,
@@ -1515,7 +1622,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "",
         "example": "Make a schedule for your week."
       }
-    ]
+    ],
+    "required": true,
+    "tier": "四会"
   },
   {
     "no": 52,
@@ -1532,7 +1641,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "",
         "example": "He won an award for his story."
       }
-    ]
+    ],
+    "required": true,
+    "tier": "四会"
   },
   {
     "no": 53,
@@ -1557,7 +1668,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "a favourable moment for doing something",
         "example": "We should seize every opportunity to improve ourselves."
       }
-    ]
+    ],
+    "required": true,
+    "tier": "四会"
   },
   {
     "no": 54,
@@ -1574,7 +1687,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "a small piece of information that helps to find the answer",
         "example": "She gave me a hint about the answer."
       }
-    ]
+    ],
+    "required": false,
+    "tier": "认读"
   },
   {
     "no": 55,
@@ -1591,7 +1706,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "",
         "example": "I subscribe to a newspaper."
       }
-    ]
+    ],
+    "required": false,
+    "tier": "认读"
   },
   {
     "no": 56,
@@ -1608,7 +1725,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "",
         "example": "We had a clear view of the mountain."
       }
-    ]
+    ],
+    "required": true,
+    "tier": "四会"
   },
   {
     "no": 57,
@@ -1625,7 +1744,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "",
         "example": "He is a former teacher."
       }
-    ]
+    ],
+    "required": true,
+    "tier": "四会"
   },
   {
     "no": 58,
@@ -1650,7 +1771,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "a person who has completed a course of study",
         "example": "The club welcomes both students and graduates."
       }
-    ]
+    ],
+    "required": false,
+    "tier": "认读"
   },
   {
     "no": 59,
@@ -1667,7 +1790,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "",
         "example": "We had an orientation day at school."
       }
-    ]
+    ],
+    "required": false,
+    "tier": "认读"
   },
   {
     "no": 60,
@@ -1684,7 +1809,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "",
         "example": "The child was frightened by the noise."
       }
-    ]
+    ],
+    "required": false,
+    "tier": "认读"
   },
   {
     "no": 61,
@@ -1701,7 +1828,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "",
         "example": "The sight of the sea was beautiful."
       }
-    ]
+    ],
+    "required": true,
+    "tier": "四会"
   },
   {
     "no": 62,
@@ -1718,7 +1847,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "",
         "example": "I figure he will come soon."
       }
-    ]
+    ],
+    "required": true,
+    "tier": "四会"
   },
   {
     "no": 63,
@@ -1735,7 +1866,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "",
         "example": "We went all out for the game."
       }
-    ]
+    ],
+    "required": true,
+    "tier": "必背短语"
   },
   {
     "no": 64,
@@ -1752,7 +1885,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "",
         "example": "Please select a book you like."
       }
-    ]
+    ],
+    "required": false,
+    "tier": "认读"
   },
   {
     "no": 65,
@@ -1769,7 +1904,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "",
         "example": "Is there any particular color you like?"
       }
-    ]
+    ],
+    "required": true,
+    "tier": "四会"
   },
   {
     "no": 66,
@@ -1786,7 +1923,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "",
         "example": "I love music, pop music in particular."
       }
-    ]
+    ],
+    "required": true,
+    "tier": "必背短语"
   },
   {
     "no": 67,
@@ -1803,7 +1942,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "",
         "example": "A rainbow appeared after the rain."
       }
-    ]
+    ],
+    "required": false,
+    "tier": "认读"
   },
   {
     "no": 68,
@@ -1820,7 +1961,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "clean and tidy; in good order",
         "example": "Her desk is neat and tidy."
       }
-    ]
+    ],
+    "required": false,
+    "tier": "认读"
   },
   {
     "no": 69,
@@ -1837,7 +1980,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "",
         "example": "Please give a specific example."
       }
-    ]
+    ],
+    "required": false,
+    "tier": "认读"
   },
   {
     "no": 70,
@@ -1854,7 +1999,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "",
         "example": "The speaker referred to a study."
       }
-    ]
+    ],
+    "required": false,
+    "tier": "认读"
   },
   {
     "no": 71,
@@ -1871,7 +2018,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "",
         "example": "Please refer to the dictionary."
       }
-    ]
+    ],
+    "required": true,
+    "tier": "必背短语"
   },
   {
     "no": 72,
@@ -1888,7 +2037,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "",
         "example": "She keeps a journal every day."
       }
-    ]
+    ],
+    "required": true,
+    "tier": "四会"
   },
   {
     "no": 73,
@@ -1905,7 +2056,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "",
         "example": "He is a junior student."
       }
-    ]
+    ],
+    "required": true,
+    "tier": "四会"
   },
   {
     "no": 74,
@@ -1930,7 +2083,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "a long hard effort to achieve something",
         "example": "The struggle for success taught him a lot."
       }
-    ]
+    ],
+    "required": true,
+    "tier": "四会"
   },
   {
     "no": 75,
@@ -1947,7 +2102,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "",
         "example": "Try to memorise these words."
       }
-    ]
+    ],
+    "required": false,
+    "tier": "认读"
   },
   {
     "no": 76,
@@ -1964,7 +2121,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "",
         "example": "Skateboarding is fun."
       }
-    ]
+    ],
+    "required": false,
+    "tier": "认读"
   },
   {
     "no": 77,
@@ -1981,7 +2140,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "",
         "example": "Move forward and don't stop."
       }
-    ]
+    ],
+    "required": true,
+    "tier": "四会"
   },
   {
     "no": 78,
@@ -1998,7 +2159,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "",
         "example": "I look forward to your letter."
       }
-    ]
+    ],
+    "required": true,
+    "tier": "必背短语"
   },
   {
     "no": 79,
@@ -2015,7 +2178,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "",
         "example": "He is on the school committee."
       }
-    ]
+    ],
+    "required": true,
+    "tier": "四会"
   },
   {
     "no": 80,
@@ -2032,7 +2197,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "",
         "example": "Exercise can improve your health."
       }
-    ]
+    ],
+    "required": false,
+    "tier": "认读"
   },
   {
     "no": 81,
@@ -2049,7 +2216,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "",
         "example": "How do you rate this film?"
       }
-    ]
+    ],
+    "required": true,
+    "tier": "四会"
   },
   {
     "no": 82,
@@ -2066,7 +2235,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "",
         "example": "Her performance was great."
       }
-    ]
+    ],
+    "required": false,
+    "tier": "认读"
   },
   {
     "no": 83,
@@ -2091,7 +2262,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "an act of giving and receiving",
         "example": "The cultural exchange widened our view of the world."
       }
-    ]
+    ],
+    "required": true,
+    "tier": "四会"
   },
   {
     "no": 84,
@@ -2108,7 +2281,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "",
         "example": "We have Orientation Day before the new term."
       }
-    ]
+    ],
+    "required": false,
+    "tier": "听音短语"
   },
   {
     "no": 85,
@@ -2125,7 +2300,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "",
         "example": "The exam puts students under pressure."
       }
-    ]
+    ],
+    "required": false,
+    "tier": "听音短语"
   },
   {
     "no": 86,
@@ -2142,7 +2319,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "",
         "example": "We depend on the bus to go to school."
       }
-    ]
+    ],
+    "required": true,
+    "tier": "必背短语"
   },
   {
     "no": 87,
@@ -2159,7 +2338,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "",
         "example": "Make the most of your time."
       }
-    ]
+    ],
+    "required": false,
+    "tier": "听音短语"
   },
   {
     "no": 88,
@@ -2176,7 +2357,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "",
         "example": "She graduated from a famous university."
       }
-    ]
+    ],
+    "required": false,
+    "tier": "听音短语"
   },
   {
     "no": 89,
@@ -2193,7 +2376,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "",
         "example": "I was about to leave when he called."
       }
-    ]
+    ],
+    "required": false,
+    "tier": "听音短语"
   },
   {
     "no": 90,
@@ -2210,7 +2395,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "",
         "example": "He acts as if he knows everything."
       }
-    ]
+    ],
+    "required": false,
+    "tier": "听音短语"
   },
   {
     "no": 91,
@@ -2227,7 +2414,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "",
         "example": "He will start high school in September."
       }
-    ]
+    ],
+    "required": false,
+    "tier": "听音短语"
   },
   {
     "no": 92,
@@ -2244,7 +2433,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "",
         "example": "Keep an open mind about new ideas."
       }
-    ]
+    ],
+    "required": false,
+    "tier": "听音短语"
   },
   {
     "no": 93,
@@ -2261,7 +2452,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "",
         "example": "We must deal with the problem."
       }
-    ]
+    ],
+    "required": false,
+    "tier": "听音短语"
   },
   {
     "no": 94,
@@ -2278,7 +2471,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "",
         "example": "She smiled at the sight of her mother."
       }
-    ]
+    ],
+    "required": false,
+    "tier": "听音短语"
   },
   {
     "no": 95,
@@ -2295,7 +2490,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "",
         "example": "Hold your head up and be proud."
       }
-    ]
+    ],
+    "required": false,
+    "tier": "听音短语"
   },
   {
     "no": 96,
@@ -2312,7 +2509,9 @@ body.timer-danger{animation:danger-flash .5s infinite}
         "enDef": "",
         "example": "Could you give me a hand?"
       }
-    ]
+    ],
+    "required": false,
+    "tier": "听音短语"
   }
 ];
 
@@ -2970,7 +3169,7 @@ body.timer-danger{animation:danger-flash .5s infinite}
     try { return JSON.parse(global.localStorage.getItem(WSTAT_KEY)) || {}; }
     catch (e) { return {}; }
   }
-  function recordWordStat(word, correct, ms, errPairs) {
+  function recordWordStat(word, correct, ms, errPairs, errType) {
     var m = loadWstat();
     var w = String(word == null ? '' : word).toLowerCase();
     if (!w) return null;
@@ -2983,6 +3182,10 @@ body.timer-danger{animation:danger-flash .5s infinite}
       var k = (p.expected || '?') + '>' + (p.got || '?');
       rec.errs[k] = (rec.errs[k] || 0) + 1;
     });
+    if (!correct && errType) {
+      rec.errTypes = rec.errTypes || {};
+      rec.errTypes[errType] = (rec.errTypes[errType] || 0) + 1;
+    }
     m[w] = rec;
     try { global.localStorage.setItem(WSTAT_KEY, JSON.stringify(m)); } catch (e) {}
     return rec;
@@ -3615,6 +3818,13 @@ body.timer-danger{animation:danger-flash .5s infinite}
     timeCoinsEarned: 0, newRecord: false      // 本局金币奖励 / 是否破纪录
   };
   var MODE_LABEL = { spell: '拼写挑战', choose: '听音选义', mix: '混合训练', review: '错词复习' };
+  var G_onlyRequired = false;
+  function toggleRequired() {
+    G_onlyRequired = !G_onlyRequired;
+    var b = document.getElementById('reqToggle');
+    if (b) { b.textContent = G_onlyRequired ? '开' : '关'; b.classList.toggle('on', G_onlyRequired); }
+    renderHome();
+  }
   /* 难度说明（随选择实时变化，让三档差异一目了然） */
   var DIFF_DESC = {
     easy:   '🟢 基础 · 有首字母提示，字母池小（约 11 键）',
@@ -3745,6 +3955,8 @@ body.timer-danger{animation:danger-flash .5s infinite}
     var gp = gw ? Math.round((st.mastered / gw) * 100) : 0;
     var g = global.getGrowth ? global.getGrowth() : { xp: 0, bestStreak: 0, totalCorrect: 0, days: {} };
     var days = g.days ? Object.keys(g.days).length : 0;
+    var ws2 = global.getWordStats ? global.getWordStats() : {};
+    var reqM = (global.ALL_WORDS||[]).filter(function(w){return w.required;}).filter(function(w){var r=ws2[w.word.toLowerCase()];return r && r.n>0 && r.ok/r.n>=0.9;}).length;
     var ge = document.getElementById('growthBody');
     if (ge) {
       ge.innerHTML =
@@ -3752,8 +3964,10 @@ body.timer-danger{animation:danger-flash .5s infinite}
         '<div class="g-row"><span>🔥 最佳连对</span><b>' + (g.bestStreak || 0) + '</b></div>' +
         '<div class="g-row"><span>✅ 累计答对</span><b>' + (g.totalCorrect || 0) + '</b></div>' +
         '<div class="g-row"><span>📅 已练天数</span><b>' + days + '</b></div>' +
-        '<div class="g-prog"><i style="width:' + gp + '%"></i></div>' +
-        '<div class="g-cap">掌握进度 ' + st.mastered + ' / ' + gw + '（' + gp + '%）</div>';
+        '<div class="g-row"><span>🔥 核心四会</span><b>' + reqM + ' / 41</b></div>' + '<div class="g-prog"><i style="width:' + gp + '%"></i></div>' +
+        '<div class="g-cap">掌握进度 ' + st.mastered + ' / ' + gw + '（' + gp + '%）</div>' +
+        checkinGrid() +
+        '<button class="iconbtn" style="margin:6px 0 4px" onclick="showWeekly()">📤 本周学习报告（可复制分享）</button>';
     }
   }
   function setDiff(k) { if (G_setDiff) G_setDiff(k); renderDiff(); renderHome(); }
@@ -3766,17 +3980,20 @@ body.timer-danger{animation:danger-flash .5s infinite}
     var chooseOpt = { wrong: cd.chooseWrong };
     // 3.1 词内分阶：所有模式按难度档收窄词池 + 档内星级升序（从易到难，规律与拼写一致）
     var starOpt = { minStar: cd.minStar, maxStar: cd.maxStar };
+    var _spell = G_onlyRequired ? SPELL_WORDS.filter(function (w) { return w.required; }) : SPELL_WORDS;
+    var _read = G_onlyRequired ? READ_WORDS.filter(function (w) { return w.required; }) : READ_WORDS;
+    var _all = G_onlyRequired ? ALL_WORDS.filter(function (w) { return w.required; }) : ALL_WORDS;
     if (mode === 'spell') {
-      questions = buildSpellWordQuestions(poolWords(SPELL_WORDS), starOpt)
-        .concat(buildSentenceQuestions(poolSentences(), starOpt))
-        .concat(buildCaseQuestions(poolWords(SPELL_WORDS), starOpt));
+      questions = buildSpellWordQuestions(poolWords(_spell), starOpt)
+        .concat(G_onlyRequired ? [] : buildSentenceQuestions(poolSentences(), starOpt))
+        .concat(buildCaseQuestions(poolWords(_spell), starOpt));
     } else if (mode === 'choose') {
-      var rw = poolWords(READ_WORDS);
+      var rw = poolWords(_read);
       if (rw.length === 0) rw = poolWords(ALL_WORDS); // 兜底：某分组可能全为拼写类，回退到全部词，保证听音选义总能出题
       questions = buildChooseQuestions(rw, Object.assign({}, chooseOpt, starOpt)); // 仅"听力/阅读类"词做听音选义
     } else if (mode === 'mix') {
-      var mw = poolWords(ALL_WORDS);
-      if (mw.length === 0) mw = poolWords(SPELL_WORDS.concat(READ_WORDS)); // 极端兜底
+      var mw = poolWords(_all);
+      if (mw.length === 0) mw = poolWords(_spell.concat(_read)); // 极端兜底
       questions = buildMixQuestions(mw, Object.assign({}, chooseOpt, starOpt))
         .concat(buildCaseQuestions(mw, starOpt));
     } else if (mode === 'review') {
@@ -4265,8 +4482,16 @@ body.timer-danger{animation:danger-flash .5s infinite}
         var fm = firstMismatch(String(state.inputVal || '').toLowerCase(), String(target || '').toLowerCase());
         if (fm) pairs.push({ expected: fm.expected, got: fm.got });
       }
-      if (global.recordWordStat) global.recordWordStat(q.word, correct, ms, pairs);
+      var errType = correct ? '' : (q && q.type === 'choose' ? '听音/语义' : '拼写');
+      if (global.recordWordStat) global.recordWordStat(q.word, correct, ms, pairs, errType);
       if (global.addGrowth) global.addGrowth(correct, state.streak);   // 优化项⑥：累计成长
+      try {   // 每日打卡记录
+        var _d = new Date();
+        var _key = _d.getFullYear() + '-' + ('0' + (_d.getMonth() + 1)).slice(-2) + '-' + ('0' + _d.getDate()).slice(-2);
+        var _ci = JSON.parse(global.localStorage.getItem('xb4-checkin') || '{}');
+        _ci[_key] = (_ci[_key] || 0) + 1;
+        global.localStorage.setItem('xb4-checkin', JSON.stringify(_ci));
+      } catch (e) {}
     } catch (e) {}
   }
 
@@ -4355,6 +4580,11 @@ body.timer-danger{animation:danger-flash .5s infinite}
   }
   function showFeedback(cls, title, det, extra) {
     var fb = document.getElementById('feedback');
+    try {
+      if (cls === 'ok' && state && state.streak >= 2) {
+        title = title + ' <span style="background:linear-gradient(135deg,#ff9f43,#ff5e62);color:#fff;border-radius:99px;padding:2px 10px;font-size:13px;font-weight:700;margin-left:6px">🔥 连击 \u00d7' + state.streak + '</span>';
+      }
+    } catch (e) {}
     fb.className = 'feedback show ' + cls;
     fb.innerHTML = title + (det ? '<div class="det">' + det + '</div>' : '') + (extra || '');
   }
@@ -4446,7 +4676,8 @@ body.timer-danger{animation:danger-flash .5s infinite}
     vl.innerHTML = poolWords(ALL_WORDS).map(function (w) {
       var best = bt[w.word.toLowerCase()];
       var bestTxt = best ? '<span class="best">🏆 ' + (best.ms / 1000).toFixed(1) + 's</span>' : '';
-      return '<div class="vitem"><div class="w">' + w.word +
+      var rt = w.required ? (w.tier === '四会' ? '<span class="rtag" style="background:#e8f0ff;color:#2a5bd7;border:1px solid #cfe0ff">核心四会</span>' : '<span class="rtag" style="background:#fff3e0;color:#c8741a;border:1px solid #ffe2bd">必背短语</span>') : (w.tier === '认读' ? '<span class="rtag" style="background:#eef1f6;color:#6b7385;border:1px solid #e1e5ee">认读</span>' : '<span class="rtag" style="background:#f3eefb;color:#8a5fc0;border:1px solid #e6ddf3">听音短语</span>');
+      return '<div class="vitem"><div class="w">' + w.word + ' ' + rt +
         ' <span class="pos">' + w.senses[0].pos + '</span> ' + bestTxt +
         '<button class="iconbtn" style="padding:4px 10px;font-size:12px" onclick="speak(\'' + w.word + '\')">🔊</button></div>' +
         w.senses.map(function (s) {
@@ -4487,12 +4718,18 @@ body.timer-danger{animation:danger-flash .5s infinite}
   function exportCsv() {
     var st = global.getWordStats ? global.getWordStats() : {};
     var W = global.ALL_WORDS || [];
-    var lines = ['单词,练习次数,正确次数,正确率,平均用时秒,易错字母'];
+    function topErrType(et) {
+      if (!et) return '';
+      var best = '', max = 0;
+      Object.keys(et).forEach(function (k) { if (et[k] > max) { max = et[k]; best = k; } });
+      return best;
+    }
+    var lines = ['单词,练习次数,正确次数,正确率,平均用时秒,易错字母,主要错误类型'];
     W.forEach(function (w) {
       var rec = st[w.word.toLowerCase()] || { n: 0, ok: 0, totalMs: 0, errs: {} };
       var acc = rec.n ? Math.round(rec.ok / rec.n * 100) : '';
       var avg = (rec.n && rec.totalMs) ? (rec.totalMs / rec.n / 1000).toFixed(1) : '';
-      lines.push([w.word, rec.n || 0, rec.ok || 0, acc, avg, topErr(rec.errs) || ''].join(','));
+      lines.push([w.word, rec.n || 0, rec.ok || 0, acc, avg, topErr(rec.errs) || '', topErrType(rec.errTypes)].join(','));
     });
     var csv = '﻿' + lines.join('\n');   // 前导 BOM 便于 Excel 正确识别中文
     try {
@@ -4506,6 +4743,124 @@ body.timer-danger{animation:danger-flash .5s infinite}
     } catch (e) { toast('⚠️ 导出失败：' + (e && e.message ? e.message : '未知错误')); }
   }
 
+  /* ---------- 每日打卡格子（P1 增强：拥有感/连续打卡） ---------- */
+  function checkinGrid() {
+    try {
+      var ci = JSON.parse(global.localStorage.getItem('xb4-checkin') || '{}');
+      var now = new Date(), y = now.getFullYear(), m = now.getMonth();
+      var dim = new Date(y, m + 1, 0).getDate();
+      var cells = '', streak = 0, maxS = 0, cnt = 0;
+      for (var dd = 1; dd <= dim; dd++) {
+        var key = y + '-' + ('0' + (m + 1)).slice(-2) + '-' + ('0' + dd).slice(-2);
+        var on = !!ci[key];
+        if (on) { cnt++; streak++; if (streak > maxS) maxS = streak; } else { streak = 0; }
+        var isToday = dd === now.getDate();
+        cells += '<span style="display:inline-block;width:15px;height:15px;border-radius:4px;margin:2px;background:' +
+          (on ? '#2a5bd7' : (isToday ? '#ffe2bd' : '#eef1f6')) + (isToday ? ';border:1px solid #c8741a' : '') + '"></span>';
+      }
+      return '<div class="g-row"><span>📆 本月打卡</span><b>' + cnt + ' 天 · 最长连 ' + maxS + ' 天</b></div>' +
+        '<div style="margin:2px 0 4px">' + cells + '</div>';
+    } catch (e) { return ''; }
+  }
+  /* ---------- 本周学习报告（P1 增强：社交分享替代在线榜） ---------- */
+  function showWeekly() {
+    try {
+      var st = global.getWordStats ? global.getWordStats() : {};
+      var W = global.ALL_WORDS || [];
+      var totalN = 0, totalOk = 0, worst = null, worstAcc = 101;
+      W.forEach(function (w) {
+        var r = st[w.word.toLowerCase()] || {};
+        if (r.n) {
+          totalN += r.n; totalOk += (r.ok || 0);
+          var acc = Math.round(r.ok / r.n * 100);
+          if (acc < worstAcc) { worstAcc = acc; worst = w.word; }
+        }
+      });
+      var reqAll = (global.ALL_WORDS || []).filter(function (w) { return w.required; });
+      var reqDone = reqAll.filter(function (w) { var r = st[w.word.toLowerCase()]; return r && r.n > 0 && r.ok / r.n >= 0.9; }).length;
+      var ci = {}; try { ci = JSON.parse(global.localStorage.getItem('xb4-checkin') || '{}'); } catch (e) {}
+      var streak = 0, maxS = 0;
+      Object.keys(ci).sort().forEach(function (k) { if (ci[k]) { streak++; if (streak > maxS) maxS = streak; } else { streak = 0; } });
+      var now = new Date();
+      var txt = '📚 单词闯关学习报告（' + now.getFullYear() + '/' + (now.getMonth() + 1) + '/' + now.getDate() + '）\n' +
+        '— 累计练习 ' + totalN + ' 次，正确率 ' + (totalN ? Math.round(totalOk / totalN * 100) : 0) + '%\n' +
+        '— 核心四会进度：' + reqDone + ' / 41\n' +
+        '— 最长连续打卡 ' + maxS + ' 天\n' +
+        (worst ? '— 待攻克：' + worst + '（正确率 ' + worstAcc + '%）\n' : '') +
+        '本周继续加油！💪';
+      var done = false;
+      try {
+        if (global.navigator && global.navigator.clipboard && global.navigator.clipboard.writeText) {
+          global.navigator.clipboard.writeText(txt).then(function () { toast('✅ 报告已复制，粘贴到班级群分享'); }, function () {});
+          done = true;
+        }
+      } catch (e) {}
+      if (!done) {
+        var ta = document.createElement('textarea');
+        ta.value = txt; document.body.appendChild(ta); ta.select();
+        try { document.execCommand('copy'); toast('✅ 报告已复制，粘贴到班级群分享'); } catch (e) { toast('⚠️ 请长按复制以下内容'); }
+        setTimeout(function () { try { document.body.removeChild(ta); } catch (e) {} }, 500);
+      }
+    } catch (e) { toast('⚠️ 生成报告失败'); }
+  }
+
+  /* ---------- 数据备份 / 跨设备导入恢复（错误归因 P0 增强） ---------- */
+  function exportData() {
+    var keys = ['xb4-wstat', 'xb4-learn-v1', 'xb4-growth', 'xb4-items', 'xb4-coins', 'xb4-besttime', 'xb4-diff', 'xb4-group'];
+    var out = { v: 1, at: new Date().toISOString(), data: {} };
+    keys.forEach(function (k) {
+      try { var v = global.localStorage.getItem(k); if (v) out.data[k] = JSON.parse(v); } catch (e) {}
+    });
+    try {
+      var blob = new Blob([JSON.stringify(out)], { type: 'application/json;charset=utf-8;' });
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement('a'); a.href = url; a.download = '单词闯关数据备份.json';
+      document.body.appendChild(a); a.click();
+      setTimeout(function () { try { document.body.removeChild(a); URL.revokeObjectURL(url); } catch (e) {} }, 1000);
+      toast('✅ 已导出完整备份，可在新设备导入合并');
+    } catch (e) { toast('⚠️ 备份导出失败'); }
+  }
+  function importData() {
+    var inp = document.createElement('input');
+    inp.type = 'file'; inp.accept = '.json';
+    inp.onchange = function () {
+      var f = inp.files && inp.files[0]; if (!f) return;
+      var rd = new FileReader();
+      rd.onload = function () {
+        try {
+          var obj = JSON.parse(rd.result);
+          var src = (obj && obj.data) ? obj.data : obj;
+          var merged = 0;
+          Object.keys(src || {}).forEach(function (k) {
+            try {
+              var newV = src[k];
+              var oldRaw = global.localStorage.getItem(k);
+              if (!oldRaw) { global.localStorage.setItem(k, JSON.stringify(newV)); merged++; return; }
+              var oldV = JSON.parse(oldRaw);
+              if (oldV && typeof oldV === 'object' && newV && typeof newV === 'object' && !Array.isArray(oldV) && !Array.isArray(newV)) {
+                Object.keys(newV).forEach(function (kk) {
+                  var a = oldV[kk], b = newV[kk];
+                  if (a && typeof a === 'object' && b && typeof b === 'object' && typeof a.n === 'number' && typeof b.n === 'number') {
+                    oldV[kk] = (a.n >= b.n) ? a : b;   // 作答统计按练习次数多者保留
+                  } else if (a === undefined) { oldV[kk] = b; }
+                  else if (b === undefined) { /* 保留旧值 */ }
+                  else { oldV[kk] = b; }
+                });
+                global.localStorage.setItem(k, JSON.stringify(oldV)); merged++;
+              } else {
+                global.localStorage.setItem(k, JSON.stringify(newV)); merged++;
+              }
+            } catch (e) {}
+          });
+          toast('✅ 导入并合并完成（' + merged + ' 项数据）');
+          setTimeout(function () { try { global.location.reload(); } catch (e) {} }, 900);
+        } catch (e) { toast('⚠️ 备份文件解析失败'); }
+      };
+      rd.readAsText(f);
+    };
+    inp.click();
+  }
+
   /* ---------- 课标 · 分层对照（优化项⑧：参赛"分层依据说明"材料） ---------- */
   function showStd() {
     var W = global.ALL_WORDS || [];
@@ -4514,14 +4869,14 @@ body.timer-danger{animation:danger-flash .5s infinite}
       var star = w.difficulty || 1;
       var lvl = star <= 1 ? '识记' : (star === 2 ? '理解' : '运用');
       var pt = w.practiceType === 'spell' ? '拼写 + 听音' : '听音选义';
-      return '<tr><td>' + w.word + '</td><td>第' + (w.group || '?') + '段</td><td>' + star + '★</td><td>' + lvl + '</td><td>' + pt + '</td></tr>';
+      return '<tr><td>' + w.word + '</td><td>第' + (w.group || '?') + '段</td><td>' + star + '★</td><td>' + lvl + '</td><td>' + (w.required ? '课标必背' : '拓展') + '</td><td>' + w.tier + '</td><td>' + pt + '</td></tr>';
     }).join('');
     var grpNote = gs.map(function (g) { return '· ' + g.noRange + '（' + g.sub + '）'; }).join('<br/>');
     var box = document.getElementById('stdBox');
     if (box) box.innerHTML =
       '<p style="font-size:13px;color:var(--muted);margin:0 0 8px">教材分组（按词汇表顺序等分）：<br/>' + grpNote + '</p>' +
-      '<div class="dwrap"><table class="datatable"><thead><tr><th>单词</th><th>教材段</th><th>星级</th><th>认知层级</th><th>建议题型</th></tr></thead><tbody>' + rows + '</tbody></table></div>' +
-      '<p style="font-size:12.5px;color:var(--muted);margin-top:8px">说明：星级取自词表 difficulty 字段；认知层级为"识记 / 理解 / 运用"建议映射；课标级别与教材页码为参赛参照模板，请教师按实际教材补正。</p>';
+      '<div class="dwrap"><table class="datatable"><thead><tr><th>单词</th><th>教材段</th><th>星级</th><th>认知层级</th><th>课标</th><th>分层</th><th>建议题型</th></tr></thead><tbody>' + rows + '</tbody></table></div>' +
+      '<p style="font-size:13px;color:#2a5bd7;margin:6px 0 8px">📊 单元词汇总量 <b>96</b> · 课标必背 <b>41</b>（核心四会 32 单字 + 必背短语 9）· 拓展 <b>55</b>（认读 43 + 听音短语 12）。</p>' + '<p style="font-size:12.5px;color:var(--muted);margin-top:8px">说明：星级取自词表 difficulty 字段；认知层级为"识记 / 理解 / 运用"建议映射；课标级别与教材页码为参赛参照模板，请教师按实际教材补正。</p>';
     show('std');
   }
 
@@ -4615,7 +4970,7 @@ body.timer-danger{animation:danger-flash .5s infinite}
 
   /* ---------- 新手引导（分步弹窗，替代单条 toast） ---------- */
   var GUIDE_STEPS = [
-    { t: '🎮 认识四个模式', d: '拼写挑战：点字母拼出单词/句子词；听音选义：听发音选释义；混合训练：随机组合；错词复习：只练答错/到期的词（智能重复）。' },
+    { t: '🎮 认识六个模式', d: '拼写挑战：点字母拼出单词/句子词；听音选义：听发音选释义；混合训练：随机组合；错词复习：只练答错/到期的词（智能重复）。' },
     { t: '🎚️ 难度三档', d: '基础：有首字母提示、只出简单词；标准：全部词；进阶：难词 + 形近干扰。难度会随你的表现自动微调。' },
     { t: '✍️ 大小写与发音', d: '默认小写；需要大写时点「⇧ 大写」切换。点 🔊 听单词发音，答对/连对还有英语鼓励音。' },
     { t: '🎁 连对送礼', d: '连续答对 5 题，就送你一个随机道具（⏸暂停 / 🐌减速 / ⏱加时 任选其一）；连对 10 题、15 题继续送。道具会存进道具栏，开启「计时闯关」后即可使用。' },
@@ -4653,6 +5008,7 @@ body.timer-danger{animation:danger-flash .5s infinite}
   global.show = show;
   global.goHome = goHome;
   global.renderHome = renderHome;
+  global.toggleRequired = toggleRequired;
   global.renderDiff = renderDiff;
   global.setDiff = setDiff;
   global.setGroup = setGroup;
@@ -4668,6 +5024,10 @@ body.timer-danger{animation:danger-flash .5s infinite}
   global.showVocab = showVocab;
   global.showData = showData;
   global.exportCsv = exportCsv;
+  global.exportData = exportData;
+  global.importData = importData;
+  global.showWeekly = showWeekly;
+  global.checkinGrid = checkinGrid;
   global.showStd = showStd;
   global.openShare = openShare;
   global.closeShare = closeShare;
